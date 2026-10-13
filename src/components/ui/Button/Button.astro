@@ -1,0 +1,29 @@
+---
+import './Button.scss';
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends Omit<HTMLAttributes<'button'>, 'type'> {
+  /** Sin `href` se renderiza un `<button type="button">`. */
+  href?: string;
+  variant?: 'primary' | 'ghost';
+  magnetic?: boolean;
+  external?: boolean;
+}
+
+const { href, variant = 'primary', magnetic = false, external = false, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  {...rest}
+  class:list={['button', `button--${variant}`]}
+  href={href}
+  type={href ? undefined : 'button'}
+  data-magnetic={magnetic ? '0.3' : undefined}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <span class="button__label">
+    <slot />
+  </span>
+</Tag>

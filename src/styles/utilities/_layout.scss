@@ -1,0 +1,40 @@
+@use '../abstracts' as *;
+
+.container {
+  @include container;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}
+
+.skip-link {
+  position: fixed;
+  top: space(xs);
+  left: space(xs);
+  z-index: calc(#{z(webgl-front)} + 1);
+  padding: space(2xs) space(xs);
+  background: color(text);
+  color: color(bg);
+  border-radius: radius(sm);
+  transform: translateY(-200%);
+
+  &:focus-visible {
+    transform: none;
+  }
+}
+
+// Estado inicial de `[data-reveal]` (ver scripts/interactions/reveal.ts).
+// Sin JS o con movimiento reducido el contenido siempre es visible.
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    visibility: hidden;
+  }
+}
+
+// Máscara de SplitText (ver scripts/interactions/split.ts): se agranda hacia arriba
+// y abajo para no recortar tildes ni descendentes ("¿", "J") con interlineado ajustado.
+.split-char-mask {
+  padding-block: 0.12em 0.2em;
+  margin-block: -0.12em -0.2em;
+}

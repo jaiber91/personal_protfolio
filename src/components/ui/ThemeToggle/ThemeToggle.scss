@@ -1,0 +1,33 @@
+@use 'abstracts' as *;
+
+.theme-toggle {
+  display: inline-flex;
+
+  &__button {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: radius(pill);
+    border: 1px solid color(border);
+    transition: border-color duration(base) ease(out);
+
+    @include hover {
+      border-color: color(text);
+    }
+  }
+
+  // Círculo que se "llena" a la mitad: luna/sol abstracto.
+  &__icon {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 1.5px solid color(text);
+    background: linear-gradient(90deg, color(text) 50%, transparent 50%);
+    transition: transform duration(slow) ease(out);
+
+    [aria-pressed='true'] > & {
+      transform: rotate(180deg);
+    }
+  }
+}

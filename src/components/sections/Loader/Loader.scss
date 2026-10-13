@@ -1,0 +1,29 @@
+@use 'abstracts' as *;
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: z(loader);
+  display: grid;
+  place-items: center;
+  background-color: color(bg);
+
+  // Sin JS o con movimiento reducido no hay intro: el contenido se ve de inmediato.
+  html:not(.js) & {
+    display: none;
+  }
+
+  @include reduced-motion {
+    display: none;
+  }
+
+  &__count {
+    // El texto de partículas se muestrea con esta misma fuente y tamaño.
+    font-family: var(--font-display);
+    font-size: font-size(giant);
+    font-weight: var(--font-weight-semibold);
+    // Sin letter-spacing ni tabular-nums: canvas 2D no los replica y el "100"
+    // de partículas no coincidiría con el HTML en el momento del cambio.
+    line-height: 1;
+  }
+}

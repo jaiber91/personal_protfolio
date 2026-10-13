@@ -1,0 +1,37 @@
+@use 'sass:math';
+
+// Interpola un valor entre dos tamaños de viewport (en rem) usando clamp().
+@function fluid($min-rem, $max-rem, $min-vw: 22.5, $max-vw: 90) {
+  $slope: math.div($max-rem - $min-rem, $max-vw - $min-vw);
+  $intercept: $min-rem - $slope * $min-vw;
+  @return clamp(#{$min-rem}rem, #{$intercept}rem + #{$slope * 100}vw, #{$max-rem}rem);
+}
+
+// Acceso a tokens expuestos como custom properties.
+@function color($role) {
+  @return var(--color-#{$role});
+}
+
+@function space($step) {
+  @return var(--space-#{$step});
+}
+
+@function font-size($step) {
+  @return var(--font-size-#{$step});
+}
+
+@function duration($name) {
+  @return var(--duration-#{$name});
+}
+
+@function ease($name) {
+  @return var(--ease-#{$name});
+}
+
+@function z($layer) {
+  @return var(--z-#{$layer});
+}
+
+@function radius($name) {
+  @return var(--radius-#{$name});
+}

@@ -1,0 +1,36 @@
+---
+import './Platforms.scss';
+import SectionHeading from '@/components/ui/SectionHeading/SectionHeading.astro';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary['platforms'];
+}
+
+const { t } = Astro.props;
+---
+
+<platforms-section class="platforms" id="platforms">
+  <!-- Se fija este div y no el custom element: el pin mueve el nodo en el DOM
+       y eso volvería a disparar connected/disconnectedCallback. -->
+  <div class="platforms__pin" data-platforms-pin>
+    <div class="platforms__inner container">
+      <SectionHeading eyebrow={t.eyebrow} title={t.title} />
+      <ol class="platforms__steps" role="list">
+        {t.steps.map((step, index) => (
+          <li class="platforms__step" data-platform-step data-active={index === 0 ? '' : undefined}>
+            <span class="platforms__index">{String(index + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="platforms__label">{step.label}</h3>
+              <p class="platforms__description">{step.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</platforms-section>
+
+<script>
+  import './Platforms.ts';
+</script>

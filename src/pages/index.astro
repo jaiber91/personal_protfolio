@@ -1,16 +1,28 @@
 ---
+// Raíz: envía al visitante a su idioma (navegador) o al idioma por defecto.
+import { DEFAULT_LOCALE, LOCALES, localizePath } from '@/i18n';
+
+const fallback = localizePath(DEFAULT_LOCALE);
+const targets = Object.fromEntries(LOCALES.map((locale) => [locale, localizePath(locale)]));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang={DEFAULT_LOCALE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Jaiber Flor</title>
+    <script is:inline define:vars={{ targets, fallback }}>
+      const preferred = (navigator.languages || [navigator.language])
+        .map((lang) => lang.slice(0, 2).toLowerCase())
+        .find((lang) => lang in targets);
+      location.replace(preferred ? targets[preferred] : fallback);
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${fallback}`} />
+    </noscript>
+  </head>
+  <body>
+    <a href={fallback}>Jaiber Flor</a>
+  </body>
 </html>

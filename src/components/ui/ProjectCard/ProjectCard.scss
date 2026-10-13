@@ -1,0 +1,64 @@
+@use 'abstracts' as *;
+
+// Un proyecto = su pantalla dentro del dispositivo para el que se hizo + su ficha.
+.project-card {
+  display: grid;
+  gap: space(md);
+  align-items: center;
+
+  @include mq(lg) {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: space(xl);
+  }
+
+  &__device {
+    display: flex;
+    justify-content: center;
+  }
+
+  &--placeholder &__device {
+    opacity: 0.6;
+  }
+
+  &__info {
+    display: grid;
+    gap: space(sm);
+    align-content: center;
+  }
+
+  &__index {
+    @include eyebrow;
+  }
+
+  &__title {
+    font-size: font-size(2xl);
+    line-height: var(--line-height-tight);
+  }
+
+  &__summary {
+    color: color(text-muted);
+    max-width: 38ch;
+  }
+
+  &__meta {
+    display: grid;
+    gap: space(2xs);
+    font-size: font-size(sm);
+
+    dt {
+      @include eyebrow;
+    }
+  }
+
+  &__link {
+    justify-self: start;
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-medium);
+    border-bottom: 1px solid currentcolor;
+    transition: color duration(base) ease(out);
+
+    @include hover {
+      color: color(accent);
+    }
+  }
+}

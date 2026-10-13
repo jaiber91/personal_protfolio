@@ -1,0 +1,57 @@
+@use 'abstracts' as *;
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100svh;
+  padding-block: var(--header-height) space(2xl);
+
+  @include mq(lg) {
+    align-items: center;
+  }
+
+  &__inner {
+    display: grid;
+    gap: space(sm);
+    justify-items: start;
+  }
+
+  &__eyebrow {
+    @include eyebrow;
+  }
+
+  &__title {
+    font-size: font-size(display);
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.045em;
+    max-width: 8ch;
+  }
+
+  &__lead {
+    max-width: 34ch;
+    font-size: font-size(lg);
+    color: color(text-muted);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(xs);
+    margin-top: space(xs);
+  }
+
+  &__scroll-hint {
+    @include eyebrow;
+    position: absolute;
+    bottom: space(md);
+    right: var(--gutter);
+  }
+
+  // Oculto hasta que GSAP lo revele (solo si hay JS y se permite movimiento).
+  @media (prefers-reduced-motion: no-preference) {
+    .js & [data-hero-reveal] {
+      visibility: hidden;
+    }
+  }
+}

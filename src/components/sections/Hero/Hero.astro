@@ -1,0 +1,40 @@
+---
+import './Hero.scss';
+import Button from '@/components/ui/Button/Button.astro';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary['hero'];
+}
+
+const { t } = Astro.props;
+---
+
+<hero-section class="hero" id="top">
+  <div class="hero__inner container">
+    <p class="hero__eyebrow" data-hero-reveal>
+      {t.eyebrow}
+    </p>
+    <h1 class="hero__title" data-hero-reveal data-hero-title>
+      {t.title}
+    </h1>
+    <p class="hero__lead" data-hero-reveal>
+      {t.lead}
+    </p>
+    <div class="hero__actions" data-hero-reveal>
+      <Button href="#projects" magnetic>
+        {t.primaryCta}
+      </Button>
+      <Button href="#contact" variant="ghost" magnetic>
+        {t.secondaryCta}
+      </Button>
+    </div>
+  </div>
+  <span class="hero__scroll-hint" data-hero-reveal aria-hidden="true">
+    {t.scrollHint}
+  </span>
+</hero-section>
+
+<script>
+  import './Hero.ts';
+</script>

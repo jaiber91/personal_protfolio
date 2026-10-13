@@ -1,0 +1,53 @@
+---
+import './DeviceFrame.scss';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+export type Device = 'phone' | 'tablet' | 'web';
+
+interface Props {
+  device: Device;
+  image?: ImageMetadata;
+  alt?: string;
+}
+
+const { device, image, alt = '' } = Astro.props;
+
+// Interfaz de ejemplo cuando no hay captura: mismas proporciones que las formas de partículas.
+const skeletonRows: Record<Device, number[]> = {
+  phone: [0.55, 0.8, -0.5, 0.9, 0.7, 0.4, -0.3, 0.6],
+  tablet: [0.5, -0.35, 0.8, 0.6, 0.7],
+  web: [0.45, 0.35, -0.3],
+};
+---
+
+<div class:list={['device-frame', `device-frame--${device}`]}>
+  {device === 'web' && (
+    <div class="device-frame__bar" aria-hidden="true">
+      <span />
+      <span />
+      <span />
+    </div>
+  )}
+  <div class="device-frame__screen">
+    {image ? (
+      <Image
+        class="device-frame__image"
+        src={image}
+        alt={alt}
+        widths={[480, 960, 1280]}
+        sizes="(min-width: 64rem) 50vw, 90vw"
+      />
+    ) : (
+      <div class="device-frame__skeleton" aria-hidden="true">
+        {skeletonRows[device].map((ratio) =>
+          ratio < 0 ? (
+            <span class="device-frame__card" style={`--h: ${Math.abs(ratio) * 6}rem`} />
+          ) : (
+            <span class="device-frame__line" style={`--w: ${ratio * 100}%`} />
+          ),
+        )}
+      </div>
+    )}
+  </div>
+</div>

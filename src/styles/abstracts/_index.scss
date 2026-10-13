@@ -1,0 +1,4 @@
+// Punto de entrada para componentes: `@use 'abstracts' as *;`
+// Solo expone funciones y mixins (no emite CSS).
+@forward 'functions';
+@forward 'mixins';

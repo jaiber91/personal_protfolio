@@ -1,0 +1,72 @@
+$font-families: (
+  display: (
+    'Outfit Variable',
+    system-ui,
+    sans-serif,
+  ),
+  body: (
+    'Work Sans Variable',
+    system-ui,
+    sans-serif,
+  ),
+  mono: (
+    ui-monospace,
+    'SF Mono',
+    Menlo,
+    monospace,
+  ),
+);
+
+// Escala fluida: [mínimo, máximo] en rem, interpolada entre 360px y 1440px.
+$font-sizes: (
+  xs: (
+    0.75,
+    0.8125,
+  ),
+  sm: (
+    0.875,
+    0.9375,
+  ),
+  base: (
+    1,
+    1.125,
+  ),
+  lg: (
+    1.125,
+    1.375,
+  ),
+  xl: (
+    1.375,
+    1.875,
+  ),
+  2xl: (
+    1.75,
+    2.75,
+  ),
+  3xl: (
+    2.25,
+    4,
+  ),
+  display: (
+    3.25,
+    8.5,
+  ),
+  giant: (
+    3.5,
+    15,
+  ),
+);
+
+$font-weights: (
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+);
+
+$line-heights: (
+  tight: 0.95,
+  snug: 1.15,
+  normal: 1.5,
+  relaxed: 1.7,
+);

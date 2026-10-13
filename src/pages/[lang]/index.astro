@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Footer from '@/components/layout/Footer/Footer.astro';
+import Header from '@/components/layout/Header/Header.astro';
+import Contact from '@/components/sections/Contact/Contact.astro';
+import Hero from '@/components/sections/Hero/Hero.astro';
+import Loader from '@/components/sections/Loader/Loader.astro';
+import Platforms from '@/components/sections/Platforms/Platforms.astro';
+import Projects from '@/components/sections/Projects/Projects.astro';
+import Story from '@/components/sections/Story/Story.astro';
+import { getDictionary, LOCALES, type Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout/BaseLayout.astro';
+
+export const getStaticPaths = (() =>
+  LOCALES.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+const t = getDictionary(locale);
+---
+
+<BaseLayout>
+  <Loader slot="overlay" label={t.a11y.loading} />
+  <Header slot="header" locale={locale} t={t} />
+
+  <Hero t={t.hero} />
+  <Platforms t={t.platforms} />
+  <Story locale={locale} t={t.story} />
+  <Projects locale={locale} t={t.projects} />
+  <Contact t={t.contact} />
+
+  <Footer slot="footer" t={t} />
+</BaseLayout>

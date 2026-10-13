@@ -1,0 +1,7 @@
+// Hoja global: se importa una sola vez desde BaseLayout.
+// Orden: tokens -> base -> utilidades. Los componentes traen su propio .scss.
+@use 'base/root';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/global';
+@use 'utilities/layout';

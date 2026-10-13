@@ -1,0 +1,51 @@
+@use '../abstracts' as *;
+
+html {
+  background-color: color(bg);
+  transition: background-color duration(base) ease(out);
+}
+
+body {
+  background-color: color(bg);
+  transition:
+    background-color duration(base) ease(out),
+    color duration(base) ease(out);
+}
+
+::selection {
+  background-color: color(selection);
+  color: color(on-selection);
+}
+
+:focus-visible {
+  @include focus-ring;
+}
+
+// Lenis (smooth scroll) — estilos recomendados por la librería.
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@include reduced-motion {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

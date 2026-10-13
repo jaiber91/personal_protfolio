@@ -1,0 +1,55 @@
+@use 'abstracts' as *;
+
+// La sección se fija (pin) mientras el scroll transforma el dispositivo 3D.
+.platforms {
+  display: block;
+
+  &__pin {
+    display: flex;
+    align-items: flex-end;
+    min-height: 100svh;
+    padding-block: var(--header-height) space(xl);
+
+    @include mq(lg) {
+      align-items: center;
+    }
+  }
+
+  &__inner {
+    display: grid;
+    gap: space(lg);
+  }
+
+  &__steps {
+    display: grid;
+    gap: space(sm);
+    max-width: 28rem;
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: space(xs);
+    opacity: 0.3;
+    transition: opacity duration(slow) ease(out);
+
+    &[data-active] {
+      opacity: 1;
+    }
+  }
+
+  &__index {
+    font-family: var(--font-mono);
+    font-size: font-size(xs);
+    padding-top: 0.4em;
+  }
+
+  &__label {
+    font-size: font-size(xl);
+  }
+
+  &__description {
+    color: color(text-muted);
+    max-width: 32ch;
+  }
+}

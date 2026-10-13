@@ -1,0 +1,98 @@
+---
+import './Story.scss';
+import SectionHeading from '@/components/ui/SectionHeading/SectionHeading.astro';
+import { LOCALE_META, type Dictionary, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dictionary['story'];
+}
+
+const { locale, t } = Astro.props;
+const numberFormat = new Intl.NumberFormat(LOCALE_META[locale].htmlLang, { useGrouping: 'always' });
+const formatMetric = (value: number, suffix: string) => `${numberFormat.format(value)}${suffix}`;
+const totalSteps = t.items.reduce((total, item) => total + item.metrics.length, 0);
+---
+
+<story-section class="story" id="story">
+  <!-- Se fija este div y no el custom element (ver Platforms). -->
+  <div class="story__pin" data-story-pin>
+    <div class="story__inner container">
+      <SectionHeading eyebrow={t.eyebrow} title={t.title} />
+
+      <ol class="story__companies" role="list">
+        {t.items.map((item) => (
+          <li class="story__company" data-story-company>
+            <header class="story__header">
+              <p class="story__period">
+                {item.current && <span class="story__live" aria-hidden="true" />}
+                {item.period}
+              </p>
+              <h3 class="story__name">{item.company}</h3>
+              <p class="story__role">{item.role}</p>
+            </header>
+
+            <ol class="story__metrics" role="list" aria-label={t.metricsLabel}>
+              {item.metrics.map((metric) => (
+                <li
+                  class="story__metric"
+                  data-story-step
+                  data-text={formatMetric(metric.value, metric.suffix)}
+                  data-from-text={
+                    'from' in metric && metric.from !== undefined
+                      ? formatMetric(metric.from, metric.suffix)
+                      : undefined
+                  }
+                >
+                  <p class="story__value" data-story-value>
+                    {formatMetric(metric.value, metric.suffix)}
+                  </p>
+                  <div class="story__text">
+                    <p class="story__label">{metric.label}</p>
+                    <p class="story__detail">{metric.detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <ul class="story__stack" role="list" aria-label={t.stackLabel}>
+              {item.stack.map((tech) => (
+                <li class="story__chip">{tech}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+
+      <div class="story__nav" aria-hidden="true">
+        <span class="story__counter" data-story-counter>
+          01 / {String(totalSteps).padStart(2, '0')}
+        </span>
+        <span class="story__dots">
+          {Array.from({ length: totalSteps }, () => (
+            <span class="story__dot" data-story-dot />
+          ))}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <section class="story__education container" aria-labelledby="education-title" data-reveal>
+    <h3 class="story__education-title" id="education-title">
+      {t.educationTitle}
+    </h3>
+    <ul class="story__education-list" role="list">
+      {t.education.map((entry) => (
+        <li class="story__education-item">
+          <span class="story__education-period">{entry.period}</span>
+          <span class="story__education-name">{entry.title}</span>
+          <span class="story__education-place">{entry.place}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+</story-section>
+
+<script>
+  import './Story.ts';
+</script>

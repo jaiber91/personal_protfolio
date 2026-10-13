@@ -1,0 +1,59 @@
+@use 'sass:list';
+@use 'sass:map';
+@use '../tokens' as tokens;
+@use '../abstracts/functions' as fn;
+
+@mixin theme-vars($theme) {
+  @each $role, $value in map.get(tokens.$themes, $theme) {
+    --color-#{$role}: #{$value};
+  }
+  color-scheme: $theme;
+}
+
+:root {
+  @include theme-vars(light);
+
+  @each $name, $stack in tokens.$font-families {
+    --font-#{$name}: #{$stack};
+  }
+  @each $step, $range in tokens.$font-sizes {
+    --font-size-#{$step}: #{fn.fluid(list.nth($range, 1), list.nth($range, 2))};
+  }
+  @each $name, $value in tokens.$font-weights {
+    --font-weight-#{$name}: #{$value};
+  }
+  @each $name, $value in tokens.$line-heights {
+    --line-height-#{$name}: #{$value};
+  }
+  @each $step, $range in tokens.$spacing {
+    --space-#{$step}: #{fn.fluid(list.nth($range, 1), list.nth($range, 2))};
+  }
+  @each $name, $value in tokens.$radius {
+    --radius-#{$name}: #{$value};
+  }
+  @each $name, $value in tokens.$durations {
+    --duration-#{$name}: #{$value};
+  }
+  @each $name, $value in tokens.$easings {
+    --ease-#{$name}: #{$value};
+  }
+  @each $name, $value in tokens.$z-layers {
+    --z-#{$name}: #{$value};
+  }
+
+  --container-max: #{tokens.$container-max};
+  --gutter: #{fn.fluid(list.nth(tokens.$gutter, 1), list.nth(tokens.$gutter, 2))};
+  --header-height: 4.5rem;
+}
+
+// Sin preferencia guardada se respeta el sistema; el script inline del layout
+// fija `data-theme` antes del primer pintado para evitar parpadeos.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include theme-vars(dark);
+  }
+}
+
+:root[data-theme='dark'] {
+  @include theme-vars(dark);
+}

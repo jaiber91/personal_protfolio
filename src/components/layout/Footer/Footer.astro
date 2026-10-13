@@ -1,0 +1,18 @@
+---
+import './Footer.scss';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner container">
+    <p>© {year} Jaiber Flor</p>
+    <p>{t.footer.builtWith}</p>
+  </div>
+</footer>

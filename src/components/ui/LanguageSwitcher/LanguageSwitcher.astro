@@ -1,0 +1,31 @@
+---
+import './LanguageSwitcher.scss';
+import { LOCALES, LOCALE_META, localizePath, stripLocale, type Locale } from '@/i18n';
+
+interface Props {
+  current: Locale;
+  label: string;
+}
+
+const { current, label } = Astro.props;
+const path = stripLocale(Astro.url.pathname);
+---
+
+<nav class="language-switcher" aria-label={label}>
+  <ul class="language-switcher__list" role="list">
+    {LOCALES.map((locale) => (
+      <li>
+        <a
+          class="language-switcher__link"
+          href={localizePath(locale, path)}
+          hreflang={LOCALE_META[locale].htmlLang}
+          lang={LOCALE_META[locale].htmlLang}
+          aria-current={locale === current ? 'page' : undefined}
+          title={LOCALE_META[locale].label}
+        >
+          {locale}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

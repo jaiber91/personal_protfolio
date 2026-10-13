@@ -1,0 +1,22 @@
+---
+import './Loader.scss';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<site-loader class="loader">
+  <div class="loader__inner" role="status">
+    <span class="visually-hidden">{label}</span>
+    <span class="loader__count" data-loader-count aria-hidden="true">
+      0
+    </span>
+  </div>
+</site-loader>
+
+<script>
+  import './Loader.ts';
+</script>

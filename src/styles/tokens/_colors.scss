@@ -1,0 +1,30 @@
+// Paleta basada en "Minimalism & Swiss" + "Portfolio/Personal" (UI UX Pro Max):
+// neutros cálidos, tinta casi negra y un único acento azul.
+// Cada tema define los mismos roles; los componentes solo usan roles, nunca hex.
+
+$themes: (
+  light: (
+    bg: #f5f1e8,
+    surface: #ece6da,
+    text: #141414,
+    text-muted: #5c5a55,
+    border: rgb(20 20 20 / 14%),
+    accent: #2f5bea,
+    on-accent: #ffffff,
+    particle: #141414,
+    selection: #141414,
+    on-selection: #f5f1e8,
+  ),
+  dark: (
+    bg: #0e0f12,
+    surface: #17181d,
+    text: #f5f1e8,
+    text-muted: #9c9a94,
+    border: rgb(245 241 232 / 14%),
+    accent: #7c9bff,
+    on-accent: #0e0f12,
+    particle: #f5f1e8,
+    selection: #f5f1e8,
+    on-selection: #0e0f12,
+  ),
+);
