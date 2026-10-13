@@ -1,0 +1,314 @@
+@use 'abstracts' as *;
+
+// Por defecto (sin JS o con movimiento reducido) la trayectoria es una lista legible.
+// Story.ts añade `story--interactive`: la sección se fija y el scroll recorre las
+// cifras una a una; con WebGL (`story--particles`) las cifras las dibujan las partículas.
+.story {
+  display: block;
+
+  &__pin {
+    padding-block: space(3xl) space(xl);
+  }
+
+  &__inner {
+    display: grid;
+    gap: space(xl);
+  }
+
+  &__companies {
+    display: grid;
+    gap: space(2xl);
+  }
+
+  &__company {
+    display: grid;
+    gap: space(md);
+  }
+
+  &__header {
+    display: grid;
+    gap: space(3xs);
+  }
+
+  &__period {
+    @include eyebrow;
+    display: flex;
+    align-items: center;
+    gap: space(2xs);
+  }
+
+  // Trabajo actual: punto lleno que emite un pulso suave.
+  &__live {
+    position: relative;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: color(text);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid color(text);
+      animation: story-pulse 2.4s ease(out) infinite;
+
+      @include reduced-motion {
+        animation: none;
+      }
+    }
+  }
+
+  &__name {
+    font-size: font-size(3xl);
+    line-height: var(--line-height-tight);
+  }
+
+  &__role {
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__metrics {
+    display: grid;
+    gap: space(md);
+
+    @include mq(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__metric {
+    display: grid;
+    gap: space(2xs);
+    align-content: start;
+  }
+
+  &__value {
+    font-family: var(--font-display);
+    font-size: font-size(3xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    // Sin letter-spacing ni tabular-nums: canvas 2D no los replica y las
+    // partículas no coincidirían con la cifra HTML (igual que en el Loader).
+    white-space: nowrap;
+  }
+
+  &__text {
+    display: grid;
+    gap: space(2xs);
+  }
+
+  &__label {
+    @include eyebrow;
+  }
+
+  &__detail {
+    max-width: 44ch;
+    color: color(text-muted);
+  }
+
+  &__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(2xs);
+  }
+
+  &__chip {
+    padding: space(3xs) space(xs);
+    border: 1px solid color(border);
+    border-radius: radius(pill);
+    font-family: var(--font-mono);
+    font-size: font-size(xs);
+  }
+
+  &__nav {
+    display: none;
+  }
+
+  // ——— Modo interactivo: una cifra por pantalla ———
+  &--interactive {
+    .story__pin {
+      height: 100svh;
+      padding-block: calc(var(--header-height) + #{space(xs)}) space(md);
+      overflow: hidden;
+    }
+
+    .story__inner {
+      height: 100%;
+      grid-template-rows: auto 1fr auto;
+      gap: space(sm);
+    }
+
+    // Todas las empresas ocupan la misma celda; solo la activa es visible.
+    .story__companies {
+      display: grid;
+      min-height: 0;
+    }
+
+    .story__company {
+      grid-area: 1 / 1;
+      grid-template-rows: 1fr auto auto auto;
+      grid-template-areas:
+        'value'
+        'header'
+        'text'
+        'stack';
+      gap: space(sm);
+      min-height: 0;
+
+      @include mq(lg) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+        grid-template-rows: 1fr auto auto 1fr;
+        grid-template-areas:
+          '. value'
+          'header value'
+          'text value'
+          'stack value';
+        column-gap: space(xl);
+        row-gap: space(md);
+      }
+    }
+
+    // Las cifras y sus textos se apilan en sus áreas de la empresa.
+    .story__metrics,
+    .story__metric {
+      display: contents;
+    }
+
+    .story__header {
+      grid-area: header;
+    }
+
+    .story__stack {
+      grid-area: stack;
+      align-self: start;
+    }
+
+    .story__value {
+      grid-area: value;
+      place-self: center;
+      font-size: font-size(display);
+    }
+
+    .story__text {
+      grid-area: text;
+    }
+
+    .story__name {
+      font-size: font-size(2xl);
+
+      @include mq(lg) {
+        font-size: font-size(3xl);
+      }
+    }
+
+    .story__detail {
+      color: color(text);
+      font-size: font-size(lg);
+    }
+
+    // Visibilidad por paso
+    .story__company,
+    .story__value,
+    .story__text {
+      transition:
+        opacity duration(slow) ease(out),
+        visibility duration(slow) ease(out),
+        transform duration(slow) ease(out);
+    }
+
+    .story__company:not([data-active]),
+    .story__metric:not([data-active]) > * {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .story__metric:not([data-active]) > .story__text {
+      transform: translateY(space(sm));
+    }
+
+    .story__nav {
+      display: flex;
+      align-items: center;
+      gap: space(sm);
+    }
+  }
+
+  // Con partículas la cifra HTML queda transparente: sigue ahí para lectores de
+  // pantalla y como referencia de posición/tamaño de las partículas.
+  &--particles .story__value {
+    color: transparent;
+  }
+
+  &__counter {
+    @include eyebrow;
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__dots {
+    display: flex;
+    gap: space(3xs);
+  }
+
+  &__dot {
+    width: 1.25rem;
+    height: 2px;
+    background: color(border);
+    transition: background-color duration(base) ease(out);
+
+    &[data-active] {
+      background: color(text);
+    }
+  }
+
+  &__education {
+    display: grid;
+    gap: space(sm);
+    padding-block: space(xl) space(3xl);
+  }
+
+  &__education-title {
+    @include eyebrow;
+  }
+
+  &__education-list {
+    border-top: 1px solid color(border);
+  }
+
+  &__education-item {
+    display: grid;
+    gap: space(3xs) space(md);
+    padding-block: space(xs);
+    border-bottom: 1px solid color(border);
+
+    @include mq(md) {
+      grid-template-columns: 7rem 1fr auto;
+      align-items: baseline;
+    }
+  }
+
+  &__education-period {
+    @include eyebrow;
+  }
+
+  &__education-name {
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__education-place {
+    color: color(text-muted);
+    font-size: font-size(sm);
+  }
+}
+
+@keyframes story-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}

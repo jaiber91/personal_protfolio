@@ -1,0 +1,19 @@
+// Mismos valores que `src/scripts/core/motion.ts` para que CSS y GSAP se sientan iguales.
+$durations: (
+  fast: 160ms,
+  base: 320ms,
+  slow: 640ms,
+);
+
+$easings: (
+  out: cubic-bezier(0.22, 1, 0.36, 1),
+  in-out: cubic-bezier(0.65, 0, 0.35, 1),
+);
+
+$z-layers: (
+  base: 0,
+  content: 10,
+  header: 20,
+  loader: 90,
+  webgl-front: 100,
+);

@@ -1,0 +1,46 @@
+---
+import './Contact.scss';
+import Button from '@/components/ui/Button/Button.astro';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary['contact'];
+}
+
+const { t } = Astro.props;
+const EMAIL = 'jaiver.navia@gmail.com';
+const LINKEDIN = 'https://www.linkedin.com/in/jaiberflor';
+---
+
+<contact-section class="contact" id="contact">
+  <section class="contact__inner container" aria-labelledby="contact-title">
+    <p class="contact__eyebrow" data-reveal>
+      {t.eyebrow}
+    </p>
+    <h2 class="contact__title" id="contact-title" data-split>
+      {t.title}
+    </h2>
+    <p class="contact__lead" data-reveal>
+      {t.lead}
+    </p>
+    <div class="contact__actions" data-reveal>
+      <Button
+        magnetic
+        title={t.copyEmail}
+        aria-label={`${t.copyEmail}: ${EMAIL}`}
+        data-copy-email={EMAIL}
+        data-copied-label={t.emailCopied}
+      >
+        {EMAIL}
+      </Button>
+      <Button href={LINKEDIN} variant="ghost" external magnetic>
+        LinkedIn
+      </Button>
+    </div>
+    <p class="visually-hidden" role="status" data-copy-status></p>
+  </section>
+</contact-section>
+
+<script>
+  import './Contact.ts';
+</script>

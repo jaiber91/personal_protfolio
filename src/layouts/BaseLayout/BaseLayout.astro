@@ -1,0 +1,91 @@
+---
+import '@fontsource-variable/outfit';
+import '@fontsource-variable/work-sans';
+import '@/styles/main.scss';
+import './BaseLayout.scss';
+import WebGLCanvas from '@/components/layout/WebGLCanvas/WebGLCanvas.astro';
+import {
+  DEFAULT_LOCALE,
+  getDictionary,
+  LOCALE_META,
+  LOCALES,
+  localizePath,
+  resolveLocale,
+  stripLocale,
+} from '@/i18n';
+import { THEME_STORAGE_KEY } from '@/scripts/core/theme';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const locale = resolveLocale(Astro.currentLocale);
+const t = getDictionary(locale);
+const { title = t.meta.title, description = t.meta.description } = Astro.props;
+
+const path = stripLocale(Astro.url.pathname);
+const canonical = new URL(localizePath(locale, path), Astro.site);
+const alternates = LOCALES.map((alt) => ({
+  hreflang: LOCALE_META[alt].htmlLang,
+  href: new URL(localizePath(alt, path), Astro.site).href,
+}));
+const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site).href;
+---
+
+<!doctype html>
+<html lang={LOCALE_META[locale].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((alt) => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={LOCALE_META[locale].ogLocale} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Antes del primer pintado: tema guardado (o del sistema) y bandera de JS. -->
+    <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
+      const root = document.documentElement;
+      root.classList.add('js');
+      let theme = null;
+      try {
+        theme = localStorage.getItem(storageKey);
+      } catch {
+        // Storage bloqueado: se usa la preferencia del sistema.
+      }
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      root.dataset.theme = theme;
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {t.a11y.skipToContent}
+    </a>
+    <WebGLCanvas />
+    <slot name="overlay" />
+    <slot name="header" />
+    <main class="page" id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+
+    <script>
+      import '@/scripts/app';
+    </script>
+  </body>
+</html>

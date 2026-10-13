@@ -1,0 +1,72 @@
+---
+import './ProjectCard.scss';
+import type { ImageMetadata } from 'astro';
+import DeviceFrame, { type Device } from '@/components/ui/DeviceFrame/DeviceFrame.astro';
+
+interface Props {
+  index: number;
+  total: number;
+  title: string;
+  summary: string;
+  role: string;
+  stack: string[];
+  year: number;
+  device: Device;
+  url?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  placeholder?: boolean;
+  labels: { role: string; stack: string; view: string };
+}
+
+const {
+  index,
+  total,
+  title,
+  summary,
+  role,
+  stack,
+  year,
+  device,
+  url,
+  image,
+  imageAlt,
+  placeholder,
+  labels,
+} = Astro.props;
+const pad = (value: number) => String(value).padStart(2, '0');
+---
+
+<article
+  class:list={[
+    'project-card',
+    `project-card--${device}`,
+    { 'project-card--placeholder': placeholder },
+  ]}
+>
+  <div class="project-card__device" data-project-device>
+    <DeviceFrame device={device} image={image} alt={imageAlt} />
+  </div>
+  <div class="project-card__info" data-project-info>
+    <p class="project-card__index">
+      {pad(index)} / {pad(total)} · {year}
+    </p>
+    <h3 class="project-card__title">{title}</h3>
+    <p class="project-card__summary">{summary}</p>
+    <dl class="project-card__meta">
+      <div>
+        <dt>{labels.role}</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt>{labels.stack}</dt>
+        <dd>{stack.join(' · ')}</dd>
+      </div>
+    </dl>
+    {url && (
+      <a class="project-card__link" href={url} target="_blank" rel="noopener noreferrer">
+        {labels.view} ↗
+      </a>
+    )}
+  </div>
+</article>

@@ -1,0 +1,42 @@
+---
+import './Header.scss';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher/LanguageSwitcher.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle/ThemeToggle.astro';
+import type { Dictionary, Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dictionary;
+}
+
+const { locale, t } = Astro.props;
+const links = [
+  { href: '#platforms', label: t.nav.platforms },
+  { href: '#story', label: t.nav.story },
+  { href: '#projects', label: t.nav.projects },
+  { href: '#contact', label: t.nav.contact },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a class="site-header__brand" href="#top" aria-label={t.hero.title}>
+      JF
+    </a>
+    <nav class="site-header__nav" aria-label={t.a11y.mainNav}>
+      <ul class="site-header__links" role="list">
+        {links.map((link) => (
+          <li>
+            <a class="site-header__link" href={link.href}>
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="site-header__actions">
+      <LanguageSwitcher current={locale} label={t.a11y.changeLanguage} />
+      <ThemeToggle label={t.a11y.toggleTheme} />
+    </div>
+  </div>
+</header>

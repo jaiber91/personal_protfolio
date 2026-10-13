@@ -1,0 +1,21 @@
+---
+import './SectionHeading.scss';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  id?: string;
+  level?: 'h1' | 'h2';
+}
+
+const { eyebrow, title, id, level: Heading = 'h2' } = Astro.props;
+---
+
+<header class="section-heading">
+  <p class="section-heading__eyebrow" data-reveal>
+    {eyebrow}
+  </p>
+  <Heading class="section-heading__title" id={id} data-split>
+    {title}
+  </Heading>
+</header>
