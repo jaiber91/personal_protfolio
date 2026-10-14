@@ -7,15 +7,17 @@ import type { Dictionary, Locale } from '@/i18n';
 interface Props {
   locale: Locale;
   t: Dictionary;
+  /** A dónde lleva el logo: `#top` en la landing, el inicio en otras páginas (p. ej. 404). */
+  homeHref?: string;
 }
 
-const { locale, t } = Astro.props;
+const { locale, t, homeHref = '#top' } = Astro.props;
 ---
 
 {/* Header mínimo: marca a la izquierda, idioma y tema a la derecha.
      La navegación vive en el dock inferior (ver Dock). */}
 <header class="site-header">
-  <a class="site-header__brand" href="#top">
+  <a class="site-header__brand" href={homeHref}>
     <span class="site-header__mark">JF</span>
     <span class="site-header__name">{t.hero.title}</span>
   </a>

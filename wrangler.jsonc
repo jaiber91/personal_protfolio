@@ -1,0 +1,13 @@
+// Configuración del Worker en Cloudflare (sitio estático con Workers Static Assets).
+// Cloudflare construye con `npm run build` y publica dist/ desde la rama main.
+// - not_found_handling "404-page": las URL inexistentes muestran dist/404.html
+//   (sin esto, Cloudflare responde un 404 vacío).
+// - public/_headers se copia a dist/ y Cloudflare aplica esas cabeceras.
+{
+  "name": "personal-protfolio",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+  },
+}

@@ -20,11 +20,13 @@ import { THEME_STORAGE_KEY } from '@/scripts/core/theme';
 interface Props {
   title?: string;
   description?: string;
+  /** Páginas que no deben indexarse (404): sin canonical, hreflang ni datos estructurados. */
+  noindex?: boolean;
 }
 
 const locale = resolveLocale(Astro.currentLocale);
 const t = getDictionary(locale);
-const { title = t.meta.title, description = t.meta.description } = Astro.props;
+const { title = t.meta.title, description = t.meta.description, noindex = false } = Astro.props;
 
 const path = stripLocale(Astro.url.pathname);
 const canonical = new URL(localizePath(locale, path), Astro.site);
@@ -43,15 +45,21 @@ const ogImage = new URL(`/og/og-${locale}.png`, Astro.site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {alternates.map((alt) => (
-      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <Fragment>
+        <link rel="canonical" href={canonical} />
+        {alternates.map((alt) => (
+          <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
 
-    <SocialMeta locale={locale} title={title} description={description} url={canonical.href} />
+        <SocialMeta locale={locale} title={title} description={description} url={canonical.href} />
 
-    <StructuredData locale={locale} url={canonical.href} image={ogImage} />
+        <StructuredData locale={locale} url={canonical.href} image={ogImage} />
+      </Fragment>
+    )}
 
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -1,0 +1,20 @@
+---
+// 404 por idioma: Cloudflare sirve el 404.html más cercano a la URL pedida
+// (/en/lo-que-sea → /en/404.html). Ver wrangler.jsonc.
+import type { GetStaticPaths } from 'astro';
+import Header from '@/components/layout/Header/Header.astro';
+import NotFound from '@/components/sections/NotFound/NotFound.astro';
+import { getDictionary, LOCALES, localizePath, type Locale } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout/BaseLayout.astro';
+
+export const getStaticPaths = (() =>
+  LOCALES.map((lang) => ({ params: { lang } }))) satisfies GetStaticPaths;
+
+const locale = Astro.params.lang as Locale;
+const t = getDictionary(locale);
+---
+
+<BaseLayout title={t.notFound.title} description={t.notFound.text} noindex>
+  <Header slot="header" locale={locale} t={t} homeHref={localizePath(locale)} />
+  <NotFound locale={locale} />
+</BaseLayout>

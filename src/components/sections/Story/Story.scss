@@ -194,7 +194,10 @@
         grid-row: auto;
       }
 
-      &.is-current {
+      // Con letras split-flap, cada placa tiene fondo propio: el parpadeo se aplica
+      // a las placas (si no, el texto oscuro quedaría sobre placas oscuras).
+      &.is-current,
+      &.is-current .flap {
         animation: story-blink 1.4s steps(1, end) infinite;
       }
     }
