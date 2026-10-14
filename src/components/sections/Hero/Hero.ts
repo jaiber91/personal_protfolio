@@ -50,6 +50,8 @@ class HeroSection extends HTMLElement {
   private async createBoard(): Promise<FlipBoard | null> {
     const title = this.querySelector<HTMLElement>('[data-hero-title]')?.textContent?.trim() ?? '';
     const wide = window.innerWidth >= 768;
+    // En pantallas verticales (móvil, tablet de pie) el nombre va en dos líneas, más grande.
+    const stacked = !wide || window.innerHeight > window.innerWidth;
 
     // La fuente real hace falta para rasterizar el nombre; el resto espera a que el navegador esté libre.
     await Promise.all([
@@ -66,10 +68,13 @@ class HeroSection extends HTMLElement {
     if (!this.stage) return null;
     const colors = () => ({ on: readColorToken('signal'), off: readColorToken('disc-off') });
     const board = new FlipBoard({
-      lines: wide ? [title.toUpperCase()] : title.toUpperCase().split(' '),
+      lines: stacked ? title.toUpperCase().split(' ') : [title.toUpperCase()],
       font: BOARD_FONT,
       cellPx: wide ? 13 : 9,
       colors: colors(),
+      // La pista de pronunciación se coloca justo debajo del nombre.
+      onLayout: (bottom) =>
+        this.style.setProperty('--name-bottom', `${(bottom * 100).toFixed(2)}%`),
     });
     this.stage.scene.add(board.mesh);
     this.stage.add(board);

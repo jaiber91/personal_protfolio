@@ -30,6 +30,45 @@
     }
   }
 
+  // Pista de pronunciación. Con WebGL se coloca bajo el nombre del tablero
+  // (`--name-bottom` lo calcula Hero.ts); sin WebGL va en el flujo, bajo el <h1>.
+  &__say {
+    @include hud;
+    position: relative;
+    justify-self: start;
+    display: flex;
+    margin: 0;
+    padding: space(2xs) space(xs);
+    background: color(ink);
+    border: 1px solid color(rule);
+
+    .js:not(.no-webgl) & {
+      position: absolute;
+      top: calc(var(--name-bottom, 62%) + #{space(xs)});
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    > [aria-hidden] {
+      display: flex;
+      gap: space(2xs);
+    }
+  }
+
+  &__say-label {
+    opacity: 0.6;
+  }
+
+  &__say-name {
+    color: color(signal);
+  }
+
+  &__say-phonetic {
+    color: color(on-ink);
+    text-transform: none;
+  }
+
   &__panel,
   &__meta {
     position: relative;
