@@ -1,0 +1,79 @@
+@use 'abstracts' as *;
+
+.not-found {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: calc(var(--header-height) + #{space(xl)}) space(2xl);
+  background: color(ink);
+  color: color(on-ink);
+
+  &__inner {
+    display: grid;
+    gap: space(md);
+    justify-items: start;
+  }
+
+  // Una fila del tablero de salidas.
+  &__board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(xs) space(md);
+    padding: space(sm);
+    background: color(ink);
+    border: 1px solid color(rule);
+    border-top: space(3xs) solid color(signal);
+    font-family: var(--font-mono);
+    font-size: font-size(lg);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  // El parpadeo va también en cada placa split-flap (tienen fondo propio).
+  &__cell--status,
+  &__cell--status .flap {
+    color: color(signal);
+    animation: not-found-blink 1.4s steps(1, end) infinite;
+
+    @include reduced-motion {
+      animation: none;
+    }
+  }
+
+  // En móvil "CANCELADO" no cabe al tamaño display: se reduce.
+  &__title {
+    font-size: font-size(3xl);
+    color: color(signal);
+
+    @include mq(md) {
+      font-size: font-size(display);
+    }
+  }
+
+  &__text {
+    max-width: 36ch;
+    font-size: font-size(lg);
+  }
+
+  &__other {
+    @include hud;
+    max-width: 60ch;
+    padding-top: space(sm);
+    border-top: 1px solid color(rule);
+    text-transform: none;
+
+    a {
+      color: color(signal);
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+  }
+}
+
+// Mismo parpadeo invertido del tablero de la trayectoria: buen contraste en las dos fases.
+@keyframes not-found-blink {
+  50% {
+    background: color(signal);
+    color: color(on-signal);
+  }
+}

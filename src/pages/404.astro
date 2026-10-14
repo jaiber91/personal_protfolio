@@ -1,0 +1,15 @@
+---
+// 404 de respaldo para URL sin idioma (p. ej. /algo): idioma por defecto + línea en inglés.
+// Las URL con idioma usan /es/404.html o /en/404.html ([lang]/404.astro).
+import Header from '@/components/layout/Header/Header.astro';
+import NotFound from '@/components/sections/NotFound/NotFound.astro';
+import { DEFAULT_LOCALE, getDictionary, localizePath } from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout/BaseLayout.astro';
+
+const t = getDictionary(DEFAULT_LOCALE);
+---
+
+<BaseLayout title={t.notFound.title} description={t.notFound.text} noindex>
+  <Header slot="header" locale={DEFAULT_LOCALE} t={t} homeHref={localizePath(DEFAULT_LOCALE)} />
+  <NotFound locale={DEFAULT_LOCALE} multilingual />
+</BaseLayout>

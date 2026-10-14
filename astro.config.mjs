@@ -15,7 +15,10 @@ export default defineConfig({
     // Sitemap con hreflang (es/en). La raíz "/" solo redirige por idioma: no se indexa.
     sitemap({
       i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
-      filter: (page) => new URL(page).pathname !== '/',
+      filter: (page) => {
+        const { pathname } = new URL(page);
+        return pathname !== '/' && !pathname.includes('404');
+      },
       // Igual que el <head>: x-default apunta al idioma por defecto (si no coinciden,
       // Google puede ignorar el par de hreflang).
       // Las URL comparten la lista de enlaces: se crea una nueva por URL.
@@ -44,19 +47,30 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self'",
         "font-src 'self'",
-        "connect-src 'self'",
+        // Cloudflare Web Analytics (sin cookies): el script lo inyecta Cloudflare y envía
+        // las métricas a cloudflareinsights.com.
+        "connect-src 'self' https://cloudflareinsights.com",
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self'",
         'upgrade-insecure-requests',
       ],
       // Atributos style="" (variables CSS en marcado) permitidos; <style> sigue con hashes.
+      scriptDirective: {
+        resources: ["'self'", 'https://static.cloudflareinsights.com'],
+      },
       styleDirective: {
         resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }],
       },
     },
   },
+  // URLs con barra final (/es/, /en/): coinciden con cómo las sirve Cloudflare, así el
+  // canonical, el hreflang y el sitemap nunca apuntan a una redirección.
+  trailingSlash: 'always',
   build: {
+    // Respeta la estructura de src/pages: [lang]/404.astro → /es/404.html y /en/404.html,
+    // que Cloudflare sirve para las URL inexistentes de cada idioma (ver wrangler.jsonc).
+    format: 'preserve',
     // El CSS es pequeño (~10 kB gzip): va dentro del HTML y no bloquea el primer pintado.
     inlineStylesheets: 'always',
   },

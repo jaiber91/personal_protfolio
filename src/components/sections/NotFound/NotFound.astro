@@ -1,0 +1,53 @@
+---
+import './NotFound.scss';
+import Button from '@/components/ui/Button/Button.astro';
+import { getDictionary, LOCALES, localizePath, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  /** En la 404 sin idioma (raíz) se añade una línea en los demás idiomas. */
+  multilingual?: boolean;
+}
+
+const { locale, multilingual = false } = Astro.props;
+const primary = getDictionary(locale);
+const others = multilingual
+  ? LOCALES.filter((alt) => alt !== locale).map((alt) => ({ locale: alt, t: getDictionary(alt) }))
+  : [];
+---
+
+{/* 404 como un vuelo cancelado en el tablero de salidas (letras split-flap). */}
+<not-found class="not-found">
+  <div class="not-found__inner container">
+    <div class="not-found__board" aria-hidden="true">
+      <span class="not-found__cell not-found__cell--code" data-flap>
+        {primary.notFound.code}
+      </span>
+      <span class="not-found__cell" data-flap>
+        {primary.notFound.destination}
+      </span>
+      <span class="not-found__cell not-found__cell--status" data-flap>
+        {primary.notFound.status}
+      </span>
+    </div>
+
+    <h1 class="not-found__title">{primary.notFound.heading}</h1>
+    <p class="not-found__text">{primary.notFound.text}</p>
+    <div class="not-found__actions">
+      <Button href={localizePath(locale)} variant="signal">
+        {primary.notFound.cta}
+      </Button>
+    </div>
+
+    {others.map(({ locale, t }) => (
+      <p class="not-found__other" lang={locale}>
+        {t.notFound.heading}. {t.notFound.text}{' '}
+        <a href={localizePath(locale)}>{t.notFound.cta} →</a>
+      </p>
+    ))}
+  </div>
+</not-found>
+
+<script>
+  import './NotFound.ts';
+</script>
