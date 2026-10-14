@@ -37,8 +37,8 @@ cada auditoría: es lo que evita reportar dos veces la misma decisión.
 
 ## Pendientes (requieren acción fuera del código)
 
-- [ ] **Dominio real** en `astro.config.mjs` (`site` todavía es `https://example.com`) y en
-      `security.txt` (`Canonical:`).
+- [x] **Dominio real:** `https://jaiberflor.dev` en `astro.config.mjs` y en `security.txt`.
+      Hosting: Cloudflare Pages (conectado a GitHub; `main` = producción).
 - [ ] **Hosting:** confirmar cabeceras con `curl -sI` y https://securityheaders.com.
 - [ ] **GitHub:** 2FA, proteger `main`, activar Dependabot alerts y secret scanning.
 - [ ] **Dominio:** 2FA y bloqueo en el registrador, CAA, DMARC `p=reject` si no envía correo.

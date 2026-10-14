@@ -118,7 +118,6 @@ sección activa y el progreso.
 
 ## Pendientes
 
-- [ ] Dominio real en `astro.config.mjs` (`site`).
 - [ ] Proyectos reales (pendiente de permisos) en `src/content/projects/`, con su captura en
       `src/assets/projects/` (`image` + `imageAlt` en el frontmatter).
 - [ ] CV descargable.

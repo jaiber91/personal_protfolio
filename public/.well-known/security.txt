@@ -3,3 +3,4 @@
 Contact: https://www.linkedin.com/in/jaiberflor
 Expires: 2027-10-13T00:00:00.000Z
 Preferred-Languages: es, en
+Canonical: https://jaiberflor.dev/.well-known/security.txt
