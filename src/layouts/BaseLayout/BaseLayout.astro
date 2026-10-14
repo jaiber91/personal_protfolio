@@ -4,6 +4,8 @@ import '@fontsource-variable/epilogue';
 import '@fontsource-variable/jetbrains-mono';
 import '@/styles/main.scss';
 import './BaseLayout.scss';
+import StructuredData from '@/components/layout/StructuredData/StructuredData.astro';
+import { profile } from '@/config/profile';
 import {
   DEFAULT_LOCALE,
   getDictionary,
@@ -31,6 +33,9 @@ const alternates = LOCALES.map((alt) => ({
   href: new URL(localizePath(alt, path), Astro.site).href,
 }));
 const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site).href;
+// Imagen para compartir (1200×630) por idioma; se regenera con `npm run og`.
+const ogImage = new URL(`/og/og-${locale}.png`, Astro.site).href;
+const otherLocales = LOCALES.filter((alt) => alt !== locale);
 ---
 
 <!doctype html>
@@ -46,14 +51,40 @@ const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site)
     ))}
     <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
 
-    <meta property="og:type" content="website" />
+    <meta name="author" content={profile.fullName} />
+
+    {/* Vista previa al compartir (WhatsApp, LinkedIn, Slack, Facebook...). */}
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.displayName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.ogImageAlt} />
     <meta property="og:locale" content={LOCALE_META[locale].ogLocale} />
+    {otherLocales.map((alt) => (
+      <meta property="og:locale:alternate" content={LOCALE_META[alt].ogLocale} />
+    ))}
+    <meta property="profile:first_name" content={profile.givenName} />
+    <meta property="profile:last_name" content={profile.familyName} />
 
+    {/* X (Twitter): sin twitter:card solo se muestra el enlace. */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={t.meta.ogImageAlt} />
+
+    <StructuredData locale={locale} url={canonical.href} image={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#111114" />
 
     {/* Antes del primer pintado: tema guardado (o del sistema) y bandera de JS. */}
     <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>

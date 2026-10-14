@@ -2,6 +2,7 @@
 import './Contact.scss';
 import QRCode from 'qrcode';
 import LiveClock from '@/components/ui/LiveClock/LiveClock.astro';
+import { profile } from '@/config/profile';
 import type { Dictionary } from '@/i18n';
 
 interface Props {
@@ -12,8 +13,8 @@ interface Props {
 const { t, hud } = Astro.props;
 // El correo nunca aparece completo en el HTML (lo recolectarían bots): el "@" lo pinta
 // el CSS y el script arma la dirección al copiar.
-const [EMAIL_USER, EMAIL_DOMAIN] = ['jaiver.navia', 'gmail.com'];
-const LINKEDIN = 'https://www.linkedin.com/in/jaiberflor';
+const { user: EMAIL_USER, domain: EMAIL_DOMAIN } = profile.email;
+const LINKEDIN = profile.linkedin;
 
 // QR generado en build; el trazo hereda el color del texto (currentcolor).
 const qr = (

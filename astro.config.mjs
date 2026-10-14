@@ -1,11 +1,28 @@
 // @ts-check
 import { fileURLToPath } from 'node:url';
+import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: reemplazar por el dominio real antes de publicar (se usa para canonical y hreflang).
+  // TODO: reemplazar por el dominio real antes de publicar. Es la única fuente del dominio:
+  // canonical, hreflang, Open Graph, datos estructurados, sitemap, robots.txt y llms.txt.
   site: 'https://example.com',
+  integrations: [
+    // Sitemap con hreflang (es/en). La raíz "/" solo redirige por idioma: no se indexa.
+    sitemap({
+      i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
+      filter: (page) => new URL(page).pathname !== '/',
+      // Igual que el <head>: x-default apunta al idioma por defecto (si no coinciden,
+      // Google puede ignorar el par de hreflang).
+      // Las URL comparten la lista de enlaces: se crea una nueva por URL.
+      serialize: (item) => {
+        const fallback = item.links?.find((link) => link.lang === 'es');
+        if (!item.links || !fallback) return item;
+        return { ...item, links: [...item.links, { url: fallback.url, lang: 'x-default' }] };
+      },
+    }),
+  ],
   i18n: {
     locales: ['es', 'en'],
     defaultLocale: 'es',

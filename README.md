@@ -105,10 +105,20 @@ Tipografías: Archivo expandida (titulares), Epilogue (texto) y JetBrains Mono (
 Navegación: header mínimo arriba y un dock inferior (como la barra de pestañas de una app) que marca la
 sección activa y el progreso.
 
+## SEO
+
+- **Dominio:** una sola fuente, `site` en `astro.config.mjs`. De ahí salen canonical, hreflang,
+  Open Graph, datos estructurados, sitemap, `robots.txt` y `llms.txt`.
+- **Perfil:** `src/config/profile.ts` (nombre completo, variantes "Jaiber Flor" / "Leonardo Flor",
+  redes, ubicación). Lo usan los datos estructurados (`Person`, `ProfilePage`, `WebSite`) y `llms.txt`.
+- **Imagen para compartir:** `npm run og` regenera `public/og/og-{es,en}.png` (1200×630) con el
+  nombre y la frase del hero de cada idioma. Usa el Chrome instalado (o `CHROME_PATH`).
+- **Generados en build:** `sitemap-index.xml` (con hreflang y x-default), `robots.txt` y `llms.txt`.
+- **Íconos:** `favicon.svg`/`.ico`, `apple-touch-icon.png`, `icon-192/512.png` y `site.webmanifest`.
+
 ## Pendientes
 
 - [ ] Dominio real en `astro.config.mjs` (`site`).
 - [ ] Proyectos reales (pendiente de permisos) en `src/content/projects/`, con su captura en
       `src/assets/projects/` (`image` + `imageAlt` en el frontmatter).
-- [ ] Imagen Open Graph y favicon propios.
 - [ ] CV descargable.
