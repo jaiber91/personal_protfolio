@@ -10,13 +10,14 @@ interface Props {
 }
 
 const { locale, t } = Astro.props;
+// Los proyectos de muestra (`placeholder: true`) se muestran como "Próximamente".
 const projects = (await getCollection('projects', ({ id }) => id.startsWith(`${locale}/`))).sort(
   (a, b) => a.data.order - b.data.order,
 );
 ---
 
-<!-- Proyectos como pases de abordar. En escritorio la sección se fija y el scroll
-     los desplaza de lado; en móvil van en columna. -->
+{/* Proyectos como pases de abordar. En escritorio la sección se fija y el scroll
+     los desplaza de lado; en móvil van en columna. */}
 <projects-section class="projects" id="projects">
   <section class="projects__pin" aria-labelledby="projects-title" data-projects-pin>
     <header class="projects__header container">

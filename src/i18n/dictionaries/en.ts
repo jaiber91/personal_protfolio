@@ -4,7 +4,7 @@ const en: Dictionary = {
   meta: {
     title: 'Jaiber Flor — Full Stack & Mobile Developer',
     description:
-      'Portfolio of Jaiber Flor, Full Stack and Mobile developer based in Colombia. Flutter, Angular, NestJS and TypeScript.',
+      'Portfolio of Jaiber Flor, Full Stack and Mobile developer based in Colombia with 5+ years of experience in banking, startups and education. Flutter, Angular, NestJS and TypeScript.',
   },
   a11y: {
     skipToContent: 'Skip to content',
@@ -32,21 +32,21 @@ const en: Dictionary = {
       'flutter build ios android web',
       'nestjs api ··· ok',
       'angular ··· ok',
-      'calibrating particles',
-      'signal stable',
+      'calibrating board',
+      'now boarding',
     ],
   },
   hero: {
     eyebrow: 'Full Stack & Mobile Developer',
     title: 'Jaiber Flor',
-    lead: 'I build digital products for mobile, tablet and web: from the architecture to the last pixel.',
-    primaryCta: 'See projects',
+    lead: 'I build mobile and web apps for banking and startups with Flutter, Angular and NestJS, from the architecture to the interface.',
+    primaryCta: 'See my journey',
     secondaryCta: "Let's talk",
     scrollHint: 'Scroll',
   },
   manifesto: {
     eyebrow: '00 — Manifesto',
-    text: 'Before writing code I taught *over a thousand people* to use technology. Today I architect apps used by *thousands*: banking, virtual assemblies and tools that have to work on *any screen*. I care about what you do not see —tests, releases, performance— as much as the *last pixel*.',
+    text: 'I taught *over 1,000 people* to use technology before I started building it. Today I develop applications for *thousands of users* in environments where *quality matters*: banking, startups and cross-platform experiences. I write code with purpose and take care of *every stage*, from testing to release.',
   },
   platforms: {
     eyebrow: '01 — Platforms',
@@ -54,15 +54,18 @@ const en: Dictionary = {
     steps: [
       {
         label: 'Mobile',
-        description: 'Flutter apps for iOS and Android, with modular architecture and tests.',
+        description:
+          'Flutter apps for iOS and Android, split into modules and tested so they can grow without breaking.',
       },
       {
         label: 'Tablet',
-        description: 'Adaptive interfaces that make the most of every inch of screen.',
+        description:
+          'The same Flutter app rearranges its interface for large screens, with navigation and columns designed for tablets.',
       },
       {
         label: 'Web',
-        description: 'Angular applications and NestJS APIs, ready to scale.',
+        description:
+          'Angular portals and NestJS APIs built for thousands of users connected in real time.',
       },
     ],
   },
@@ -99,12 +102,12 @@ const en: Dictionary = {
             suffix: '%+',
             label: 'unit test coverage',
             detail:
-              'Across reusable packages, keeping production builds stable in a regulated banking environment.',
+              'I write tests for the packages every team shares, so each release ships stable in a regulated banking environment.',
           },
           {
             value: 1000,
             suffix: '+',
-            label: 'downloads on iOS, Android, web and tablet',
+            label: "downloads of the bank's app",
             detail:
               "I build features for the bank's app, which runs on iOS, Android, web and tablet from a single Flutter codebase. I now also build internal tools for the company.",
           },
@@ -121,7 +124,7 @@ const en: Dictionary = {
             suffix: '+',
             label: 'attendees connected at once',
             detail:
-              'Helped build, in Angular, a virtual and hybrid assembly platform for residential communities: live video, real-time quorum and voting, with 300 to 2,000 attendees per session.',
+              'At a startup building technology for residential communities, I helped build its virtual and hybrid assembly platform in Angular. It includes live video, real-time quorum and voting for sessions of 300 to 2,000 attendees.',
           },
           {
             value: 10,
@@ -129,14 +132,14 @@ const en: Dictionary = {
             suffix: ' min',
             label: 'per release (down from 60+)',
             detail:
-              'Automated Flutter app releases with Fastlane (CI/CD): from over an hour to 10 minutes per release, 15+ hours saved monthly and no third-party service costs.',
+              'Automated Flutter app releases with Fastlane (CI/CD). Each release went from over an hour to 10 minutes, and the team got back 15+ hours a month without paying for external services.',
           },
           {
             value: 8000,
             suffix: '+',
             label: 'mobile app downloads',
             detail:
-              'New features for the Flutter app on Google Play and the App Store, and the REST APIs behind it with NestJS, MongoDB and PostgreSQL.',
+              'Built new features for the Flutter app on Google Play and the App Store, and the REST APIs behind it with NestJS, MongoDB and PostgreSQL.',
           },
         ],
         stack: ['Angular', 'NestJS', 'Flutter', 'Fastlane', 'MongoDB', 'PostgreSQL'],
@@ -151,21 +154,21 @@ const en: Dictionary = {
             suffix: '+',
             label: 'people trained',
             detail:
-              'Online workshops on digital tools for teachers, content creators and students nationwide.',
+              'In the education sector, I ran online workshops on digital tools for teachers, content creators and students nationwide.',
           },
           {
             value: 100,
             suffix: '+',
             label: 'programming and robotics workshops',
             detail:
-              'For children and youth: first steps in code and STEM, with my own teaching guides.',
+              'Designed workshops so children and teens could take their first steps in programming and robotics, with my own teaching guides.',
           },
           {
             value: 10,
             suffix: '+',
             label: 'websites and landing pages',
             detail:
-              'Built with WordPress, Wix, JavaScript, HTML and CSS for teachers and small businesses.',
+              'Built sites with WordPress, Wix, JavaScript, HTML and CSS for teachers and small businesses.',
           },
         ],
         stack: ['JavaScript', 'HTML', 'CSS', 'WordPress', 'Wix'],
@@ -202,13 +205,12 @@ const en: Dictionary = {
   contact: {
     eyebrow: '04 — Contact',
     title: "Let's talk",
-    lead: "I'm open to new projects and opportunities.",
+    lead: "I have shipped apps to thousands of users in banking and startups, and I come from the education sector. If your next project is headed down any of those paths, let's build it together.",
     copyEmail: 'Copy email',
     emailCopied: 'Email copied!',
     qrLabel: 'Scan → LinkedIn',
   },
   footer: {
-    builtWith: 'Built with Astro, Three.js and GSAP',
     backToTop: 'Back to top',
   },
 };

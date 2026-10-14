@@ -3,7 +3,7 @@ const es = {
   meta: {
     title: 'Jaiber Flor — Full Stack & Mobile Developer',
     description:
-      'Portafolio de Jaiber Flor, desarrollador Full Stack y Mobile en Colombia. Flutter, Angular, NestJS y TypeScript.',
+      'Portafolio de Jaiber Flor, desarrollador Full Stack y Mobile en Colombia con más de 5 años de experiencia en banca, startups y el sector educativo. Flutter, Angular, NestJS y TypeScript.',
   },
   a11y: {
     skipToContent: 'Saltar al contenido',
@@ -31,22 +31,22 @@ const es = {
       'flutter build ios android web',
       'nestjs api ··· ok',
       'angular ··· ok',
-      'calibrando partículas',
-      'señal estable',
+      'calibrando tablero',
+      'embarque abierto',
     ],
   },
   hero: {
     eyebrow: 'Full Stack & Mobile Developer',
     title: 'Jaiber Flor',
-    lead: 'Construyo productos digitales para móvil, tablet y web: de la arquitectura al último píxel.',
-    primaryCta: 'Ver proyectos',
+    lead: 'Desarrollo apps móviles y web para banca y startups con Flutter, Angular y NestJS, desde la arquitectura hasta la interfaz.',
+    primaryCta: 'Ver trayectoria',
     secondaryCta: 'Hablemos',
     scrollHint: 'Desliza',
   },
   manifesto: {
     eyebrow: '00 — Manifiesto',
     // Las palabras entre *asteriscos* se resaltan con el color de la señal.
-    text: 'Antes de escribir código enseñé a *más de mil personas* a usar la tecnología. Hoy diseño la arquitectura de apps que usan *miles*: banca, asambleas virtuales y herramientas que tienen que funcionar en *cualquier pantalla*. Me importa lo que no se ve —pruebas, despliegues, rendimiento— tanto como el *último píxel*.',
+    text: 'Enseñé a *más de 1.000 personas* a usar la tecnología antes de dedicarme a construirla. Hoy desarrollo aplicaciones para *miles de usuarios* en entornos donde *la calidad importa*: banca, startups y experiencias multiplataforma. Escribo código con propósito y cuido *cada etapa*, desde las pruebas hasta el despliegue.',
   },
   platforms: {
     eyebrow: '01 — Plataformas',
@@ -54,15 +54,18 @@ const es = {
     steps: [
       {
         label: 'Móvil',
-        description: 'Apps en Flutter para iOS y Android, con arquitectura modular y pruebas.',
+        description:
+          'Apps en Flutter para iOS y Android, divididas en módulos y con pruebas para crecer sin romperse.',
       },
       {
         label: 'Tablet',
-        description: 'Interfaces adaptativas que aprovechan cada centímetro de pantalla.',
+        description:
+          'La misma app en Flutter reorganiza su interfaz para pantallas grandes, con navegación y columnas pensadas para tablet.',
       },
       {
         label: 'Web',
-        description: 'Aplicaciones en Angular y APIs en NestJS, listas para escalar.',
+        description:
+          'Portales en Angular y APIs en NestJS preparados para miles de usuarios conectados en tiempo real.',
       },
     ],
   },
@@ -99,12 +102,12 @@ const es = {
             suffix: '%+',
             label: 'cobertura de pruebas unitarias',
             detail:
-              'En paquetes reutilizables, para mantener builds estables en un entorno bancario regulado.',
+              'Escribo pruebas para los paquetes que comparten todos los equipos, así cada versión sale estable en un entorno bancario regulado.',
           },
           {
             value: 1000,
             suffix: '+',
-            label: 'descargas en iOS, Android, web y tablet',
+            label: 'descargas de la app del banco',
             detail:
               'Desarrollo funcionalidades de la app del banco, que corre en iOS, Android, web y tablet con un solo código en Flutter. Ahora también construyo herramientas internas para la empresa.',
           },
@@ -121,7 +124,7 @@ const es = {
             suffix: '+',
             label: 'asistentes conectados a la vez',
             detail:
-              'Participé en el desarrollo en Angular de una plataforma de asambleas virtuales e híbridas para copropiedades: video en vivo, quórum y votaciones en tiempo real, con sesiones de 300 a 2.000 asistentes.',
+              'En una startup de tecnología para copropiedades, participé en el desarrollo en Angular de su plataforma de asambleas virtuales e híbridas. Incluye video en vivo, quórum y votaciones en tiempo real para sesiones de 300 a 2.000 asistentes.',
           },
           {
             value: 10,
@@ -129,14 +132,14 @@ const es = {
             suffix: ' min',
             label: 'por despliegue (antes, más de 60)',
             detail:
-              'Automaticé la publicación de las apps Flutter con Fastlane (CI/CD): de más de una hora a 10 minutos por despliegue, más de 15 horas ahorradas al mes y sin costos de servicios externos.',
+              'Automaticé la publicación de las apps Flutter con Fastlane (CI/CD). Cada despliegue pasó de más de una hora a 10 minutos, y el equipo recuperó más de 15 horas al mes sin pagar servicios externos.',
           },
           {
             value: 8000,
             suffix: '+',
             label: 'descargas de la app móvil',
             detail:
-              'Nuevas funcionalidades para la app en Flutter publicada en Google Play y App Store, y las APIs REST que la sostienen con NestJS, MongoDB y PostgreSQL.',
+              'Desarrollé nuevas funcionalidades para la app en Flutter de Google Play y App Store, y las APIs REST que la sostienen con NestJS, MongoDB y PostgreSQL.',
           },
         ],
         stack: ['Angular', 'NestJS', 'Flutter', 'Fastlane', 'MongoDB', 'PostgreSQL'],
@@ -151,20 +154,21 @@ const es = {
             suffix: '+',
             label: 'personas formadas',
             detail:
-              'Talleres en línea sobre herramientas digitales para docentes, creadores de contenido y estudiantes de todo el país.',
+              'En el sector educativo, dicté talleres en línea sobre herramientas digitales a docentes, creadores de contenido y estudiantes de todo el país.',
           },
           {
             value: 100,
             suffix: '+',
             label: 'talleres de programación y robótica',
             detail:
-              'Para niños y jóvenes: primeros pasos en código y STEM, con guías didácticas propias.',
+              'Diseñé talleres para que niños y jóvenes dieran sus primeros pasos en programación y robótica, con guías didácticas propias.',
           },
           {
             value: 10,
             suffix: '+',
             label: 'sitios web y landing pages',
-            detail: 'Con WordPress, Wix, JavaScript, HTML y CSS para docentes y pequeños negocios.',
+            detail:
+              'Construí sitios con WordPress, Wix, JavaScript, HTML y CSS para docentes y pequeños negocios.',
           },
         ],
         stack: ['JavaScript', 'HTML', 'CSS', 'WordPress', 'Wix'],
@@ -197,13 +201,12 @@ const es = {
   contact: {
     eyebrow: '04 — Contacto',
     title: '¿Hablamos?',
-    lead: 'Estoy abierto a nuevos proyectos y oportunidades.',
+    lead: 'He llevado apps a miles de usuarios en banca y en startups, y vengo del sector educativo. Si tu próximo proyecto va por alguno de esos caminos, construyámoslo juntos.',
     copyEmail: 'Copiar correo',
     emailCopied: '¡Correo copiado!',
     qrLabel: 'Escanea → LinkedIn',
   },
   footer: {
-    builtWith: 'Hecho con Astro, Three.js y GSAP',
     backToTop: 'Volver arriba',
   },
 };

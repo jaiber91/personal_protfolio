@@ -28,24 +28,27 @@ class ProjectsSection extends HTMLElement {
 
     this.media = gsap.matchMedia(this);
 
-    this.media.add(HORIZONTAL_QUERY, () => {
-      this.classList.add('projects--horizontal');
-      // El padding del carril (CSS) centra el primer y el último pase.
-      const distance = () => track.scrollWidth - window.innerWidth;
-      gsap.to(track, {
-        x: () => -distance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: pin,
-          start: 'top top',
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-        },
+    // Con un solo pase no hay nada que desplazar: se queda centrado, sin fijar la sección.
+    if (tickets.length > 1) {
+      this.media.add(HORIZONTAL_QUERY, () => {
+        this.classList.add('projects--horizontal');
+        // El padding del carril (CSS) centra el primer y el último pase.
+        const distance = () => track.scrollWidth - window.innerWidth;
+        gsap.to(track, {
+          x: () => -distance(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: pin,
+            start: 'top top',
+            end: () => `+=${distance()}`,
+            pin: true,
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+          },
+        });
+        return () => this.classList.remove('projects--horizontal');
       });
-      return () => this.classList.remove('projects--horizontal');
-    });
+    }
 
     this.media.add(MOTION_QUERY, () => {
       tickets.forEach((ticket) => {

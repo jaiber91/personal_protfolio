@@ -12,8 +12,8 @@ interface Props {
 const { t, hud } = Astro.props;
 ---
 
-<!-- Hero: tablero flip-dot (WebGL) que escribe el nombre. El <h1> real queda para
-     lectores de pantalla y como respaldo visible si no hay WebGL. -->
+{/* Hero: tablero flip-dot (WebGL) que escribe el nombre. El <h1> real queda para
+     lectores de pantalla y como respaldo visible si no hay WebGL. */}
 <hero-section class="hero" id="top">
   <canvas class="hero__board" data-hero-board aria-hidden="true"></canvas>
   <h1 class="hero__title" data-hero-title>
@@ -24,7 +24,7 @@ const { t, hud } = Astro.props;
     <p class="hero__eyebrow">{t.eyebrow}</p>
     <p class="hero__lead">{t.lead}</p>
     <div class="hero__actions">
-      <Button href="#projects" variant="signal" magnetic>
+      <Button href="#story" variant="signal" magnetic>
         {t.primaryCta}
       </Button>
       <Button href="#contact" variant="ghost" magnetic>
