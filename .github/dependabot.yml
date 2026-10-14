@@ -1,0 +1,11 @@
+# Actualizaciones de seguridad y versiones de dependencias (OWASP A03:2025).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dev-dependencies:
+        dependency-type: development

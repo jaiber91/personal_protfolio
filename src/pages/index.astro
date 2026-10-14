@@ -15,7 +15,7 @@ const targets = Object.fromEntries(LOCALES.map((locale) => [locale, localizePath
     <script is:inline define:vars={{ targets, fallback }}>
       const preferred = (navigator.languages || [navigator.language])
         .map((lang) => lang.slice(0, 2).toLowerCase())
-        .find((lang) => lang in targets);
+        .find((lang) => Object.hasOwn(targets, lang));
       location.replace(preferred ? targets[preferred] : fallback);
     </script>
     <noscript>
