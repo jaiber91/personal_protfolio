@@ -31,14 +31,17 @@ cada auditoría: es lo que evita reportar dos veces la misma decisión.
 - **Coordenadas, ciudad y hora local públicas:** decisión de diseño del autor.
 - **JSON-LD con `set:html`** (`StructuredData.astro`): datos propios de `profile.ts`, con `<`
   escapado; un `<script type="application/ld+json">` no se ejecuta, la CSP no lo bloquea.
+- **Cloudflare suma las cabeceras de todas las reglas de `_headers` que coinciden** (no las
+  reemplaza): por eso `Cross-Origin-Resource-Policy` se define por ruta (`/_astro/*` same-origin,
+  `/og/*` cross-origin) y no en `/*`. Verificar con `curl -sI` que cada cabecera salga una vez.
 - **`Cross-Origin-Resource-Policy: cross-origin` solo en `/og/*`:** las plataformas que
   muestran la vista previa al compartir deben poder cargar la imagen.
 - **QR con `set:html`:** se genera en build desde una constante del código, sin datos externos.
 
 ## Pendientes (requieren acción fuera del código)
 
-- [ ] **Dominio real** en `astro.config.mjs` (`site` todavía es `https://example.com`) y en
-      `security.txt` (`Canonical:`).
+- [x] **Dominio real:** `https://jaiberflor.dev` en `astro.config.mjs` y en `security.txt`.
+      Hosting: Cloudflare Pages (conectado a GitHub; `main` = producción).
 - [ ] **Hosting:** confirmar cabeceras con `curl -sI` y https://securityheaders.com.
 - [ ] **GitHub:** 2FA, proteger `main`, activar Dependabot alerts y secret scanning.
 - [ ] **Dominio:** 2FA y bloqueo en el registrador, CAA, DMARC `p=reject` si no envía correo.

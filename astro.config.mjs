@@ -5,9 +5,12 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: reemplazar por el dominio real antes de publicar. Es la única fuente del dominio:
-  // canonical, hreflang, Open Graph, datos estructurados, sitemap, robots.txt y llms.txt.
-  site: 'https://example.com',
+  // Única fuente del dominio: canonical, hreflang, Open Graph, datos estructurados,
+  // sitemap, robots.txt y llms.txt.
+  site: 'https://jaiberflor.dev',
+  // Sin resaltado de código (no hay bloques de código): Shiki usa estilos en línea
+  // incompatibles con la CSP.
+  markdown: { syntaxHighlight: false },
   integrations: [
     // Sitemap con hreflang (es/en). La raíz "/" solo redirige por idioma: no se indexa.
     sitemap({

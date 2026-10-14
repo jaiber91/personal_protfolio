@@ -1,5 +1,7 @@
 # Política de divulgación responsable (RFC 9116).
-# Si encontraste una vulnerabilidad en este sitio, escríbeme por LinkedIn.
+# Si encontraste una vulnerabilidad en este sitio, escríbeme.
+Contact: mailto:hola@jaiberflor.dev
 Contact: https://www.linkedin.com/in/jaiberflor
 Expires: 2027-10-13T00:00:00.000Z
 Preferred-Languages: es, en
+Canonical: https://jaiberflor.dev/.well-known/security.txt
