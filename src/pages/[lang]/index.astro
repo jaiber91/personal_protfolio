@@ -2,9 +2,11 @@
 import type { GetStaticPaths } from 'astro';
 import Footer from '@/components/layout/Footer/Footer.astro';
 import Header from '@/components/layout/Header/Header.astro';
+import Dock from '@/components/layout/Dock/Dock.astro';
 import Contact from '@/components/sections/Contact/Contact.astro';
 import Hero from '@/components/sections/Hero/Hero.astro';
 import Loader from '@/components/sections/Loader/Loader.astro';
+import Manifesto from '@/components/sections/Manifesto/Manifesto.astro';
 import Platforms from '@/components/sections/Platforms/Platforms.astro';
 import Projects from '@/components/sections/Projects/Projects.astro';
 import Story from '@/components/sections/Story/Story.astro';
@@ -19,14 +21,16 @@ const t = getDictionary(locale);
 ---
 
 <BaseLayout>
-  <Loader slot="overlay" label={t.a11y.loading} />
+  <Loader slot="overlay" label={t.a11y.loading} t={t.loader} />
   <Header slot="header" locale={locale} t={t} />
+  <Dock slot="header" t={t} />
 
-  <Hero t={t.hero} />
+  <Hero t={t.hero} hud={t.hud} />
+  <Manifesto t={t.manifesto} />
   <Platforms t={t.platforms} />
   <Story locale={locale} t={t.story} />
   <Projects locale={locale} t={t.projects} />
-  <Contact t={t.contact} />
+  <Contact t={t.contact} hud={t.hud} />
 
   <Footer slot="footer" t={t} />
 </BaseLayout>

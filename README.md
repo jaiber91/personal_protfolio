@@ -17,16 +17,17 @@ Portafolio personal bilingüe (ES/EN) construido con **Astro**, **Three.js**, **
 ```text
 src/
 ├── components/
-│   ├── layout/        # Header, Footer, WebGLCanvas
-│   ├── sections/      # Loader, Hero, Platforms, Story, Projects, Contact
-│   └── ui/            # Button, DeviceFrame, SectionHeading, ThemeToggle, LanguageSwitcher, ProjectCard
+│   ├── layout/        # Header, Dock (navegación inferior), Footer
+│   ├── sections/      # Loader, Hero, Manifesto, Platforms, Story, Projects, Contact
+│   └── ui/            # Button, DeviceFrame, LanguageSwitcher, LiveClock,
+│                      # ProjectCard (pase de abordar), ThemeToggle
 ├── content/projects/  # Proyectos en Markdown, una carpeta por idioma (es/, en/)
 ├── i18n/              # Idiomas, diccionarios tipados y helpers de rutas
-├── layouts/           # BaseLayout (SEO, hreflang, tema, canvas)
+├── layouts/           # BaseLayout (SEO, hreflang, tema)
 ├── pages/[lang]/      # Una página por idioma (/es/, /en/)
 ├── scripts/
 │   ├── core/          # gsap, scroll (Lenis), lifecycle, motion, theme
-│   └── interactions/  # magnetic, reveal, split (comportamientos reutilizables por data-attributes)
+│   └── interactions/  # fit, flap, magnetic, reveal, split (comportamientos reutilizables por data-attributes)
 ├── styles/
 │   ├── tokens/        # Colores (temas), tipografía, espaciado, movimiento, breakpoints
 │   ├── abstracts/     # Funciones y mixins (no emiten CSS)
@@ -34,9 +35,10 @@ src/
 │   ├── utilities/     # Clases utilitarias
 │   └── main.scss      # Hoja global (se importa una vez en BaseLayout)
 └── webgl/
-    ├── Experience.ts  # Renderer, cámara, loop y conversión pantalla -> mundo
-    ├── particles/     # ParticleMorph + shaders GLSL
-    └── shapes/        # Formas dibujadas en canvas 2D y muestreadas como partículas
+    ├── Stage.ts       # Un renderer por sección: cámara, loop (solo si es visible), puntero
+    ├── flip/          # FlipBoard: tablero flip-dot (hero)
+    ├── pixels/        # PixelDevices: píxeles que forman móvil -> tablet -> web
+    └── shapes/        # Formas dibujadas en canvas 2D y muestreadas como puntos
 ```
 
 ## Convenciones
@@ -80,17 +82,28 @@ Hero/
   visible de inmediato.
 - Sin WebGL o sin JS el sitio sigue siendo completamente legible.
 
+## Dirección visual: “SALIDAS”
+
+Tableros de aeropuerto (flip-dot y split-flap): la trayectoria se lee como un viaje. Basada en
+[UI UX Pro Max](https://uupm.cc/): **Brutalism** + **Kinetic Typography** con un solo acento
+(**Swiss Modernism 2.0**): el amarillo de los discos flip-dot (`signal`) sobre tinta y papel.
+Tipografías: Archivo expandida (titulares), Epilogue (texto) y JetBrains Mono (datos).
+
 ## Flujo de la experiencia
 
-1. **Loader**: contador 0 → 100 mientras cargan fuentes y partículas.
-2. **Intro**: el “100” se convierte en partículas que forman un móvil (hero).
-3. **Plataformas**: sección fija; el scroll transforma móvil → tablet → web.
-4. **Trayectoria**: la sección se fija y el scroll recorre las cifras de cada empresa. Las partículas forman
-   la cifra activa encima del número HTML (que queda transparente) y entre cifras estallan y se rearman.
-   Debajo, la formación.
-5. **Proyectos**: en escritorio la sección se fija y el scroll desplaza los proyectos en horizontal, cada uno
-   dentro del dispositivo para el que se hizo (`device: phone | tablet | web` en el Markdown).
-6. **Contacto**: el campo de partículas vuelve a juntarse formando un “@”.
+1. **Loader**: log de terminal + contador 000 → 100; el fondo se deshace en una grilla de píxeles.
+2. **Hero**: tablero flip-dot en WebGL (`webgl/flip`): los discos giran en 3D para escribir el nombre y
+   se voltean al paso del cursor.
+3. **Manifiesto**: las palabras se encienden con el scroll; las clave se marcan en amarillo.
+4. **Plataformas**: sección fija; píxeles cuadrados forman móvil → tablet → web.
+5. **Trayectoria**: tablero de salidas con letras split-flap (`scripts/interactions/flap.ts`); cada vuelo
+   (empresa) se abre y muestra sus cifras. Debajo, las "escalas" (formación).
+6. **Proyectos**: pases de abordar en un carril horizontal fijado (escritorio), con inclinación 3D al cursor
+   (`device: phone | tablet | web` en el Markdown define la "puerta" y el marco).
+7. **Contacto**: bloque que copia el correo, LinkedIn, QR (generado en build) y hora local en vivo.
+
+Navegación: header mínimo arriba y un dock inferior (como la barra de pestañas de una app) que marca la
+sección activa y el progreso.
 
 ## Pendientes
 

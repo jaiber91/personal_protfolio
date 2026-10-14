@@ -1,0 +1,50 @@
+@use 'abstracts' as *;
+
+.manifesto {
+  display: block;
+  padding-block: space(3xl);
+  background: color(bg);
+  color: color(text);
+
+  &__inner {
+    display: grid;
+    gap: space(md);
+
+    @include mq(lg) {
+      grid-template-columns: 1fr 4fr;
+      gap: space(xl);
+    }
+  }
+
+  &__eyebrow {
+    @include hud;
+    padding-top: 0.6em;
+  }
+
+  &__text {
+    font-size: font-size(3xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+
+  // Resaltado tipo marcador: un bloque azul que se "pinta" de izquierda a derecha.
+  &__mark {
+    padding-inline: 0.12em;
+    background: linear-gradient(color(signal), color(signal)) no-repeat left center / 100% 100%;
+    color: color(on-signal);
+    box-decoration-break: clone;
+  }
+
+  // Estado inicial (solo con JS y movimiento permitido): palabras apagadas.
+  @media (prefers-reduced-motion: no-preference) {
+    .js & [data-manifesto-word] {
+      opacity: 0.14;
+    }
+
+    .js & [data-highlight] {
+      background-size: 0% 100%;
+      color: inherit;
+    }
+  }
+}

@@ -1,55 +1,110 @@
 @use 'abstracts' as *;
 
-// La sección se fija (pin) mientras el scroll transforma el dispositivo 3D.
+// Sección oscura fija: el scroll arma móvil -> tablet -> web con píxeles cuadrados.
 .platforms {
   display: block;
+  background: color(ink);
+  color: color(on-ink);
 
   &__pin {
-    display: flex;
-    align-items: flex-end;
+    position: relative;
     min-height: 100svh;
-    padding-block: var(--header-height) space(xl);
+    overflow: hidden;
+  }
+
+  // Móvil: el dispositivo arriba. Escritorio: mitad derecha.
+  &__canvas {
+    position: absolute;
+    top: calc(var(--header-height) + 6rem);
+    right: 0;
+    width: 100%;
+    height: 38%;
 
     @include mq(lg) {
-      align-items: center;
+      top: 0;
+      width: 55%;
+      height: 100%;
     }
   }
 
   &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+    padding: calc(var(--header-height) + #{space(md)}) var(--gutter)
+      calc(#{space(2xl)} + #{space(sm)});
+    pointer-events: none;
+
+    a,
+    button {
+      pointer-events: auto;
+    }
+  }
+
+  &__header {
     display: grid;
-    gap: space(lg);
+    gap: space(2xs);
+    max-width: 22rem;
+  }
+
+  &__eyebrow {
+    @include hud;
+    color: color(signal);
+  }
+
+  &__title {
+    font-size: font-size(xl);
+    line-height: 1;
   }
 
   &__steps {
     display: grid;
-    gap: space(sm);
-    max-width: 28rem;
   }
 
   &__step {
     display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: space(xs);
-    opacity: 0.3;
-    transition: opacity duration(slow) ease(out);
+    grid-template-columns: 4rem auto;
+    align-items: end;
+    column-gap: space(sm);
+    padding-block: space(2xs);
+    border-top: 1px solid color(rule);
+  }
 
-    &[data-active] {
+  &__index {
+    @include hud;
+    align-self: start;
+    padding-top: space(2xs);
+    opacity: 0.6;
+  }
+
+  // Inactivo = contorno. Activo = relleno. Sin transición: el cambio es seco.
+  &__label {
+    @include outline-text(color(on-ink));
+    font-size: font-size(3xl);
+    line-height: 1;
+    opacity: 0.45;
+
+    [data-active] > & {
+      color: color(on-ink);
+      -webkit-text-stroke: 0;
       opacity: 1;
     }
   }
 
-  &__index {
-    font-family: var(--font-mono);
-    font-size: font-size(xs);
-    padding-top: 0.4em;
-  }
-
-  &__label {
-    font-size: font-size(xl);
-  }
-
   &__description {
-    color: color(text-muted);
-    max-width: 32ch;
+    @include hud;
+    grid-column: 2;
+
+    max-width: 34ch;
+    padding-bottom: space(xs);
+    line-height: 1.5;
+    text-transform: none;
+    display: none;
+
+    [data-active] > & {
+      display: block;
+    }
   }
 }

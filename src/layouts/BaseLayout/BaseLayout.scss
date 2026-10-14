@@ -1,10 +1,9 @@
 @use 'abstracts' as *;
 
-// El contenido va por encima del canvas WebGL (que está fijo en z-index base).
 .page {
   position: relative;
   z-index: z(content);
-  // Evita scroll horizontal por animaciones que desplazan elementos (p. ej. x: 40).
+  // Evita scroll horizontal por animaciones que desplazan elementos.
   // `clip` (y no `hidden`) no crea un contenedor de scroll: sticky y pin siguen funcionando.
   overflow-x: clip;
 }

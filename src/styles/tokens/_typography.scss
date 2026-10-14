@@ -1,20 +1,8 @@
 $font-families: (
-  display: (
-    'Outfit Variable',
-    system-ui,
-    sans-serif,
-  ),
-  body: (
-    'Work Sans Variable',
-    system-ui,
-    sans-serif,
-  ),
-  mono: (
-    ui-monospace,
-    'SF Mono',
-    Menlo,
-    monospace,
-  ),
+  // UI UX Pro Max: "Minimalist Portfolio" (Archivo, aquí expandida) + "Developer Mono".
+  display: ('Archivo Variable', system-ui, sans-serif),
+  body: ('Epilogue Variable', system-ui, sans-serif),
+  mono: ('JetBrains Mono Variable', ui-monospace, Menlo, monospace)
 );
 
 // Escala fluida: [mínimo, máximo] en rem, interpolada entre 360px y 1440px.
@@ -55,6 +43,11 @@ $font-sizes: (
     3.5,
     15,
   ),
+  // Titulares gigantes (se ajustan al ancho con `data-fit`).
+  mega: (
+      3.5,
+      12,
+    ),
 );
 
 $font-weights: (
@@ -66,6 +59,8 @@ $font-weights: (
 
 $line-heights: (
   tight: 0.95,
+  // Archivo expandida en mayúsculas: las líneas casi se tocan.
+  solid: 0.88,
   snug: 1.15,
   normal: 1.5,
   relaxed: 1.7,

@@ -1,0 +1,12 @@
+@use 'abstracts' as *;
+
+.live-clock {
+  @include hud;
+  display: inline-flex;
+  gap: space(2xs);
+  font-variant-numeric: tabular-nums;
+
+  &__zone {
+    opacity: 0.6;
+  }
+}

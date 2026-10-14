@@ -2,7 +2,6 @@
 import './Projects.scss';
 import { getCollection } from 'astro:content';
 import ProjectCard from '@/components/ui/ProjectCard/ProjectCard.astro';
-import SectionHeading from '@/components/ui/SectionHeading/SectionHeading.astro';
 import type { Dictionary, Locale } from '@/i18n';
 
 interface Props {
@@ -16,15 +15,19 @@ const projects = (await getCollection('projects', ({ id }) => id.startsWith(`${l
 );
 ---
 
+<!-- Proyectos como pases de abordar. En escritorio la sección se fija y el scroll
+     los desplaza de lado; en móvil van en columna. -->
 <projects-section class="projects" id="projects">
-  <!-- Igual que en Platforms: se fija este div, no el custom element. -->
   <section class="projects__pin" aria-labelledby="projects-title" data-projects-pin>
-    <div class="projects__header container">
-      <SectionHeading eyebrow={t.eyebrow} title={t.title} id="projects-title" />
-      <span class="projects__progress" aria-hidden="true">
-        <span class="projects__progress-bar" data-projects-progress></span>
-      </span>
-    </div>
+    <header class="projects__header container">
+      <p class="projects__eyebrow" data-reveal>
+        {t.eyebrow}
+      </p>
+      <h2 class="projects__title" id="projects-title" data-split>
+        {t.title}
+      </h2>
+    </header>
+
     {projects.length > 0 ? (
       <ol class="projects__track" role="list" data-projects-track>
         {projects.map((project, index) => (
@@ -33,7 +36,14 @@ const projects = (await getCollection('projects', ({ id }) => id.startsWith(`${l
               index={index + 1}
               total={projects.length}
               {...project.data}
-              labels={{ role: t.roleLabel, stack: t.stackLabel, view: t.viewLabel }}
+              labels={{
+                pass: t.pass,
+                gate: t.gateLabel,
+                year: t.yearLabel,
+                role: t.roleLabel,
+                stack: t.stackLabel,
+                view: t.viewLabel,
+              }}
             />
           </li>
         ))}

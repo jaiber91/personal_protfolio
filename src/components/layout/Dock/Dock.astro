@@ -1,0 +1,40 @@
+---
+import './Dock.scss';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary;
+}
+
+const { t } = Astro.props;
+const links = [
+  { id: 'platforms', label: t.nav.platforms },
+  { id: 'story', label: t.nav.story },
+  { id: 'projects', label: t.nav.projects },
+  { id: 'contact', label: t.nav.contact },
+];
+---
+
+<!-- Dock inferior, como la barra de pestañas de una app: marca la sección activa
+     y el progreso de lectura. -->
+<site-dock class="dock">
+  <nav class="dock__nav" aria-label={t.a11y.mainNav}>
+    <span class="dock__progress" aria-hidden="true">
+      <span class="dock__bar" data-dock-bar></span>
+    </span>
+    <ul class="dock__links" role="list">
+      {links.map((link, index) => (
+        <li>
+          <a class="dock__link" href={`#${link.id}`} data-dock-link={link.id}>
+            <span class="dock__index">0{index + 1}</span>
+            <span class="dock__label">{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</site-dock>
+
+<script>
+  import './Dock.ts';
+</script>

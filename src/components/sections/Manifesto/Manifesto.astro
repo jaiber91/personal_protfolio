@@ -1,0 +1,48 @@
+---
+import './Manifesto.scss';
+import type { Dictionary } from '@/i18n';
+
+interface Props {
+  t: Dictionary['manifesto'];
+}
+
+const { t } = Astro.props;
+
+interface Token {
+  text: string;
+  kind: 'word' | 'highlight' | 'space';
+}
+
+// "texto *resaltado*: texto" -> palabras, resaltados y espacios tal como vienen
+// (la puntuación pegada a un resaltado no recibe un espacio extra).
+const tokens: Token[] = [...t.text.matchAll(/\*[^*]+\*|\s+|[^\s*]+/g)].map(([chunk]) => {
+  if (chunk.startsWith('*')) return { text: chunk.slice(1, -1), kind: 'highlight' };
+  if (/^\s+$/.test(chunk)) return { text: ' ', kind: 'space' };
+  return { text: chunk, kind: 'word' };
+});
+---
+
+<manifesto-section class="manifesto">
+  <div class="manifesto__inner container">
+    <p class="manifesto__eyebrow">{t.eyebrow}</p>
+    <p class="manifesto__text">
+      {tokens.map(({ text, kind }) =>
+        kind === 'space' ? (
+          ' '
+        ) : kind === 'highlight' ? (
+          <mark class="manifesto__mark" data-manifesto-word data-highlight>
+            {text}
+          </mark>
+        ) : (
+          <span class="manifesto__word" data-manifesto-word>
+            {text}
+          </span>
+        ),
+      )}
+    </p>
+  </div>
+</manifesto-section>
+
+<script>
+  import './Manifesto.ts';
+</script>

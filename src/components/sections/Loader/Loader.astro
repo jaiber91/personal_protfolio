@@ -1,20 +1,37 @@
 ---
 import './Loader.scss';
+import type { Dictionary } from '@/i18n';
 
 interface Props {
   label: string;
+  t: Dictionary['loader'];
 }
 
-const { label } = Astro.props;
+const { label, t } = Astro.props;
 ---
 
+<!-- Arranque tipo terminal: log + contador. Al terminar se deshace en una grilla de píxeles. -->
 <site-loader class="loader">
-  <div class="loader__inner" role="status">
-    <span class="visually-hidden">{label}</span>
-    <span class="loader__count" data-loader-count aria-hidden="true">
-      0
+  <div class="loader__tiles" data-loader-tiles aria-hidden="true"></div>
+  <div class="loader__content" data-loader-content aria-hidden="true">
+    <ol class="loader__log" role="list">
+      {t.log.map((line) => (
+        <li class="loader__line" data-loader-line>
+          <span class="loader__prompt">&gt;</span>
+          {line}
+        </li>
+      ))}
+    </ol>
+    <div class="loader__meter">
+      <span class="loader__bar" data-loader-bar></span>
+    </div>
+    <span class="loader__count" data-loader-count>
+      000
     </span>
   </div>
+  <span class="visually-hidden" role="status">
+    {label}
+  </span>
 </site-loader>
 
 <script>

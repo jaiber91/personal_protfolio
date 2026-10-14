@@ -3,29 +3,24 @@
 .language-switcher {
   &__list {
     display: flex;
-    gap: space(3xs);
   }
 
   &__link {
+    @include hud;
     display: grid;
     place-items: center;
     min-width: 2.75rem;
     height: 2.75rem;
-    font-family: var(--font-mono);
-    font-size: font-size(xs);
-    text-transform: uppercase;
-    color: color(text-muted);
-    border-radius: radius(pill);
-    transition: color duration(base) ease(out);
+    opacity: 0.55;
 
     @include hover {
-      color: color(text);
+      opacity: 1;
     }
 
     &[aria-current='page'] {
-      color: color(text);
-      text-decoration: underline;
-      text-underline-offset: 0.3em;
+      opacity: 1;
+      background: color(signal);
+      color: color(on-signal);
     }
   }
 }

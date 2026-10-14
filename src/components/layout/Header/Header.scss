@@ -1,65 +1,85 @@
 @use 'abstracts' as *;
 
+// Piezas sueltas sobre el contenido, siempre en tinta: se leen sobre cualquier sección.
 .site-header {
   position: fixed;
-  inset: 0 0 auto;
+  top: space(xs);
+  right: var(--gutter);
+  left: var(--gutter);
   z-index: z(header);
-  height: var(--header-height);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: space(xs);
+  pointer-events: none;
 
-  &__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: space(sm);
-    height: 100%;
+  > * {
+    pointer-events: auto;
   }
 
   &__brand {
-    font-family: var(--font-display);
-    font-size: font-size(lg);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: -0.04em;
+    display: flex;
+    align-items: stretch;
+    height: 2.75rem;
+    background: color(ink);
+    color: color(on-ink);
+    border: 1px solid color(rule);
   }
 
-  &__nav {
+  &__mark {
+    @include display-type;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    background: color(signal);
+    color: color(on-signal);
+    font-size: font-size(sm);
+  }
+
+  &__name {
+    @include hud;
     display: none;
+    align-items: center;
+    padding-inline: space(xs);
 
     @include mq(md) {
-      display: block;
+      display: flex;
     }
   }
 
-  &__links {
-    display: flex;
-    gap: space(md);
-  }
-
-  &__link {
-    position: relative;
-    font-size: font-size(sm);
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: auto 0 -0.25em;
-      height: 1px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform duration(slow) ease(out);
-    }
-
-    @include hover {
-      &::after {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-    }
-  }
-
-  &__actions {
-    display: flex;
+  &__status {
+    @include hud;
+    display: none;
     align-items: center;
     gap: space(2xs);
+    height: 2.75rem;
+    padding-inline: space(xs);
+    background: color(ink);
+    color: color(on-ink);
+    border: 1px solid color(rule);
+
+    @include mq(lg) {
+      display: flex;
+    }
+  }
+
+  &__pulse {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: color(signal);
+    animation: header-blink 1.2s steps(1, end) infinite;
+  }
+
+  &__tools {
+    display: flex;
+    background: color(ink);
+    color: color(on-ink);
+    border: 1px solid color(rule);
+  }
+}
+
+@keyframes header-blink {
+  50% {
+    opacity: 0;
   }
 }

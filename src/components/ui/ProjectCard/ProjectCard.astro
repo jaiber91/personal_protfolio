@@ -2,6 +2,7 @@
 import './ProjectCard.scss';
 import type { ImageMetadata } from 'astro';
 import DeviceFrame, { type Device } from '@/components/ui/DeviceFrame/DeviceFrame.astro';
+import { createRandom } from '@/webgl/utils/random';
 
 interface Props {
   index: number;
@@ -16,7 +17,7 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   placeholder?: boolean;
-  labels: { role: string; stack: string; view: string };
+  labels: { pass: string; gate: string; year: string; role: string; stack: string; view: string };
 }
 
 const {
@@ -34,37 +35,56 @@ const {
   placeholder,
   labels,
 } = Astro.props;
-const pad = (value: number) => String(value).padStart(2, '0');
+const code = `JF${String(index).padStart(3, '0')}`;
+const gates: Record<Device, string> = { phone: 'M1', tablet: 'T2', web: 'W3' };
+
+// Código de barras decorativo, estable por proyecto.
+const random = createRandom(index * 7);
+const bars = Array.from({ length: 38 }, () => 1 + Math.floor(random() * 3));
 ---
 
-<article
-  class:list={[
-    'project-card',
-    `project-card--${device}`,
-    { 'project-card--placeholder': placeholder },
-  ]}
->
-  <div class="project-card__device" data-project-device>
-    <DeviceFrame device={device} image={image} alt={imageAlt} />
-  </div>
-  <div class="project-card__info" data-project-info>
-    <p class="project-card__index">
-      {pad(index)} / {pad(total)} · {year}
+<!-- Pase de abordar: cuerpo con la pantalla del proyecto + talón con los datos. -->
+<article class:list={['ticket', { 'ticket--placeholder': placeholder }]} data-ticket>
+  <div class="ticket__main">
+    <p class="ticket__top">
+      <span>{labels.pass}</span>
+      <span>
+        {code} · {String(index).padStart(2, '0')}/{String(total).padStart(2, '0')}
+      </span>
     </p>
-    <h3 class="project-card__title">{title}</h3>
-    <p class="project-card__summary">{summary}</p>
-    <dl class="project-card__meta">
+    <div class="ticket__screen">
+      <DeviceFrame device={device} image={image} alt={imageAlt} />
+    </div>
+    <h3 class="ticket__title">{title}</h3>
+    <p class="ticket__summary">{summary}</p>
+  </div>
+
+  <div class="ticket__stub">
+    <dl class="ticket__data">
       <div>
+        <dt>{labels.gate}</dt>
+        <dd class="ticket__gate">{gates[device]}</dd>
+      </div>
+      <div>
+        <dt>{labels.year}</dt>
+        <dd>{year}</dd>
+      </div>
+      <div class="ticket__wide">
         <dt>{labels.role}</dt>
         <dd>{role}</dd>
       </div>
-      <div>
+      <div class="ticket__wide">
         <dt>{labels.stack}</dt>
         <dd>{stack.join(' · ')}</dd>
       </div>
     </dl>
+    <span class="ticket__barcode" aria-hidden="true">
+      {bars.map((width) => (
+        <span style={`--w: ${width}px`} />
+      ))}
+    </span>
     {url && (
-      <a class="project-card__link" href={url} target="_blank" rel="noopener noreferrer">
+      <a class="ticket__link" href={url} target="_blank" rel="noopener noreferrer">
         {labels.view} ↗
       </a>
     )}

@@ -4,9 +4,13 @@
   position: fixed;
   inset: 0;
   z-index: z(loader);
-  display: grid;
-  place-items: center;
-  background-color: color(bg);
+  background: color(ink);
+  color: color(on-ink);
+
+  // Cuando hay grilla, el fondo lo ponen las baldosas (para poder deshacerlo).
+  &.has-tiles {
+    background: transparent;
+  }
 
   // Sin JS o con movimiento reducido no hay intro: el contenido se ve de inmediato.
   html:not(.js) & {
@@ -17,13 +21,78 @@
     display: none;
   }
 
+  &__tiles {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 1), 1fr);
+    grid-template-rows: repeat(var(--rows, 1), 1fr);
+  }
+
+  &__tile {
+    background: color(ink);
+    // Evita líneas finas entre baldosas por redondeo de subpíxeles.
+    outline: 1px solid color(ink);
+  }
+
+  &__content {
+    position: absolute;
+    inset: space(md);
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    gap: space(sm);
+  }
+
+  &__log {
+    @include hud;
+    display: grid;
+    align-content: start;
+    gap: space(3xs);
+  }
+
+  &__line {
+    visibility: hidden;
+
+    &.is-visible {
+      visibility: visible;
+    }
+
+    // Cursor parpadeante en la última línea escrita.
+    &.is-current::after {
+      content: '▌';
+      margin-left: 0.4ch;
+      animation: loader-caret 0.8s steps(1, end) infinite;
+    }
+  }
+
+  &__prompt {
+    margin-right: 1ch;
+    color: color(signal);
+  }
+
+  &__meter {
+    height: 2px;
+    background: color(rule);
+  }
+
+  &__bar {
+    display: block;
+    height: 100%;
+    background: color(on-ink);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
   &__count {
-    // El texto de partículas se muestrea con esta misma fuente y tamaño.
-    font-family: var(--font-display);
-    font-size: font-size(giant);
-    font-weight: var(--font-weight-semibold);
-    // Sin letter-spacing ni tabular-nums: canvas 2D no los replica y el "100"
-    // de partículas no coincidiría con el HTML en el momento del cambio.
-    line-height: 1;
+    @include display-type;
+    justify-self: end;
+    font-size: font-size(mega);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes loader-caret {
+  50% {
+    opacity: 0;
   }
 }

@@ -43,7 +43,7 @@
 
   --container-max: #{tokens.$container-max};
   --gutter: #{fn.fluid(list.nth(tokens.$gutter, 1), list.nth(tokens.$gutter, 2))};
-  --header-height: 4.5rem;
+  --header-height: 4rem;
 }
 
 // Sin preferencia guardada se respeta el sistema; el script inline del layout

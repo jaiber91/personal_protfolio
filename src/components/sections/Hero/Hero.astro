@@ -1,28 +1,30 @@
 ---
 import './Hero.scss';
 import Button from '@/components/ui/Button/Button.astro';
+import LiveClock from '@/components/ui/LiveClock/LiveClock.astro';
 import type { Dictionary } from '@/i18n';
 
 interface Props {
   t: Dictionary['hero'];
+  hud: Dictionary['hud'];
 }
 
-const { t } = Astro.props;
+const { t, hud } = Astro.props;
 ---
 
+<!-- Hero: tablero flip-dot (WebGL) que escribe el nombre. El <h1> real queda para
+     lectores de pantalla y como respaldo visible si no hay WebGL. -->
 <hero-section class="hero" id="top">
-  <div class="hero__inner container">
-    <p class="hero__eyebrow" data-hero-reveal>
-      {t.eyebrow}
-    </p>
-    <h1 class="hero__title" data-hero-reveal data-hero-title>
-      {t.title}
-    </h1>
-    <p class="hero__lead" data-hero-reveal>
-      {t.lead}
-    </p>
-    <div class="hero__actions" data-hero-reveal>
-      <Button href="#projects" magnetic>
+  <canvas class="hero__board" data-hero-board aria-hidden="true"></canvas>
+  <h1 class="hero__title" data-hero-title>
+    {t.title}
+  </h1>
+
+  <div class="hero__panel" data-hero-reveal>
+    <p class="hero__eyebrow">{t.eyebrow}</p>
+    <p class="hero__lead">{t.lead}</p>
+    <div class="hero__actions">
+      <Button href="#projects" variant="signal" magnetic>
         {t.primaryCta}
       </Button>
       <Button href="#contact" variant="ghost" magnetic>
@@ -30,9 +32,19 @@ const { t } = Astro.props;
       </Button>
     </div>
   </div>
-  <span class="hero__scroll-hint" data-hero-reveal aria-hidden="true">
-    {t.scrollHint}
-  </span>
+
+  <dl class="hero__meta" data-hero-reveal>
+    <div>
+      <dt>{hud.location}</dt>
+      <dd>{hud.coordinates}</dd>
+    </div>
+    <div>
+      <dt>{hud.localTime}</dt>
+      <dd>
+        <LiveClock label={hud.localTime} />
+      </dd>
+    </div>
+  </dl>
 </hero-section>
 
 <script>

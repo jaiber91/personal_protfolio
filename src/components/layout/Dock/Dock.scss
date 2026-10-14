@@ -1,0 +1,78 @@
+@use 'abstracts' as *;
+
+.dock {
+  position: fixed;
+  bottom: space(xs);
+  left: 50%;
+  z-index: z(header);
+  display: block;
+  transform: translateX(-50%);
+
+  &__nav {
+    position: relative;
+    background: color(ink);
+    color: color(on-ink);
+    border: 1px solid color(rule);
+  }
+
+  &__progress {
+    position: absolute;
+    inset: -1px -1px auto;
+    height: 3px;
+  }
+
+  &__bar {
+    display: block;
+    height: 100%;
+    background: color(signal);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  &__links {
+    display: flex;
+  }
+
+  &__link {
+    @include hud;
+    display: flex;
+    align-items: center;
+    gap: space(3xs);
+    height: 2.75rem;
+    padding-inline: space(xs);
+    transition:
+      background-color duration(fast) ease(snap),
+      color duration(fast) ease(snap);
+
+    @include hover {
+      background: color(on-ink);
+      color: color(ink);
+    }
+
+    &[aria-current='true'] {
+      background: color(signal);
+      color: color(on-signal);
+    }
+  }
+
+  &__index {
+    opacity: 0.6;
+
+    [aria-current='true'] > & {
+      opacity: 1;
+    }
+  }
+
+  // En móvil solo la sección activa muestra su nombre.
+  &__label {
+    display: none;
+
+    @include mq(md) {
+      display: inline;
+    }
+
+    [aria-current='true'] > & {
+      display: inline;
+    }
+  }
+}

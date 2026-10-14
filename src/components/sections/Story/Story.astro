@@ -1,6 +1,5 @@
 ---
 import './Story.scss';
-import SectionHeading from '@/components/ui/SectionHeading/SectionHeading.astro';
 import { LOCALE_META, type Dictionary, type Locale } from '@/i18n';
 
 interface Props {
@@ -10,87 +9,125 @@ interface Props {
 
 const { locale, t } = Astro.props;
 const numberFormat = new Intl.NumberFormat(LOCALE_META[locale].htmlLang, { useGrouping: 'always' });
-const formatMetric = (value: number, suffix: string) => `${numberFormat.format(value)}${suffix}`;
-const totalSteps = t.items.reduce((total, item) => total + item.metrics.length, 0);
+const { board } = t;
 ---
 
+<!-- Trayectoria como tablero de salidas: cada empresa es un vuelo (letras split-flap).
+     Al abrir un vuelo se ven sus cifras y logros. -->
 <story-section class="story" id="story">
-  <!-- Se fija este div y no el custom element (ver Platforms). -->
-  <div class="story__pin" data-story-pin>
-    <div class="story__inner container">
-      <SectionHeading eyebrow={t.eyebrow} title={t.title} />
+  <div class="story__inner container">
+    <header class="story__header">
+      <p class="story__eyebrow" data-reveal>
+        {t.eyebrow}
+      </p>
+      <h2 class="story__title" data-split>
+        {t.title}
+      </h2>
+    </header>
 
-      <ol class="story__companies" role="list">
-        {t.items.map((item) => (
-          <li class="story__company" data-story-company>
-            <header class="story__header">
-              <p class="story__period">
-                {item.current && <span class="story__live" aria-hidden="true" />}
+    <div class="story__board" data-story-board>
+      <div class="story__board-top">
+        <p class="story__board-title">
+          <span>✈ {board.title}</span>
+          <span class="story__board-subtitle">{board.subtitle}</span>
+        </p>
+        <p class="story__hint">
+          <span class="story__hint-arrow" aria-hidden="true">
+            ↓
+          </span>
+          {board.hint}
+        </p>
+      </div>
+
+      <div class="story__head" aria-hidden="true">
+        <span>{board.columns.period}</span>
+        <span>{board.columns.company}</span>
+        <span class="story__head-role">{board.columns.role}</span>
+        <span>{board.columns.status}</span>
+      </div>
+
+      {t.items.map((item, index) => (
+        <article class="story__flight" data-flight data-open={index === 0 ? '' : undefined}>
+          <h3 class="story__flight-heading">
+            <button
+              class="story__row"
+              type="button"
+              aria-expanded={index === 0 ? 'true' : 'false'}
+              aria-controls={`flight-${index}`}
+              data-flight-toggle
+            >
+              <span class="story__cell story__cell--period" data-flap>
                 {item.period}
-              </p>
-              <h3 class="story__name">{item.company}</h3>
-              <p class="story__role">{item.role}</p>
-            </header>
+              </span>
+              <span class="story__cell story__cell--company" data-flap>
+                {item.company}
+              </span>
+              <span class="story__cell story__cell--role" data-flap>
+                {item.role}
+              </span>
+              <span
+                class:list={['story__cell story__cell--status', { 'is-current': item.current }]}
+                data-flap
+              >
+                {item.current ? board.status.current : board.status.done}
+              </span>
+              <span class="story__toggle" aria-hidden="true">
+                <span class="story__toggle-open">{board.details} +</span>
+                <span class="story__toggle-close">{board.close} ×</span>
+              </span>
+            </button>
+          </h3>
 
-            <ol class="story__metrics" role="list" aria-label={t.metricsLabel}>
-              {item.metrics.map((metric) => (
-                <li
-                  class="story__metric"
-                  data-story-step
-                  data-text={formatMetric(metric.value, metric.suffix)}
-                  data-from-text={
-                    'from' in metric && metric.from !== undefined
-                      ? formatMetric(metric.from, metric.suffix)
-                      : undefined
-                  }
-                >
-                  <p class="story__value" data-story-value>
-                    {formatMetric(metric.value, metric.suffix)}
-                  </p>
-                  <div class="story__text">
-                    <p class="story__label">{metric.label}</p>
-                    <p class="story__detail">{metric.detail}</p>
+          <div class="story__panel" id={`flight-${index}`} data-flight-panel>
+            <div class="story__panel-inner">
+              <p class="story__panel-role">{item.role}</p>
+              <dl class="story__metrics" aria-label={t.metricsLabel}>
+                {item.metrics.map((metric) => (
+                  <div class="story__metric">
+                    <dt class="story__label">
+                      <span class="story__label-title">{metric.label}</span>
+                      <span class="story__detail">{metric.detail}</span>
+                    </dt>
+                    <dd
+                      class="story__value"
+                      data-count={metric.value}
+                      data-count-from={
+                        'from' in metric && metric.from !== undefined ? metric.from : 0
+                      }
+                      data-count-suffix={metric.suffix}
+                    >
+                      {numberFormat.format(metric.value)}
+                      {metric.suffix}
+                    </dd>
                   </div>
-                </li>
-              ))}
-            </ol>
+                ))}
+              </dl>
+              <ul class="story__stack" role="list" aria-label={t.stackLabel}>
+                {item.stack.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
 
-            <ul class="story__stack" role="list" aria-label={t.stackLabel}>
-              {item.stack.map((tech) => (
-                <li class="story__chip">{tech}</li>
-              ))}
-            </ul>
+    <section class="story__layovers" aria-labelledby="education-title">
+      <h3 class="story__layovers-title" id="education-title">
+        {t.educationTitle}
+      </h3>
+      <ul class="story__courses" role="list">
+        {t.education.map((entry) => (
+          <li class="story__course" data-reveal>
+            <span class="story__course-period">{entry.period}</span>
+            <span class="story__course-title">{entry.title}</span>
+            <span class="story__course-place">{entry.place}</span>
           </li>
         ))}
-      </ol>
-
-      <div class="story__nav" aria-hidden="true">
-        <span class="story__counter" data-story-counter>
-          01 / {String(totalSteps).padStart(2, '0')}
-        </span>
-        <span class="story__dots">
-          {Array.from({ length: totalSteps }, () => (
-            <span class="story__dot" data-story-dot />
-          ))}
-        </span>
-      </div>
-    </div>
+      </ul>
+    </section>
   </div>
-
-  <section class="story__education container" aria-labelledby="education-title" data-reveal>
-    <h3 class="story__education-title" id="education-title">
-      {t.educationTitle}
-    </h3>
-    <ul class="story__education-list" role="list">
-      {t.education.map((entry) => (
-        <li class="story__education-item">
-          <span class="story__education-period">{entry.period}</span>
-          <span class="story__education-name">{entry.title}</span>
-          <span class="story__education-place">{entry.place}</span>
-        </li>
-      ))}
-    </ul>
-  </section>
 </story-section>
 
 <script>

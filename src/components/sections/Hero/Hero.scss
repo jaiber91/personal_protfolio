@@ -2,50 +2,85 @@
 
 .hero {
   position: relative;
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template-rows: 1fr auto;
   min-height: 100svh;
-  padding-block: var(--header-height) space(2xl);
+  padding: calc(var(--header-height) + #{space(sm)}) var(--gutter)
+    calc(#{space(2xl)} + #{space(md)});
+  overflow: hidden;
+  background: color(ink);
+  color: color(on-ink);
 
-  @include mq(lg) {
-    align-items: center;
+  &__board {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
-  &__inner {
+  // Con WebGL el nombre lo dibuja el tablero; el <h1> queda solo para lectores de pantalla.
+  &__title {
+    @include display-type;
+    align-self: center;
+    font-size: font-size(mega);
+    color: color(signal);
+
+    .js:not(.no-webgl) & {
+      @include visually-hidden;
+    }
+  }
+
+  &__panel,
+  &__meta {
+    position: relative;
+    align-self: end;
+  }
+
+  &__panel {
     display: grid;
-    gap: space(sm);
-    justify-items: start;
+    gap: space(xs);
+    max-width: 30rem;
+    padding: space(sm);
+    background: color(ink);
+    border: 1px solid color(rule);
   }
 
   &__eyebrow {
-    @include eyebrow;
-  }
-
-  &__title {
-    font-size: font-size(display);
-    line-height: var(--line-height-tight);
-    letter-spacing: -0.045em;
-    max-width: 8ch;
+    @include hud;
+    color: color(signal);
   }
 
   &__lead {
-    max-width: 34ch;
     font-size: font-size(lg);
-    color: color(text-muted);
+    line-height: var(--line-height-snug);
   }
 
   &__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: space(xs);
-    margin-top: space(xs);
+    gap: space(2xs);
+    margin-top: space(2xs);
   }
 
-  &__scroll-hint {
-    @include eyebrow;
+  &__meta {
+    @include hud;
+    display: none;
     position: absolute;
-    bottom: space(md);
     right: var(--gutter);
+    bottom: calc(#{space(2xl)} + #{space(md)});
+    gap: space(xs);
+    padding: space(xs) space(sm);
+    background: color(ink);
+    border: 1px solid color(rule);
+    text-align: right;
+
+    @include mq(md) {
+      display: grid;
+    }
+
+    dt {
+      opacity: 0.55;
+    }
   }
 
   // Oculto hasta que GSAP lo revele (solo si hay JS y se permite movimiento).
