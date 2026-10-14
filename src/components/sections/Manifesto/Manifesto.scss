@@ -36,15 +36,18 @@
     box-decoration-break: clone;
   }
 
-  // Estado inicial (solo con JS y movimiento permitido): palabras apagadas.
+  // Estado inicial (solo con JS y movimiento permitido): palabras apagadas en un gris que
+  // cumple contraste. `--lit` (0 -> 1) las enciende; al ser una variable, el efecto
+  // sigue funcionando si cambia el tema.
   @media (prefers-reduced-motion: no-preference) {
     .js & [data-manifesto-word] {
-      opacity: 0.14;
+      --lit: 0;
+      color: color-mix(in srgb, color(text) calc(var(--lit) * 100%), color(text-faint));
     }
 
     .js & [data-highlight] {
-      background-size: 0% 100%;
-      color: inherit;
+      background-size: calc(var(--lit) * 100%) 100%;
+      color: color-mix(in srgb, color(on-signal) calc(var(--lit) * 100%), color(text-faint));
     }
   }
 }

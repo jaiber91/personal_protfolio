@@ -36,14 +36,22 @@
     font-size: font-size(sm);
   }
 
+  // En móvil el nombre se oculta visualmente pero sigue siendo el nombre del enlace.
   &__name {
     @include hud;
-    display: none;
-    align-items: center;
-    padding-inline: space(xs);
+    @include visually-hidden;
 
     @include mq(md) {
+      position: static !important;
       display: flex;
+      align-items: center;
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding-inline: space(xs);
+      overflow: visible;
+      clip: auto;
+      white-space: nowrap;
     }
   }
 

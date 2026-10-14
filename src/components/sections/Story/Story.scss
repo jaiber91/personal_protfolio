@@ -376,9 +376,11 @@
   }
 }
 
+// Parpadeo invertido (amarillo/negro): las dos fases tienen buen contraste.
 @keyframes story-blink {
   50% {
-    opacity: 0.25;
+    background: color(signal);
+    color: color(on-signal);
   }
 }
 

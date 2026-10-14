@@ -1,7 +1,6 @@
 import { gsap } from '@/scripts/core/gsap';
 import { lifecycle } from '@/scripts/core/lifecycle';
 import { prefersReducedMotion } from '@/scripts/core/motion';
-import { readColorToken } from '@/scripts/core/theme';
 
 /** Las palabras se encienden con el scroll; las resaltadas se "pintan" de azul. */
 class ManifestoSection extends HTMLElement {
@@ -28,19 +27,8 @@ class ManifestoSection extends HTMLElement {
         },
       });
       words.forEach((word, index) => {
-        timeline.to(word, { opacity: 1, duration: 0.3, ease: 'none' }, index * 0.1);
-        if (word.hasAttribute('data-highlight')) {
-          timeline.to(
-            word,
-            {
-              backgroundSize: '100% 100%',
-              color: readColorToken('on-signal'),
-              duration: 0.4,
-              ease: 'none',
-            },
-            index * 0.1,
-          );
-        }
+        const duration = word.hasAttribute('data-highlight') ? 0.4 : 0.3;
+        timeline.to(word, { '--lit': 1, duration, ease: 'none' }, index * 0.1);
       });
     }, this);
   }

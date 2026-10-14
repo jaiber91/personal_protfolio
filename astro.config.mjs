@@ -15,6 +15,10 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+  build: {
+    // El CSS es pequeño (~10 kB gzip): va dentro del HTML y no bloquea el primer pintado.
+    inlineStylesheets: 'always',
+  },
   vite: {
     build: {
       // Three.js por sí solo ronda los 530 kB minificados (~130 kB gzip).
