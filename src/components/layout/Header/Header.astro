@@ -10,33 +10,21 @@ interface Props {
 }
 
 const { locale, t } = Astro.props;
-const links = [
-  { href: '#platforms', label: t.nav.platforms },
-  { href: '#story', label: t.nav.story },
-  { href: '#projects', label: t.nav.projects },
-  { href: '#contact', label: t.nav.contact },
-];
 ---
 
+<!-- Header mínimo: marca a la izquierda, idioma y tema a la derecha.
+     La navegación vive en el dock inferior (ver Dock). -->
 <header class="site-header">
-  <div class="site-header__inner container">
-    <a class="site-header__brand" href="#top" aria-label={t.hero.title}>
-      JF
-    </a>
-    <nav class="site-header__nav" aria-label={t.a11y.mainNav}>
-      <ul class="site-header__links" role="list">
-        {links.map((link) => (
-          <li>
-            <a class="site-header__link" href={link.href}>
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-    <div class="site-header__actions">
-      <LanguageSwitcher current={locale} label={t.a11y.changeLanguage} />
-      <ThemeToggle label={t.a11y.toggleTheme} />
-    </div>
+  <a class="site-header__brand" href="#top" aria-label={t.hero.title}>
+    <span class="site-header__mark">JF</span>
+    <span class="site-header__name">{t.hero.title}</span>
+  </a>
+  <div class="site-header__status">
+    <span class="site-header__pulse" aria-hidden="true"></span>
+    {t.hud.status}
+  </div>
+  <div class="site-header__tools">
+    <LanguageSwitcher current={locale} label={t.a11y.changeLanguage} />
+    <ThemeToggle label={t.a11y.toggleTheme} />
   </div>
 </header>

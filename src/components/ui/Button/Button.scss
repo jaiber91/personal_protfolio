@@ -1,41 +1,50 @@
 @use 'abstracts' as *;
 
+// Brutalism: bloques rectos, borde visible y cambios de estado secos.
 .button {
+  @include hud;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: space(2xs);
   min-height: 3rem;
   padding: 0 space(sm);
-  border-radius: radius(pill);
-  border: 1px solid color(text);
-  font-family: var(--font-display);
+  border: 1px solid currentcolor;
   font-size: font-size(sm);
   font-weight: var(--font-weight-medium);
-  letter-spacing: 0.01em;
   transition:
-    background-color duration(base) ease(out),
-    color duration(base) ease(out),
-    border-color duration(base) ease(out);
+    background-color duration(fast) ease(snap),
+    color duration(fast) ease(snap),
+    border-color duration(fast) ease(snap);
 
   &--primary {
-    background-color: color(text);
-    color: color(bg);
+    background-color: color(ink);
+    border-color: color(ink);
+    color: color(on-ink);
+  }
 
-    @include hover {
-      background-color: color(accent);
-      border-color: color(accent);
-      color: color(on-accent);
-    }
+  &--signal {
+    background-color: color(signal);
+    border-color: color(signal);
+    color: color(on-signal);
   }
 
   &--ghost {
     background-color: transparent;
-    color: color(text);
+    color: inherit;
+  }
 
+  // Todas terminan en amarillo al pasar el cursor; la amarilla se invierte.
+  @include hover {
+    background-color: color(signal);
+    border-color: color(signal);
+    color: color(on-signal);
+  }
+
+  &--signal {
     @include hover {
-      background-color: color(text);
-      color: color(bg);
+      background-color: transparent;
+      color: color(signal);
     }
   }
 }

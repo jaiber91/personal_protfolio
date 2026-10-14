@@ -2,14 +2,10 @@
 
 html {
   background-color: color(bg);
-  transition: background-color duration(base) ease(out);
 }
 
 body {
   background-color: color(bg);
-  transition:
-    background-color duration(base) ease(out),
-    color duration(base) ease(out);
 }
 
 ::selection {

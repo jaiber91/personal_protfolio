@@ -1,17 +1,22 @@
 @use 'abstracts' as *;
 
 .site-footer {
+  @include hud;
   position: relative;
   z-index: z(content);
-  padding-block: space(md);
-  border-top: 1px solid color(border);
-  font-size: font-size(xs);
-  color: color(text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: space(xs);
+  // Espacio extra abajo para que el dock no tape el pie.
+  padding: space(sm) var(--gutter) calc(#{space(2xl)} + #{space(md)});
+  background: color(ink);
+  color: color(on-ink);
+  border-top: 1px solid color(rule);
 
-  &__inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: space(xs);
+  &__top {
+    @include hover {
+      color: color(signal);
+    }
   }
 }

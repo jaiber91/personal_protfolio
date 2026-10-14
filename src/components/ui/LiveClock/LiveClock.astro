@@ -1,0 +1,22 @@
+---
+import './LiveClock.scss';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<!-- Hora local de Colombia en vivo. Sin JS muestra "--:--:--". -->
+<live-clock class="live-clock">
+  <span class="visually-hidden">{label}</span>
+  <time class="live-clock__time" data-clock-time>
+    --:--:--
+  </time>
+  <span class="live-clock__zone">GMT−5</span>
+</live-clock>
+
+<script>
+  import './LiveClock.ts';
+</script>

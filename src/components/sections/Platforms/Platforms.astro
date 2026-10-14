@@ -1,6 +1,5 @@
 ---
 import './Platforms.scss';
-import SectionHeading from '@/components/ui/SectionHeading/SectionHeading.astro';
 import type { Dictionary } from '@/i18n';
 
 interface Props {
@@ -8,22 +7,31 @@ interface Props {
 }
 
 const { t } = Astro.props;
+const total = String(t.steps.length).padStart(2, '0');
 ---
 
 <platforms-section class="platforms" id="platforms">
   <!-- Se fija este div y no el custom element: el pin mueve el nodo en el DOM
        y eso volvería a disparar connected/disconnectedCallback. -->
   <div class="platforms__pin" data-platforms-pin>
-    <div class="platforms__inner container">
-      <SectionHeading eyebrow={t.eyebrow} title={t.title} />
+    <canvas class="platforms__canvas" data-platforms-canvas aria-hidden="true"></canvas>
+    <div class="platforms__inner">
+      <header class="platforms__header">
+        <p class="platforms__eyebrow" data-reveal>
+          {t.eyebrow}
+        </p>
+        <h2 class="platforms__title" data-split>
+          {t.title}
+        </h2>
+      </header>
       <ol class="platforms__steps" role="list">
         {t.steps.map((step, index) => (
           <li class="platforms__step" data-platform-step data-active={index === 0 ? '' : undefined}>
-            <span class="platforms__index">{String(index + 1).padStart(2, '0')}</span>
-            <div>
-              <h3 class="platforms__label">{step.label}</h3>
-              <p class="platforms__description">{step.description}</p>
-            </div>
+            <span class="platforms__index">
+              {String(index + 1).padStart(2, '0')} / {total}
+            </span>
+            <h3 class="platforms__label">{step.label}</h3>
+            <p class="platforms__description">{step.description}</p>
           </li>
         ))}
       </ol>

@@ -1,64 +1,158 @@
 @use 'abstracts' as *;
 
-// Un proyecto = su pantalla dentro del dispositivo para el que se hizo + su ficha.
-.project-card {
+$notch: 0.9rem;
+
+// Pase de abordar: cuerpo en papel + talón separado por una línea perforada.
+.ticket {
   display: grid;
-  gap: space(md);
-  align-items: center;
+  width: min(54rem, 86vw);
+  color: color(text);
+  transform-style: preserve-3d;
+  box-shadow: 0.5rem 0.5rem 0 color(ink);
 
   @include mq(lg) {
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: space(xl);
+    grid-template-columns: 1fr 15rem;
   }
 
-  &__device {
+  &__main,
+  &__stub {
+    display: grid;
+    gap: space(xs);
+    padding: space(md);
+    background: color(bg);
+  }
+
+  &__main {
+    align-content: start;
+  }
+
+  &__stub {
+    position: relative;
+    align-content: space-between;
+    border-top: 2px dashed color(rule);
+
+    @include mq(lg) {
+      border-top: 0;
+      border-left: 2px dashed color(rule);
+    }
+
+    // Muescas donde se corta el talón: círculos del color del fondo de la sección.
+    // Móvil: el talón va debajo (muescas a izquierda y derecha). Escritorio: a la derecha.
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: -$notch;
+      width: $notch * 2;
+      height: $notch * 2;
+      border-radius: 50%;
+      background: color(signal);
+    }
+
+    &::before {
+      left: -$notch;
+    }
+
+    &::after {
+      right: -$notch;
+
+      @include mq(lg) {
+        top: auto;
+        right: auto;
+        bottom: -$notch;
+        left: -$notch;
+      }
+    }
+  }
+
+  &__top {
+    @include hud;
+    display: flex;
+    justify-content: space-between;
+    gap: space(sm);
+    padding-bottom: space(2xs);
+    border-bottom: 1px solid color(rule);
+  }
+
+  &__screen {
     display: flex;
     justify-content: center;
+    padding: space(sm);
+    background: color(ink);
+
+    .device-frame--phone {
+      height: min(32svh, 18rem);
+    }
+
+    .device-frame--tablet {
+      width: min(100%, 20rem);
+    }
+
+    .device-frame--web {
+      width: min(100%, 30rem);
+    }
   }
 
-  &--placeholder &__device {
-    opacity: 0.6;
-  }
-
-  &__info {
-    display: grid;
-    gap: space(sm);
-    align-content: center;
-  }
-
-  &__index {
-    @include eyebrow;
+  &--placeholder &__screen {
+    opacity: 0.7;
   }
 
   &__title {
-    font-size: font-size(2xl);
-    line-height: var(--line-height-tight);
+    font-size: font-size(xl);
   }
 
   &__summary {
+    font-size: font-size(sm);
     color: color(text-muted);
-    max-width: 38ch;
   }
 
-  &__meta {
+  &__data {
     display: grid;
-    gap: space(2xs);
-    font-size: font-size(sm);
+    grid-template-columns: 1fr 1fr;
+    gap: space(xs);
 
     dt {
-      @include eyebrow;
+      @include hud;
+      color: color(text-muted);
+    }
+
+    dd {
+      font-family: var(--font-mono);
+      font-size: font-size(sm);
+    }
+  }
+
+  &__wide {
+    grid-column: 1 / -1;
+  }
+
+  &__gate {
+    @include display-type;
+    font-family: var(--font-display);
+    font-size: font-size(2xl);
+  }
+
+  &__barcode {
+    display: flex;
+    gap: 2px;
+    height: 3rem;
+
+    span {
+      width: var(--w);
+      background: color(text);
     }
   }
 
   &__link {
+    @include hud;
     justify-self: start;
-    font-family: var(--font-display);
-    font-weight: var(--font-weight-medium);
-    border-bottom: 1px solid currentcolor;
-    transition: color duration(base) ease(out);
+    padding: space(2xs) space(xs);
+    background: color(ink);
+    color: color(on-ink);
 
     @include hover {
-      color: color(accent);
+      background: color(signal);
+      color: color(on-signal);
     }
   }
 }

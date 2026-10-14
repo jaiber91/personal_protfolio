@@ -1,76 +1,285 @@
 @use 'abstracts' as *;
 
-// Por defecto (sin JS o con movimiento reducido) la trayectoria es una lista legible.
-// Story.ts añade `story--interactive`: la sección se fija y el scroll recorre las
-// cifras una a una; con WebGL (`story--particles`) las cifras las dibujan las partículas.
 .story {
   display: block;
-
-  &__pin {
-    padding-block: space(3xl) space(xl);
-  }
+  padding-block: space(3xl);
+  background: color(bg);
+  color: color(text);
 
   &__inner {
     display: grid;
     gap: space(xl);
   }
 
-  &__companies {
-    display: grid;
-    gap: space(2xl);
-  }
-
-  &__company {
-    display: grid;
-    gap: space(md);
-  }
-
   &__header {
     display: grid;
-    gap: space(3xs);
+    gap: space(xs);
   }
 
-  &__period {
-    @include eyebrow;
+  &__eyebrow {
+    @include hud;
+  }
+
+  &__title {
+    font-size: font-size(3xl);
+  }
+
+  // ——— Tablero ———
+  &__board {
+    background: color(ink);
+    color: color(on-ink);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  &__board-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: space(xs);
+    padding: space(sm);
+    background: color(signal);
+    color: color(on-signal);
+  }
+
+  &__board-title {
+    @include display-type;
+    display: flex;
+    align-items: baseline;
+    gap: space(sm);
+    font-size: font-size(2xl);
+  }
+
+  &__hint {
+    @include hud;
     display: flex;
     align-items: center;
     gap: space(2xs);
+    text-align: right;
   }
 
-  // Trabajo actual: punto lleno que emite un pulso suave.
-  &__live {
-    position: relative;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background: color(text);
+  &__hint-arrow {
+    animation: story-nudge 1.2s ease(in-out) infinite;
 
-    &::after {
+    @include reduced-motion {
+      animation: none;
+    }
+  }
+
+  &__board-subtitle {
+    @include hud;
+    font-weight: 400;
+    font-stretch: 100%;
+    letter-spacing: 0.06em;
+  }
+
+  // Columnas: móvil = destino + estado / periodo; escritorio = tabla completa.
+  &__head,
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: space(3xs) space(sm);
+    align-items: center;
+    padding: space(xs) space(sm);
+
+    @include mq(lg) {
+      grid-template-columns: 11rem 1.1fr 1.5fr 9rem 8rem;
+    }
+  }
+
+  &__head {
+    display: none;
+    font-size: font-size(xs);
+    letter-spacing: 0.08em;
+    opacity: 0.55;
+    border-bottom: 1px solid color(rule);
+
+    @include mq(lg) {
+      display: grid;
+    }
+  }
+
+  &__flight {
+    border-bottom: 1px solid color(rule);
+  }
+
+  &__flight-heading {
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: normal;
+  }
+
+  &__row {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    // Los botones no heredan text-transform por defecto.
+    text-transform: inherit;
+    font-size: font-size(sm);
+    transition: background-color duration(fast) ease(snap);
+
+    // Barra amarilla a la izquierda: la fila es clicable.
+    &::before {
       content: '';
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      border: 1px solid color(text);
-      animation: story-pulse 2.4s ease(out) infinite;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: color(signal);
+      transform: scaleY(0);
+      transition: transform duration(fast) ease(snap);
+    }
 
-      @include reduced-motion {
-        animation: none;
+    @include hover {
+      background: color(surface);
+
+      &::before {
+        transform: scaleY(1);
+      }
+    }
+
+    [data-open] > h3 > &::before {
+      transform: scaleY(1);
+    }
+
+    @include mq(lg) {
+      font-size: font-size(base);
+    }
+  }
+
+  &__cell {
+    line-height: 1.6;
+
+    &--company {
+      grid-column: 1;
+      grid-row: 1;
+      font-size: font-size(lg);
+      font-weight: 600;
+
+      @include mq(lg) {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+
+    &--period {
+      grid-column: 1;
+      grid-row: 2;
+      font-size: font-size(xs);
+
+      @include mq(lg) {
+        grid-column: auto;
+        grid-row: auto;
+        font-size: inherit;
+      }
+    }
+
+    &--role {
+      display: none;
+
+      @include mq(lg) {
+        display: block;
+      }
+    }
+
+    &--status {
+      grid-column: 1;
+      grid-row: 3;
+      color: color(signal);
+      font-weight: 600;
+
+      @include mq(lg) {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      &.is-current {
+        animation: story-blink 1.4s steps(1, end) infinite;
       }
     }
   }
 
-  &__name {
-    font-size: font-size(3xl);
-    line-height: var(--line-height-tight);
+  // Botón visible en cada vuelo: "Detalles +" cerrado, "Cerrar ×" abierto.
+  &__toggle {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    justify-self: end;
+    padding: space(3xs) space(2xs);
+    border: 1px solid color(signal);
+    color: color(signal);
+    font-size: font-size(xs);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition:
+      background-color duration(fast) ease(snap),
+      color duration(fast) ease(snap);
+
+    @include mq(lg) {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .story__row:hover &,
+    .story__row:focus-visible &,
+    [data-open] & {
+      background: color(signal);
+      color: color(on-signal);
+    }
+
+    // Hasta que se abre el primer vuelo, los cerrados parpadean para invitar al clic.
+    .story__board:not(.is-explored) .story__flight:not([data-open]) & {
+      animation: story-invite 1.6s steps(1, end) infinite;
+    }
   }
 
-  &__role {
-    font-weight: var(--font-weight-medium);
+  &__toggle-close,
+  [data-open] &__toggle-open {
+    display: none;
+  }
+
+  [data-open] &__toggle-close {
+    display: inline;
+  }
+
+  // Panel que se abre: filas de grilla 0fr -> 1fr.
+  &__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows duration(slow) ease(out);
+
+    [data-open] > & {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__panel-inner {
+    display: grid;
+    gap: space(sm);
+    min-height: 0;
+    overflow: hidden;
+    padding-inline: space(sm);
+
+    [data-open] & {
+      padding-block: space(2xs) space(md);
+    }
+  }
+
+  &__panel-role {
+    font-size: font-size(xs);
+    letter-spacing: 0.06em;
+    color: color(signal);
+
+    @include mq(lg) {
+      display: none;
+    }
   }
 
   &__metrics {
     display: grid;
-    gap: space(md);
+    gap: 1px;
+    background: color(rule);
+    border: 1px solid color(rule);
 
     @include mq(md) {
       grid-template-columns: repeat(3, 1fr);
@@ -78,237 +287,110 @@
   }
 
   &__metric {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: space(2xs);
-    align-content: start;
+    padding: space(sm);
+    background: color(ink);
   }
 
+  // En el HTML va después de su etiqueta (<dt> antes que <dd>), pero se muestra primero.
   &__value {
-    font-family: var(--font-display);
+    @include display-type;
+    order: -1;
     font-size: font-size(3xl);
-    font-weight: var(--font-weight-semibold);
-    line-height: 1;
-    // Sin letter-spacing ni tabular-nums: canvas 2D no los replica y las
-    // partículas no coincidirían con la cifra HTML (igual que en el Loader).
-    white-space: nowrap;
-  }
-
-  &__text {
-    display: grid;
-    gap: space(2xs);
+    color: color(signal);
+    font-variant-numeric: tabular-nums;
   }
 
   &__label {
-    @include eyebrow;
+    display: grid;
+    gap: space(3xs);
+  }
+
+  &__label-title {
+    font-size: font-size(xs);
+    letter-spacing: 0.06em;
+    opacity: 0.7;
   }
 
   &__detail {
-    max-width: 44ch;
-    color: color(text-muted);
+    font-family: var(--font-body);
+    font-size: font-size(sm);
+    line-height: 1.45;
+    text-transform: none;
   }
 
   &__stack {
     display: flex;
     flex-wrap: wrap;
-    gap: space(2xs);
-  }
-
-  &__chip {
-    padding: space(3xs) space(xs);
-    border: 1px solid color(border);
-    border-radius: radius(pill);
-    font-family: var(--font-mono);
-    font-size: font-size(xs);
-  }
-
-  &__nav {
-    display: none;
-  }
-
-  // ——— Modo interactivo: una cifra por pantalla ———
-  &--interactive {
-    .story__pin {
-      height: 100svh;
-      padding-block: calc(var(--header-height) + #{space(xs)}) space(md);
-      overflow: hidden;
-    }
-
-    .story__inner {
-      height: 100%;
-      grid-template-rows: auto 1fr auto;
-      gap: space(sm);
-    }
-
-    // Todas las empresas ocupan la misma celda; solo la activa es visible.
-    .story__companies {
-      display: grid;
-      min-height: 0;
-    }
-
-    .story__company {
-      grid-area: 1 / 1;
-      grid-template-rows: 1fr auto auto auto;
-      grid-template-areas:
-        'value'
-        'header'
-        'text'
-        'stack';
-      gap: space(sm);
-      min-height: 0;
-
-      @include mq(lg) {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
-        grid-template-rows: 1fr auto auto 1fr;
-        grid-template-areas:
-          '. value'
-          'header value'
-          'text value'
-          'stack value';
-        column-gap: space(xl);
-        row-gap: space(md);
-      }
-    }
-
-    // Las cifras y sus textos se apilan en sus áreas de la empresa.
-    .story__metrics,
-    .story__metric {
-      display: contents;
-    }
-
-    .story__header {
-      grid-area: header;
-    }
-
-    .story__stack {
-      grid-area: stack;
-      align-self: start;
-    }
-
-    .story__value {
-      grid-area: value;
-      place-self: center;
-      font-size: font-size(display);
-    }
-
-    .story__text {
-      grid-area: text;
-    }
-
-    .story__name {
-      font-size: font-size(2xl);
-
-      @include mq(lg) {
-        font-size: font-size(3xl);
-      }
-    }
-
-    .story__detail {
-      color: color(text);
-      font-size: font-size(lg);
-    }
-
-    // Visibilidad por paso
-    .story__company,
-    .story__value,
-    .story__text {
-      transition:
-        opacity duration(slow) ease(out),
-        visibility duration(slow) ease(out),
-        transform duration(slow) ease(out);
-    }
-
-    .story__company:not([data-active]),
-    .story__metric:not([data-active]) > * {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .story__metric:not([data-active]) > .story__text {
-      transform: translateY(space(sm));
-    }
-
-    .story__nav {
-      display: flex;
-      align-items: center;
-      gap: space(sm);
-    }
-  }
-
-  // Con partículas la cifra HTML queda transparente: sigue ahí para lectores de
-  // pantalla y como referencia de posición/tamaño de las partículas.
-  &--particles .story__value {
-    color: transparent;
-  }
-
-  &__counter {
-    @include eyebrow;
-    font-variant-numeric: tabular-nums;
-  }
-
-  &__dots {
-    display: flex;
     gap: space(3xs);
-  }
+    font-size: font-size(xs);
 
-  &__dot {
-    width: 1.25rem;
-    height: 2px;
-    background: color(border);
-    transition: background-color duration(base) ease(out);
-
-    &[data-active] {
-      background: color(text);
+    li {
+      padding: space(3xs) space(2xs);
+      border: 1px solid color(rule);
     }
   }
 
-  &__education {
+  // ——— Escalas (formación) ———
+  &__layovers {
     display: grid;
     gap: space(sm);
-    padding-block: space(xl) space(3xl);
   }
 
-  &__education-title {
-    @include eyebrow;
+  &__layovers-title {
+    @include hud;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-stretch: 100%;
   }
 
-  &__education-list {
+  &__courses {
     border-top: 1px solid color(border);
   }
 
-  &__education-item {
+  &__course {
     display: grid;
     gap: space(3xs) space(md);
     padding-block: space(xs);
     border-bottom: 1px solid color(border);
 
     @include mq(md) {
-      grid-template-columns: 7rem 1fr auto;
+      grid-template-columns: 8rem 1fr auto;
       align-items: baseline;
     }
   }
 
-  &__education-period {
-    @include eyebrow;
+  &__course-period {
+    @include hud;
   }
 
-  &__education-name {
-    font-weight: var(--font-weight-medium);
+  &__course-title {
+    font-weight: var(--font-weight-semibold);
   }
 
-  &__education-place {
-    color: color(text-muted);
+  &__course-place {
     font-size: font-size(sm);
+    color: color(text-muted);
   }
 }
 
-@keyframes story-pulse {
-  from {
-    transform: scale(1);
-    opacity: 0.8;
+@keyframes story-blink {
+  50% {
+    opacity: 0.25;
   }
+}
 
-  to {
-    transform: scale(3);
-    opacity: 0;
+@keyframes story-invite {
+  50% {
+    background: color(signal);
+    color: color(on-signal);
+  }
+}
+
+@keyframes story-nudge {
+  50% {
+    transform: translateY(0.25em);
   }
 }

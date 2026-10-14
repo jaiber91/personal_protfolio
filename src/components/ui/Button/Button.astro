@@ -5,7 +5,7 @@ import type { HTMLAttributes } from 'astro/types';
 interface Props extends Omit<HTMLAttributes<'button'>, 'type'> {
   /** Sin `href` se renderiza un `<button type="button">`. */
   href?: string;
-  variant?: 'primary' | 'ghost';
+  variant?: 'primary' | 'signal' | 'ghost';
   magnetic?: boolean;
   external?: boolean;
 }

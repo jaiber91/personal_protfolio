@@ -1,36 +1,107 @@
 @use 'abstracts' as *;
 
 .contact {
-  display: flex;
-  align-items: center;
-  min-height: 90svh;
-  padding-block: space(3xl);
+  display: block;
+  background: color(ink);
+  color: color(on-ink);
 
   &__inner {
     display: grid;
-    gap: space(sm);
-    justify-items: start;
+    gap: space(md);
+    padding: space(3xl) var(--gutter) space(xl);
   }
 
   &__eyebrow {
-    @include eyebrow;
+    @include hud;
   }
 
   &__title {
-    font-size: font-size(giant);
-    line-height: var(--line-height-tight);
-    letter-spacing: -0.05em;
+    font-size: font-size(mega);
+    color: color(signal);
+    white-space: nowrap;
+  }
+
+  &__grid {
+    display: grid;
+    border-top: 1px solid color(rule);
+    border-left: 1px solid color(rule);
+
+    @include mq(lg) {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  &__cell {
+    display: grid;
+    align-content: space-between;
+    gap: space(sm);
+    min-height: 10rem;
+    padding: space(sm);
+    border-right: 1px solid color(rule);
+    border-bottom: 1px solid color(rule);
+    text-align: left;
+  }
+
+  &__email,
+  &__linkedin {
+    transition:
+      background-color duration(fast) ease(snap),
+      color duration(fast) ease(snap);
+
+    @include hover {
+      background: color(signal);
+      color: color(on-signal);
+    }
+  }
+
+  &__email {
+    @include mq(lg) {
+      grid-row: span 2;
+    }
+  }
+
+  &__hint {
+    @include hud;
+  }
+
+  &__address {
+    font-family: var(--font-mono);
+    font-size: font-size(lg);
+    font-weight: var(--font-weight-semibold);
+    overflow-wrap: anywhere;
+
+    @include mq(lg) {
+      font-size: font-size(xl);
+    }
+  }
+
+  &__big {
+    @include display-type;
+    font-size: font-size(2xl);
+  }
+
+  // Escanear el QR desde el mismo teléfono no tiene sentido: solo en pantallas grandes.
+  &__qr {
+    display: none;
+    justify-items: start;
+
+    @include mq(lg) {
+      display: grid;
+    }
+
+    svg {
+      width: 7rem;
+      height: 7rem;
+    }
+  }
+
+  &__where {
+    @include mq(lg) {
+      grid-column: 2 / -1;
+    }
   }
 
   &__lead {
-    font-size: font-size(lg);
-    color: color(text-muted);
-  }
-
-  &__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: space(xs);
-    margin-top: space(sm);
+    max-width: 28ch;
   }
 }

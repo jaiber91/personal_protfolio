@@ -1,42 +1,77 @@
 ---
 import './Contact.scss';
-import Button from '@/components/ui/Button/Button.astro';
+import QRCode from 'qrcode';
+import LiveClock from '@/components/ui/LiveClock/LiveClock.astro';
 import type { Dictionary } from '@/i18n';
 
 interface Props {
   t: Dictionary['contact'];
+  hud: Dictionary['hud'];
 }
 
-const { t } = Astro.props;
+const { t, hud } = Astro.props;
 const EMAIL = 'jaiver.navia@gmail.com';
 const LINKEDIN = 'https://www.linkedin.com/in/jaiberflor';
+
+// QR generado en build; el trazo hereda el color del texto (currentcolor).
+const qr = (
+  await QRCode.toString(LINKEDIN, {
+    type: 'svg',
+    margin: 0,
+    color: { dark: '#000000', light: '#ffffff00' },
+  })
+)
+  .replace('stroke="#000000"', 'stroke="currentColor"')
+  .replace('<svg ', '<svg aria-hidden="true" ');
 ---
 
 <contact-section class="contact" id="contact">
-  <section class="contact__inner container" aria-labelledby="contact-title">
+  <section class="contact__inner" aria-labelledby="contact-title">
     <p class="contact__eyebrow" data-reveal>
       {t.eyebrow}
     </p>
-    <h2 class="contact__title" id="contact-title" data-split>
+    <h2 class="contact__title" id="contact-title" data-split data-fit>
       {t.title}
     </h2>
-    <p class="contact__lead" data-reveal>
-      {t.lead}
-    </p>
-    <div class="contact__actions" data-reveal>
-      <Button
-        magnetic
-        title={t.copyEmail}
+
+    <div class="contact__grid">
+      <button
+        class="contact__cell contact__email"
+        type="button"
         aria-label={`${t.copyEmail}: ${EMAIL}`}
         data-copy-email={EMAIL}
         data-copied-label={t.emailCopied}
       >
-        {EMAIL}
-      </Button>
-      <Button href={LINKEDIN} variant="ghost" external magnetic>
-        LinkedIn
-      </Button>
+        <span class="contact__hint">{t.copyEmail} ⧉</span>
+        <span class="contact__address" data-copy-label>
+          {EMAIL}
+        </span>
+      </button>
+
+      <a
+        class="contact__cell contact__linkedin"
+        href={LINKEDIN}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="contact__hint">linkedin.com/in/jaiberflor</span>
+        <span class="contact__big">LinkedIn ↗</span>
+      </a>
+
+      <div class="contact__cell contact__qr">
+        <Fragment set:html={qr} />
+        <span class="contact__hint">{t.qrLabel}</span>
+      </div>
+
+      <div class="contact__cell contact__where">
+        <span class="contact__hint">
+          {hud.location} · {hud.coordinates}
+        </span>
+        <LiveClock label={hud.localTime} />
+        <p class="contact__lead">{t.lead}</p>
+      </div>
     </div>
+
     <p class="visually-hidden" role="status" data-copy-status></p>
   </section>
 </contact-section>

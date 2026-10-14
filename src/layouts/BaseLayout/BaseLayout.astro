@@ -1,9 +1,9 @@
 ---
-import '@fontsource-variable/outfit';
-import '@fontsource-variable/work-sans';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/epilogue';
+import '@fontsource-variable/jetbrains-mono';
 import '@/styles/main.scss';
 import './BaseLayout.scss';
-import WebGLCanvas from '@/components/layout/WebGLCanvas/WebGLCanvas.astro';
 import {
   DEFAULT_LOCALE,
   getDictionary,
@@ -76,7 +76,6 @@ const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site)
     <a class="skip-link" href="#main">
       {t.a11y.skipToContent}
     </a>
-    <WebGLCanvas />
     <slot name="overlay" />
     <slot name="header" />
     <main class="page" id="main">

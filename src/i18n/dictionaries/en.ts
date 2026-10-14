@@ -4,7 +4,7 @@ const en: Dictionary = {
   meta: {
     title: 'Jaiber Flor — Full Stack & Mobile Developer',
     description:
-      'Portfolio of Jaiber Flor, Full Stack and Mobile developer. Flutter, Angular, NestJS and TypeScript.',
+      'Portfolio of Jaiber Flor, Full Stack and Mobile developer based in Colombia. Flutter, Angular, NestJS and TypeScript.',
   },
   a11y: {
     skipToContent: 'Skip to content',
@@ -19,13 +19,34 @@ const en: Dictionary = {
     projects: 'Projects',
     contact: 'Contact',
   },
+  hud: {
+    location: 'Jamundí, Colombia',
+    coordinates: '3°15′N 76°32′W',
+    localTime: 'Local time',
+    status: 'Available for projects',
+    hire: "Let's talk",
+  },
+  loader: {
+    log: [
+      'booting jaiber.flor',
+      'flutter build ios android web',
+      'nestjs api ··· ok',
+      'angular ··· ok',
+      'calibrating particles',
+      'signal stable',
+    ],
+  },
   hero: {
     eyebrow: 'Full Stack & Mobile Developer',
     title: 'Jaiber Flor',
-    lead: 'I build digital products for mobile, tablet and web — from the architecture to the last interface detail.',
+    lead: 'I build digital products for mobile, tablet and web: from the architecture to the last pixel.',
     primaryCta: 'See projects',
     secondaryCta: "Let's talk",
     scrollHint: 'Scroll',
+  },
+  manifesto: {
+    eyebrow: '00 — Manifesto',
+    text: 'Before writing code I taught *over a thousand people* to use technology. Today I architect apps used by *thousands*: banking, virtual assemblies and tools that have to work on *any screen*. I care about what you do not see —tests, releases, performance— as much as the *last pixel*.',
   },
   platforms: {
     eyebrow: '01 — Platforms',
@@ -50,6 +71,15 @@ const en: Dictionary = {
     title: 'My journey',
     metricsLabel: 'Results',
     stackLabel: 'Stack',
+    board: {
+      title: 'Departures',
+      subtitle: 'Salidas',
+      columns: { period: 'Period', company: 'Destination', role: 'Flight', status: 'Status' },
+      status: { current: 'Boarding', done: 'Landed' },
+      details: 'Details',
+      close: 'Close',
+      hint: 'Tap a flight to see its details',
+    },
     items: [
       {
         period: '2025 — Now',
@@ -60,9 +90,9 @@ const en: Dictionary = {
           {
             value: 300,
             suffix: '',
-            label: 'people in the banking program',
+            label: 'people on the same banking project',
             detail:
-              'Designed the package-based routing of a modular Flutter architecture: a 10-person team ships in parallel with no rework.',
+              'The app is split into independent modules. I designed how they connect and navigate between each other, and that solution became the standard every team on the project uses in their packages.',
           },
           {
             value: 80,
@@ -76,7 +106,7 @@ const en: Dictionary = {
             suffix: '+',
             label: 'downloads on iOS, Android, web and tablet',
             detail:
-              'Cross-platform features for the banking app and, later, internal enterprise tools.',
+              "I build features for the bank's app, which runs on iOS, Android, web and tablet from a single Flutter codebase. I now also build internal tools for the company.",
           },
         ],
         stack: ['Flutter', 'Dart', 'Testing', 'Scrum'],
@@ -89,9 +119,9 @@ const en: Dictionary = {
           {
             value: 1500,
             suffix: '+',
-            label: 'concurrent users',
+            label: 'attendees connected at once',
             detail:
-              'Integrated Zoom SDK into the Angular virtual assembly portal: 300 to 2,000 attendees per session.',
+              'Helped build, in Angular, a virtual and hybrid assembly platform for residential communities: live video, real-time quorum and voting, with 300 to 2,000 attendees per session.',
           },
           {
             value: 10,
@@ -99,14 +129,14 @@ const en: Dictionary = {
             suffix: ' min',
             label: 'per release (down from 60+)',
             detail:
-              'Automated Flutter releases with Fastlane: 15+ hours saved monthly, no paid CodeMagic.',
+              'Automated Flutter app releases with Fastlane (CI/CD): from over an hour to 10 minutes per release, 15+ hours saved monthly and no third-party service costs.',
           },
           {
             value: 8000,
             suffix: '+',
             label: 'mobile app downloads',
             detail:
-              'New Flutter features for Google Play and the App Store, plus 10+ REST endpoints with NestJS, MongoDB and PostgreSQL.',
+              'New features for the Flutter app on Google Play and the App Store, and the REST APIs behind it with NestJS, MongoDB and PostgreSQL.',
           },
         ],
         stack: ['Angular', 'NestJS', 'Flutter', 'Fastlane', 'MongoDB', 'PostgreSQL'],
@@ -141,12 +171,17 @@ const en: Dictionary = {
         stack: ['JavaScript', 'HTML', 'CSS', 'WordPress', 'Wix'],
       },
     ],
-    educationTitle: 'Education',
+    educationTitle: 'Layovers · Education',
     education: [
       {
         period: 'In progress',
         title: 'Systems Engineering',
         place: 'Universidad Internacional de La Rioja',
+      },
+      {
+        period: '2018',
+        title: "Bachelor's Degree in History",
+        place: 'Universidad del Valle',
       },
       { period: '2021', title: 'Full Stack Developer', place: 'Prográmate by Simplon' },
       { period: '2020', title: 'Frontend Developer Master', place: 'Platzi' },
@@ -156,6 +191,9 @@ const en: Dictionary = {
   projects: {
     eyebrow: '03 — Projects',
     title: 'Selected work',
+    pass: 'Boarding pass',
+    gateLabel: 'Gate',
+    yearLabel: 'Year',
     empty: 'Projects coming soon.',
     stackLabel: 'Stack',
     roleLabel: 'Role',
@@ -167,9 +205,11 @@ const en: Dictionary = {
     lead: "I'm open to new projects and opportunities.",
     copyEmail: 'Copy email',
     emailCopied: 'Email copied!',
+    qrLabel: 'Scan → LinkedIn',
   },
   footer: {
-    builtWith: 'Built with Astro and Three.js',
+    builtWith: 'Built with Astro, Three.js and GSAP',
+    backToTop: 'Back to top',
   },
 };
 

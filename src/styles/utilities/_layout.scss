@@ -38,3 +38,37 @@
   padding-block: 0.12em 0.2em;
   margin-block: -0.12em -0.2em;
 }
+
+// Titulares ajustados al ancho (ver scripts/interactions/fit.ts): su caja no debe
+// crecer con el contenido o el cálculo mide el texto desbordado.
+[data-fit] {
+  min-width: 0;
+  max-width: 100%;
+}
+
+// Celdas split-flap (ver scripts/interactions/flap.ts): una placa por carácter con
+// la línea de corte horizontal de los tableros de aeropuerto.
+.flap-word {
+  display: inline-flex;
+  gap: 0.08em;
+  white-space: nowrap;
+}
+
+.flap {
+  position: relative;
+  display: inline-block;
+  min-width: 0.78em;
+  padding: 0.12em 0.06em;
+  background: var(--color-disc-off);
+  text-align: center;
+  line-height: 1.15;
+  transform-origin: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 1px;
+    background: rgb(0 0 0 / 55%);
+  }
+}

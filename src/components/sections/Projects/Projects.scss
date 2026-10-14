@@ -2,48 +2,47 @@
 
 // Vertical por defecto (móvil, sin JS, movimiento reducido). En escritorio
 // Projects.ts añade `projects--horizontal`: la sección se fija y el scroll
-// desplaza los proyectos de lado, uno por pantalla.
+// desplaza los pases de lado.
 .projects {
   display: block;
+  background: color(signal);
+  color: color(on-signal);
 
   &__pin {
     display: grid;
-    // La columna no crece con el carril horizontal (que mide varias pantallas).
     grid-template-columns: minmax(0, 1fr);
     gap: space(xl);
     padding-block: space(3xl);
+    overflow: hidden;
   }
 
   &__header {
     display: grid;
-    gap: space(sm);
+    gap: space(xs);
   }
 
-  &__progress {
-    display: none;
-    height: 1px;
-    background: color(border);
+  &__eyebrow {
+    @include hud;
   }
 
-  &__progress-bar {
-    display: block;
-    height: 100%;
-    background: color(text);
-    transform-origin: left;
-    transform: scaleX(0);
+  &__title {
+    font-size: font-size(3xl);
   }
 
   &__track {
     display: grid;
-    gap: space(2xl);
+    gap: space(xl);
+    padding-inline: var(--gutter);
   }
 
   &__slide {
-    @include container;
+    display: flex;
+    justify-content: center;
+    perspective: 70rem;
   }
 
   &__empty {
-    color: color(text-muted);
+    font-family: var(--font-mono);
   }
 
   &--horizontal {
@@ -51,24 +50,19 @@
       height: 100svh;
       align-content: center;
       gap: space(lg);
-      padding-block: var(--header-height) space(md);
-      overflow: hidden;
+      padding-block: calc(var(--header-height) + #{space(sm)}) space(2xl);
     }
 
-    .projects__progress {
-      display: block;
-    }
-
+    // Mismo ancho que `.ticket`: el primer y el último pase quedan centrados.
     .projects__track {
       display: flex;
-      gap: 0;
+      gap: space(xl);
       width: max-content;
+      padding-inline: calc((100vw - min(54rem, 86vw)) / 2);
     }
 
     .projects__slide {
       flex: none;
-      width: 100vw;
-      max-width: none;
     }
   }
 }

@@ -63,3 +63,28 @@
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
+
+// Texto de interfaz tipo HUD: mono, mayúsculas, con el color del contexto.
+@mixin hud {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// Titulares: Archivo expandida y negra, en mayúsculas.
+@mixin display-type {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: var(--line-height-solid);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+// Letras solo con contorno (texto "apagado"). El trazo necesita un color explícito:
+// `currentcolor` ya sería transparente.
+@mixin outline-text($stroke, $width: 1px) {
+  color: transparent;
+  -webkit-text-stroke: $width $stroke;
+}
