@@ -75,6 +75,11 @@
     }
   }
 
+  // El "@" del correo se genera aquí para que no esté en el texto del HTML.
+  &__at::before {
+    content: '@';
+  }
+
   &__big {
     @include display-type;
     font-size: font-size(2xl);
@@ -102,6 +107,6 @@
   }
 
   &__lead {
-    max-width: 28ch;
+    max-width: 40ch;
   }
 }
