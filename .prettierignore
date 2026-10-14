@@ -2,3 +2,6 @@ dist
 .astro
 node_modules
 package-lock.json
+
+# Skills de terceros (se mantienen tal como vienen del original)
+.claude/skills
