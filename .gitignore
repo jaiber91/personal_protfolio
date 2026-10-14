@@ -22,3 +22,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# environment variables (cualquier variante)
+.env.*
+!.env.example
+
+# reportes locales (Lighthouse, auditorías): pueden contener datos del entorno
+report*.json
+*.lighthouse.json
+lighthouse-*.html

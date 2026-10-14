@@ -1,0 +1,21 @@
+# Cabeceras de seguridad (Netlify y Cloudflare Pages). Basadas en OWASP Secure Headers,
+# adaptadas al sitio: ver .claude/skills/web-security-audit/references/security-headers.md
+# - clipboard-write=(self): el botón "Copiar correo" escribe en el portapapeles.
+# - La CSP principal la genera Astro en un <meta> (con hashes); aquí va lo que un <meta>
+#   no admite: frame-ancestors.
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(self), usb=(), web-share=(), xr-spatial-tracking=(), clipboard-read=(), clipboard-write=(self), gamepad=(), hid=(), idle-detection=(), interest-cohort=(), serial=(), unload=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
+  X-DNS-Prefetch-Control: off
+
+# Archivos con hash en el nombre: se pueden guardar en caché para siempre.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

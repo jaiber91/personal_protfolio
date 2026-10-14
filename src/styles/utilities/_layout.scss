@@ -72,3 +72,9 @@
     background: rgb(0 0 0 / 55%);
   }
 }
+
+// Sin WebGL (no soportado o contexto perdido): se ocultan los lienzos y queda el HTML.
+.no-webgl [data-hero-board],
+.no-webgl [data-platforms-canvas] {
+  display: none;
+}

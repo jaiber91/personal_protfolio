@@ -14,8 +14,9 @@ class ContactSection extends HTMLElement {
     const status = this.querySelector<HTMLElement>('[data-copy-status]');
     if (!button || !label) return;
 
-    const email = button.dataset.copyEmail ?? '';
-    const original = label.textContent ?? email;
+    // La dirección se arma aquí (no está completa en el HTML, ver Contact.astro).
+    const email = `${button.dataset.emailUser ?? ''}@${button.dataset.emailDomain ?? ''}`;
+    const original = [...label.childNodes].map((node) => node.cloneNode(true));
 
     button.addEventListener(
       'click',
@@ -31,7 +32,7 @@ class ContactSection extends HTMLElement {
         if (status) status.textContent = copied;
         window.clearTimeout(this.resetTimer);
         this.resetTimer = window.setTimeout(() => {
-          label.textContent = original;
+          label.replaceChildren(...original.map((node) => node.cloneNode(true)));
           if (status) status.textContent = '';
         }, COPIED_DURATION);
       },

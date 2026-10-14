@@ -28,6 +28,7 @@ export class Stage {
   private readonly resizeObserver: ResizeObserver;
   private readonly visibilityObserver: IntersectionObserver;
   private visible = false;
+  private lost = false;
 
   constructor(readonly canvas: HTMLCanvasElement) {
     this.renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -42,6 +43,17 @@ export class Stage {
     this.visibilityObserver.observe(canvas);
 
     const { signal } = this.abort;
+    // Si el navegador pierde el contexto WebGL (GPU reiniciada, demasiadas pestañas...)
+    // se deja de dibujar y la página muestra su respaldo en HTML (clase `no-webgl`).
+    canvas.addEventListener(
+      'webglcontextlost',
+      (event) => {
+        event.preventDefault();
+        this.lost = true;
+        document.documentElement.classList.add('no-webgl');
+      },
+      { signal },
+    );
     window.addEventListener('pointermove', this.onPointerMove, { passive: true, signal });
     document.documentElement.addEventListener(
       'pointerleave',
@@ -77,7 +89,7 @@ export class Stage {
   }
 
   private readonly tick = (time: number): void => {
-    if (!this.visible) return;
+    if (!this.visible || this.lost) return;
     this.pointer.lerp(this.pointerTarget, 0.1);
     this.objects.forEach((object) => object.update(time, this));
     this.renderer.render(this.scene, this.camera);
