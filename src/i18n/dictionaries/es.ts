@@ -1,9 +1,11 @@
 // Diccionario base: define la forma (tipo) que deben cumplir los demás idiomas.
 const es = {
   meta: {
-    title: 'Jaiber Flor — Full Stack & Mobile Developer',
+    title: 'Jaiber Flor | Desarrollador Flutter y Full Stack',
     description:
-      'Portafolio de Jaiber Flor, desarrollador Full Stack y Mobile en Colombia con más de 5 años de experiencia en banca, startups y el sector educativo. Flutter, Angular, NestJS y TypeScript.',
+      'Jaiber Leonardo Flor es desarrollador Full Stack y Mobile en Colombia, con más de 5 años en banca, startups y educación. Flutter, Angular y NestJS.',
+    ogImageAlt:
+      'Tablero de discos amarillos que escribe Jaiber Flor, con el rol Full Stack & Mobile Developer.',
   },
   a11y: {
     skipToContent: 'Saltar al contenido',

@@ -2,9 +2,11 @@ import type { Dictionary } from './es';
 
 const en: Dictionary = {
   meta: {
-    title: 'Jaiber Flor — Full Stack & Mobile Developer',
+    title: 'Jaiber Flor | Flutter & Full Stack Developer',
     description:
-      'Portfolio of Jaiber Flor, Full Stack and Mobile developer based in Colombia with 5+ years of experience in banking, startups and education. Flutter, Angular, NestJS and TypeScript.',
+      'Jaiber Leonardo Flor is a Full Stack and Mobile developer in Colombia with 5+ years in banking, startups and education. Flutter, Angular and NestJS.',
+    ogImageAlt:
+      'A board of yellow discs spelling Jaiber Flor, with the role Full Stack & Mobile Developer.',
   },
   a11y: {
     skipToContent: 'Skip to content',

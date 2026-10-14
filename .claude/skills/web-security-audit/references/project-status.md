@@ -29,6 +29,10 @@ cada auditoría: es lo que evita reportar dos veces la misma decisión.
 - **`npm audit`: `braces` (alta) vía `eslint-plugin-astro`:** solo desarrollo (lint), sin
   versión corregida; `npm audit --omit=dev` = 0. Revisar cuando Dependabot proponga una versión.
 - **Coordenadas, ciudad y hora local públicas:** decisión de diseño del autor.
+- **JSON-LD con `set:html`** (`StructuredData.astro`): datos propios de `profile.ts`, con `<`
+  escapado; un `<script type="application/ld+json">` no se ejecuta, la CSP no lo bloquea.
+- **`Cross-Origin-Resource-Policy: cross-origin` solo en `/og/*`:** las plataformas que
+  muestran la vista previa al compartir deben poder cargar la imagen.
 - **QR con `set:html`:** se genera en build desde una constante del código, sin datos externos.
 
 ## Pendientes (requieren acción fuera del código)

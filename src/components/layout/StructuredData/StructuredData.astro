@@ -1,0 +1,67 @@
+---
+// Datos estructurados (schema.org, JSON-LD): le dicen a Google y a los buscadores de IA
+// quién es la persona, con qué nombres la buscan y dónde están sus perfiles.
+// Un <script type="application/ld+json"> no se ejecuta, así que la CSP no lo bloquea.
+import { profile } from '@/config/profile';
+import type { Locale } from '@/i18n';
+import { getDictionary, LOCALE_META } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  url: string;
+  image: string;
+}
+
+const { locale, url, image } = Astro.props;
+const t = getDictionary(locale);
+const site = new URL('/', Astro.site).href;
+const personId = `${site}#person`;
+
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: profile.fullName,
+      givenName: profile.givenName,
+      familyName: profile.familyName,
+      alternateName: profile.alternateNames,
+      jobTitle: profile.jobTitle,
+      description: t.meta.description,
+      url: site,
+      image,
+      sameAs: [profile.linkedin, profile.github],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: profile.location.locality,
+        addressRegion: profile.location.region,
+        addressCountry: profile.location.country,
+      },
+      knowsAbout: profile.knowsAbout,
+      alumniOf: profile.alumniOf.map((name) => ({ '@type': 'EducationalOrganization', name })),
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${url}#page`,
+      url,
+      name: t.meta.title,
+      inLanguage: LOCALE_META[locale].htmlLang,
+      mainEntity: { '@id': personId },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site}#website`,
+      url: site,
+      name: profile.displayName,
+      inLanguage: ['es', 'en'],
+      publisher: { '@id': personId },
+    },
+  ],
+};
+
+// `</` escapado: el JSON no puede cerrar la etiqueta <script> aunque un texto lo contenga.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} />

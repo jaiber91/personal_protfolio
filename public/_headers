@@ -19,3 +19,7 @@
 # Archivos con hash en el nombre: se pueden guardar en caché para siempre.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes para compartir: las plataformas (LinkedIn, Slack, Discord...) deben poder mostrarlas.
+/og/*
+  Cross-Origin-Resource-Policy: cross-origin
