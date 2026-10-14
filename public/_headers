@@ -12,13 +12,15 @@
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(self), usb=(), web-share=(), xr-spatial-tracking=(), clipboard-read=(), clipboard-write=(self), gamepad=(), hid=(), idle-detection=(), interest-cohort=(), serial=(), unload=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
-  Cross-Origin-Resource-Policy: same-origin
   X-Permitted-Cross-Domain-Policies: none
   X-DNS-Prefetch-Control: off
 
 # Archivos con hash en el nombre: se pueden guardar en caché para siempre.
+# Cloudflare suma (no reemplaza) las cabeceras de reglas que coinciden: por eso
+# Cross-Origin-Resource-Policy no va en /* y se define por ruta.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+  Cross-Origin-Resource-Policy: same-origin
 
 # Imágenes para compartir: las plataformas (LinkedIn, Slack, Discord...) deben poder mostrarlas.
 /og/*

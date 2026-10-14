@@ -1,8 +1,11 @@
 ---
 // Raíz: envía al visitante a su idioma (navegador) o al idioma por defecto.
-import { DEFAULT_LOCALE, LOCALES, localizePath } from '@/i18n';
+// Lleva los metadatos para compartir: WhatsApp y compañía no ejecutan el redireccionamiento.
+import SocialMeta from '@/components/layout/SocialMeta/SocialMeta.astro';
+import { DEFAULT_LOCALE, getDictionary, LOCALES, localizePath } from '@/i18n';
 
 const fallback = localizePath(DEFAULT_LOCALE);
+const t = getDictionary(DEFAULT_LOCALE);
 const targets = Object.fromEntries(LOCALES.map((locale) => [locale, localizePath(locale)]));
 ---
 
@@ -10,8 +13,19 @@ const targets = Object.fromEntries(LOCALES.map((locale) => [locale, localizePath
 <html lang={DEFAULT_LOCALE}>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Jaiber Flor</title>
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <link rel="canonical" href={new URL(fallback, Astro.site).href} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SocialMeta
+      locale={DEFAULT_LOCALE}
+      title={t.meta.title}
+      description={t.meta.description}
+      url={new URL('/', Astro.site).href}
+    />
     <script is:inline define:vars={{ targets, fallback }}>
       const preferred = (navigator.languages || [navigator.language])
         .map((lang) => lang.slice(0, 2).toLowerCase())
