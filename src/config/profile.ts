@@ -12,7 +12,8 @@ export const profile = {
   alternateNames: ['Jaiber Flor', 'Leonardo Flor', 'Jaiber Leonardo Flor'],
   jobTitle: 'Full Stack & Mobile Developer',
   // El correo se guarda en partes: nunca se publica completo en el HTML (ver Contact).
-  email: { user: 'jaiver.navia', domain: 'gmail.com' },
+  // hola@jaiberflor.dev se reenvía a Gmail con Cloudflare Email Routing.
+  email: { user: 'hola', domain: 'jaiberflor.dev' },
   linkedin: 'https://www.linkedin.com/in/jaiberflor',
   github: 'https://github.com/jaiber91',
   location: { locality: 'Jamundí', region: 'Valle del Cauca', country: 'CO' },
