@@ -1,11 +1,11 @@
 // Diccionario base: define la forma (tipo) que deben cumplir los demás idiomas.
 const es = {
   meta: {
-    title: 'Jaiber Flor | Desarrollador Flutter y Full Stack',
+    title: 'Jaiber Flor | Desarrollador Full Stack',
     description:
-      'Jaiber Leonardo Flor es desarrollador Full Stack y Mobile en Colombia, con más de 5 años en banca, startups y educación. Flutter, Angular y NestJS.',
+      'Jaiber Leonardo Flor es desarrollador Full Stack en Colombia, con más de 5 años en banca, startups y educación. Flutter, Angular y NestJS.',
     ogImageAlt:
-      'Tablero de discos amarillos que escribe Jaiber Flor, con el rol Full Stack & Mobile Developer.',
+      'Tablero de discos amarillos que escribe Jaiber Flor, con el rol Full Stack Developer.',
   },
   a11y: {
     skipToContent: 'Saltar al contenido',
@@ -38,7 +38,7 @@ const es = {
     ],
   },
   hero: {
-    eyebrow: 'Full Stack & Mobile Developer',
+    eyebrow: 'Full Stack Developer',
     title: 'Jaiber Flor',
     lead: 'Desarrollo apps móviles y web para banca y startups con Flutter, Angular y NestJS, desde la arquitectura hasta la interfaz.',
     primaryCta: 'Ver trayectoria',
@@ -214,6 +214,15 @@ const es = {
     copyEmail: 'Copiar correo',
     emailCopied: '¡Correo copiado!',
     qrLabel: 'Escanea → LinkedIn',
+  },
+  notFound: {
+    title: 'Vuelo cancelado | Jaiber Flor',
+    code: '404',
+    destination: 'Destino desconocido',
+    status: 'Cancelado',
+    heading: 'Vuelo cancelado',
+    text: 'La página que buscas no existe o cambió de puerta.',
+    cta: 'Volver al inicio',
   },
   footer: {
     backToTop: 'Volver arriba',

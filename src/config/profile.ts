@@ -10,7 +10,7 @@ export const profile = {
   displayName: 'Jaiber Flor',
   /** Variantes con las que buscan a la persona (en distintos trabajos lo conocen por cada una). */
   alternateNames: ['Jaiber Flor', 'Leonardo Flor', 'Jaiber Leonardo Flor'],
-  jobTitle: 'Full Stack & Mobile Developer',
+  jobTitle: 'Full Stack Developer',
   // El correo se guarda en partes: nunca se publica completo en el HTML (ver Contact).
   // hola@jaiberflor.dev se reenvía a Gmail con Cloudflare Email Routing.
   email: { user: 'hola', domain: 'jaiberflor.dev' },

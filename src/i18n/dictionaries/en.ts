@@ -2,11 +2,10 @@ import type { Dictionary } from './es';
 
 const en: Dictionary = {
   meta: {
-    title: 'Jaiber Flor | Flutter & Full Stack Developer',
+    title: 'Jaiber Flor | Full Stack Developer',
     description:
-      'Jaiber Leonardo Flor is a Full Stack and Mobile developer in Colombia with 5+ years in banking, startups and education. Flutter, Angular and NestJS.',
-    ogImageAlt:
-      'A board of yellow discs spelling Jaiber Flor, with the role Full Stack & Mobile Developer.',
+      'Jaiber Leonardo Flor is a Full Stack developer in Colombia with 5+ years in banking, startups and education. Flutter, Angular and NestJS.',
+    ogImageAlt: 'A board of yellow discs spelling Jaiber Flor, with the role Full Stack Developer.',
   },
   a11y: {
     skipToContent: 'Skip to content',
@@ -39,7 +38,7 @@ const en: Dictionary = {
     ],
   },
   hero: {
-    eyebrow: 'Full Stack & Mobile Developer',
+    eyebrow: 'Full Stack Developer',
     title: 'Jaiber Flor',
     lead: 'I build mobile and web apps for banking and startups with Flutter, Angular and NestJS, from the architecture to the interface.',
     primaryCta: 'See my journey',
@@ -218,6 +217,15 @@ const en: Dictionary = {
     copyEmail: 'Copy email',
     emailCopied: 'Email copied!',
     qrLabel: 'Scan → LinkedIn',
+  },
+  notFound: {
+    title: 'Flight cancelled | Jaiber Flor',
+    code: '404',
+    destination: 'Unknown destination',
+    status: 'Cancelled',
+    heading: 'Flight cancelled',
+    text: 'The page you are looking for does not exist or changed gates.',
+    cta: 'Back to home',
   },
   footer: {
     backToTop: 'Back to top',
