@@ -11,8 +11,8 @@ const total = String(t.steps.length).padStart(2, '0');
 ---
 
 <platforms-section class="platforms" id="platforms">
-  <!-- Se fija este div y no el custom element: el pin mueve el nodo en el DOM
-       y eso volvería a disparar connected/disconnectedCallback. -->
+  {/* Se fija este div y no el custom element: el pin mueve el nodo en el DOM
+       y eso volvería a disparar connected/disconnectedCallback. */}
   <div class="platforms__pin" data-platforms-pin>
     <canvas class="platforms__canvas" data-platforms-canvas aria-hidden="true"></canvas>
     <div class="platforms__inner">

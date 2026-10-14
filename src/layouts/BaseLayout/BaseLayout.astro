@@ -54,9 +54,8 @@ const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site)
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
 
-    <!-- Antes del primer pintado: tema guardado (o del sistema) y bandera de JS. -->
+    {/* Antes del primer pintado: tema guardado (o del sistema) y bandera de JS. */}
     <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
       const root = document.documentElement;
       root.classList.add('js');

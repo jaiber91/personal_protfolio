@@ -12,10 +12,10 @@ interface Props {
 const { locale, t } = Astro.props;
 ---
 
-<!-- Header mínimo: marca a la izquierda, idioma y tema a la derecha.
-     La navegación vive en el dock inferior (ver Dock). -->
+{/* Header mínimo: marca a la izquierda, idioma y tema a la derecha.
+     La navegación vive en el dock inferior (ver Dock). */}
 <header class="site-header">
-  <a class="site-header__brand" href="#top" aria-label={t.hero.title}>
+  <a class="site-header__brand" href="#top">
     <span class="site-header__mark">JF</span>
     <span class="site-header__name">{t.hero.title}</span>
   </a>

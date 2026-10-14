@@ -9,6 +9,8 @@ $themes: (
     surface: #e4e1d7,
     text: #111114,
     text-muted: #5a5850,
+    // Texto "apagado" que aún cumple 3:1 (WCAG, texto grande).
+    text-faint: #7a776f,
     border: #111114,
     rule: rgb(17 17 20 / 16%),
     accent: #111114,
@@ -27,6 +29,7 @@ $themes: (
     surface: #1b1b20,
     text: #efede6,
     text-muted: #9a978e,
+    text-faint: #6d6b65,
     border: #efede6,
     rule: rgb(239 237 230 / 16%),
     accent: #ffd23f,
