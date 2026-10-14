@@ -19,6 +19,16 @@ const { t, hud } = Astro.props;
   <h1 class="hero__title" data-hero-title>
     {t.title}
   </h1>
+  {/* Pista de pronunciación justo debajo del nombre del tablero (Hero.ts la ubica). */}
+  <p class="hero__say" data-hero-say data-hero-reveal>
+    <span aria-hidden="true">
+      <span class="hero__say-label">{t.pronunciation.label}</span>
+      <span class="hero__say-name">{t.pronunciation.name}</span>
+      <span class="hero__say-sep">·</span>
+      <span class="hero__say-phonetic">{t.pronunciation.phonetic}</span>
+    </span>
+    <span class="visually-hidden">{t.pronunciation.spoken}</span>
+  </p>
 
   <div class="hero__panel" data-hero-reveal>
     <p class="hero__eyebrow">{t.eyebrow}</p>

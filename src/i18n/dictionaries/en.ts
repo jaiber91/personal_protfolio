@@ -45,6 +45,13 @@ const en: Dictionary = {
     primaryCta: 'See my journey',
     secondaryCta: "Let's talk",
     scrollHint: 'Scroll',
+    // "HIGH" in English sounds like the Spanish "JAI" (the J is never pronounced like "Jack").
+    pronunciation: {
+      label: 'Pronounced',
+      name: 'Jaiber',
+      phonetic: '/HIGH-ber/',
+      spoken: 'Pronounced HIGH-ber.',
+    },
   },
   manifesto: {
     eyebrow: '00 — Manifesto',

@@ -44,6 +44,13 @@ const es = {
     primaryCta: 'Ver trayectoria',
     secondaryCta: 'Hablemos',
     scrollHint: 'Desliza',
+    // Pista de pronunciación bajo el nombre (en inglés la J se lee "Y": ver en.ts).
+    pronunciation: {
+      label: 'Se pronuncia',
+      name: 'Jaiber',
+      phonetic: '/JÁI-ber/',
+      spoken: 'Se pronuncia Jáiber, con la jota de jamón.',
+    },
   },
   manifesto: {
     eyebrow: '00 — Manifiesto',

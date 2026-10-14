@@ -20,6 +20,11 @@ export interface FlipBoardOptions {
   /** Tamaño aproximado de celda en píxeles CSS. */
   cellPx: number;
   colors: { on: string; off: string };
+  /**
+   * Se llama al cambiar el tamaño con el borde inferior del texto, como fracción (0–1)
+   * de la altura del canvas: para colocar HTML justo debajo del nombre.
+   */
+  onLayout?: (textBottom: number) => void;
 }
 
 const FLIP_SPEED = 5; // medias vueltas por segundo
@@ -47,6 +52,8 @@ export class FlipBoard implements StageObject {
   private lastTime = 0;
   private time = 0;
   private revealed = false;
+  /** Fila (en celdas) justo debajo del último disco encendido del texto. */
+  private textBottomRow = 0;
   private readonly random = createRandom(11);
   private readonly material: ShaderMaterial;
 
@@ -95,10 +102,14 @@ export class FlipBoard implements StageObject {
     if (cols === this.cols && rows === this.rows) {
       this.cell = cell;
       this.material.uniforms.uCell.value = cell;
-      return;
+    } else {
+      this.build(cols, rows, cell);
+      if (this.revealed) this.showInstantly();
     }
-    this.build(cols, rows, cell);
-    if (this.revealed) this.showInstantly();
+    // La grilla está centrada en el canvas: lo que sobra se reparte arriba y abajo.
+    const height = stage.world.height;
+    const offset = (height - rows * cell) / 2;
+    this.options.onLayout?.((offset + this.textBottomRow * cell) / height);
   }
 
   update(time: number, stage: Stage): void {
@@ -181,12 +192,14 @@ export class FlipBoard implements StageObject {
     const blockHeight = lines.length * size * lineHeight;
     lines.forEach((line, index) => {
       // Un poco por encima del centro: abajo quedan el panel y los datos del hero.
-      const y = rows * 0.42 - blockHeight / 2 + size * lineHeight * (index + 0.5);
+      const y = rows * 0.4 - blockHeight / 2 + size * lineHeight * (index + 0.5);
       context.fillText(line, cols / 2, y);
     });
 
     const { data } = context.getImageData(0, 0, cols, rows);
     for (let i = 0; i < result.length; i++) result[i] = data[i * 4 + 3] > 110 ? 1 : 0;
+    const lastLit = result.lastIndexOf(1);
+    this.textBottomRow = lastLit >= 0 ? Math.floor(lastLit / cols) + 1 : rows / 2;
     return result;
   }
 
