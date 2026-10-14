@@ -10,7 +10,9 @@ interface Props {
 }
 
 const { t, hud } = Astro.props;
-const EMAIL = 'jaiver.navia@gmail.com';
+// El correo nunca aparece completo en el HTML (lo recolectarían bots): el "@" lo pinta
+// el CSS y el script arma la dirección al copiar.
+const [EMAIL_USER, EMAIL_DOMAIN] = ['jaiver.navia', 'gmail.com'];
 const LINKEDIN = 'https://www.linkedin.com/in/jaiberflor';
 
 // QR generado en build; el trazo hereda el color del texto (currentcolor).
@@ -38,13 +40,16 @@ const qr = (
       <button
         class="contact__cell contact__email"
         type="button"
-        aria-label={`${t.copyEmail}: ${EMAIL}`}
-        data-copy-email={EMAIL}
+        data-copy-email
+        data-email-user={EMAIL_USER}
+        data-email-domain={EMAIL_DOMAIN}
         data-copied-label={t.emailCopied}
       >
         <span class="contact__hint">{t.copyEmail} ⧉</span>
         <span class="contact__address" data-copy-label>
-          {EMAIL}
+          {EMAIL_USER}
+          <span class="contact__at"></span>
+          {EMAIL_DOMAIN}
         </span>
       </button>
 
