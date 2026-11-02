@@ -3,6 +3,7 @@ import { whenIdle } from '@/scripts/core/idle';
 import { lifecycle } from '@/scripts/core/lifecycle';
 import { prefersReducedMotion } from '@/scripts/core/motion';
 import { readColorToken, THEME_CHANGE_EVENT } from '@/scripts/core/theme';
+import { hasWebGL } from '@/scripts/core/webgl';
 import type { FlipBoard } from '@/webgl/flip/FlipBoard';
 import type { Stage } from '@/webgl/Stage';
 
@@ -34,7 +35,8 @@ class HeroSection extends HTMLElement {
   private async setup(): Promise<void> {
     // El tablero se prepara en paralelo mientras corre el loader.
     const boardReady = this.createBoard();
-    if (prefersReducedMotion()) {
+    // Sin WebGL tampoco: la entrada escalonada solo acompaña al tablero.
+    if (prefersReducedMotion() || !hasWebGL()) {
       (await boardReady)?.showInstantly();
       return;
     }

@@ -18,13 +18,13 @@ Estado al 2026-10-14. Sitio en producción: https://jaiberflor.dev (Cloudflare, 
 
 ## 1. Registrar el sitio en buscadores (lo hace Jaiber)
 
-- [ ] **Google Search Console** — https://search.google.com/search-console
+- [x] **Google Search Console** (verificado por DNS, sitemap enviado, indexación solicitada) — https://search.google.com/search-console
   1. Agregar propiedad → tipo **Dominio** → `jaiberflor.dev`.
   2. Verificar con el registro `TXT` que entrega Google (agregarlo en el DNS de Cloudflare;
      Cloudflare puede hacerlo automático).
   3. **Sitemaps** → enviar `sitemap-index.xml`.
   4. **Inspección de URLs** → solicitar indexación de `https://jaiberflor.dev/es/` y `/en/`.
-- [ ] **Bing Webmaster Tools** — https://www.bing.com/webmasters
+- [x] **Bing Webmaster Tools** (importado desde Search Console) — https://www.bing.com/webmasters
   - Importar desde Search Console (un clic). Bing alimenta ChatGPT y Copilot.
 
 ## 2. Coherencia fuera del sitio (lo hace Jaiber)
@@ -45,15 +45,23 @@ Estado al 2026-10-14. Sitio en producción: https://jaiberflor.dev (Cloudflare, 
 
 ## 4. Pendientes técnicos (los hace Claude)
 
-- [ ] **`www.jaiberflor.dev` responde error 522.** Falta la regla en Cloudflare:
-      Rules → Redirect Rules → plantilla **"Redirect from WWW to root"** (301, conservar
-      query string). El registro `AAAA www → 100::` (proxy) ya existe.
+- [x] **`www.jaiberflor.dev` → `jaiberflor.dev`:** regla de Cloudflare "Redirect from WWW to root"
+      (301, conserva ruta y parámetros).
 - [x] **Página 404 propia** con el concepto del aeropuerto ("Vuelo cancelado") y enlace al
       inicio, en ES y EN. Hoy una URL inexistente devuelve una página genérica.
 - [x] **Cloudflare Web Analytics** (CSP lista; falta activarla en el panel de Cloudflare:
       Analytics & Logs → Web Analytics → agregar `jaiberflor.dev` con instalación automática) (gratis, sin cookies): activar en Cloudflare y ajustar la
       CSP para permitir su script (`static.cloudflareinsights.com`) y el envío de datos
       (`cloudflareinsights.com`). Actualizar `project-status.md` de la skill de seguridad.
+- [ ] **HTTP → HTTPS** (detectado el 2026-11-02 por el aviso de Search Console "Excluida por
+      una etiqueta noindex", que lista `https://jaiberflor.dev/`, `https://www.jaiberflor.dev/`
+      y `http://jaiberflor.dev/`). Hoy `http://jaiberflor.dev/` responde 200 sin redirigir y
+      `http://www.jaiberflor.dev/` responde 522. Arreglo en Cloudflare: SSL/TLS → Edge
+      Certificates → activar **Always Use HTTPS**. Verificar después (deben dar 301 hasta
+      `https://jaiberflor.dev/`):
+      `for u in http://jaiberflor.dev/ http://www.jaiberflor.dev/ https://www.jaiberflor.dev/; do curl -s -o /dev/null -w "$u %{http_code} -> %{redirect_url}\n" "$u"; done`
+      Los avisos de "noindex" (raíz `/` y páginas 404) y de "Página alternativa con etiqueta
+      canónica adecuada" son intencionales: no pulsar "Validar corrección".
 - [ ] (Opcional) Desactivar en Cloudflare los builds de ramas que no son de producción
       (Settings → Build → Branch control): hoy fallan con `wrangler preview` sin afectar
       producción.
