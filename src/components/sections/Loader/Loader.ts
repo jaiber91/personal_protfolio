@@ -2,6 +2,7 @@ import { gsap } from '@/scripts/core/gsap';
 import { lifecycle } from '@/scripts/core/lifecycle';
 import { prefersReducedMotion } from '@/scripts/core/motion';
 import { lockScroll, unlockScroll } from '@/scripts/core/scroll';
+import { hasWebGL } from '@/scripts/core/webgl';
 
 const MIN_DURATION = 2.2;
 
@@ -9,10 +10,11 @@ const MIN_DURATION = 2.2;
  * Arranque: el log se escribe línea a línea mientras el contador sube 000 -> 100.
  * Al terminar, el fondo (una grilla de baldosas) se deshace en orden aleatorio y
  * deja ver el hero, como píxeles que se apagan.
+ * Sin WebGL no hay tablero que esperar: se salta y el hero (HTML) se ve de inmediato.
  */
 class SiteLoader extends HTMLElement {
   connectedCallback(): void {
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || !hasWebGL()) {
       this.finish();
       return;
     }

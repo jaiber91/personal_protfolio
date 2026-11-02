@@ -1,5 +1,6 @@
 import { PerspectiveCamera, Scene, Vector2, WebGLRenderer } from 'three';
 import { gsap } from '@/scripts/core/gsap';
+import { hasWebGL } from '@/scripts/core/webgl';
 
 export interface StageObject {
   update(time: number, stage: Stage): void;
@@ -31,7 +32,12 @@ export class Stage {
   private lost = false;
 
   constructor(readonly canvas: HTMLCanvasElement) {
-    this.renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true });
+    this.renderer = new WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      failIfMajorPerformanceCaveat: true,
+    });
     this.renderer.setClearColor(0x000000, 0);
     this.camera.position.z = 10;
 
@@ -114,18 +120,9 @@ export class Stage {
   };
 }
 
-export function isWebGLAvailable(): boolean {
-  try {
-    const canvas = document.createElement('canvas');
-    return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-}
-
 /** Crea un Stage sobre `canvas` si hay WebGL; si no, marca el documento y devuelve null. */
 export function createStage(canvas: HTMLCanvasElement | null): Stage | null {
-  if (!canvas || !isWebGLAvailable()) {
+  if (!canvas || !hasWebGL()) {
     document.documentElement.classList.add('no-webgl');
     return null;
   }
