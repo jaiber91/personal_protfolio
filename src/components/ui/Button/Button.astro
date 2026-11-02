@@ -10,13 +10,20 @@ interface Props extends Omit<HTMLAttributes<'button'>, 'type'> {
   external?: boolean;
 }
 
-const { href, variant = 'primary', magnetic = false, external = false, ...rest } = Astro.props;
+const {
+  href,
+  variant = 'primary',
+  magnetic = false,
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
 const Tag = href ? 'a' : 'button';
 ---
 
 <Tag
   {...rest}
-  class:list={['button', `button--${variant}`]}
+  class:list={['button', `button--${variant}`, className]}
   href={href}
   type={href ? undefined : 'button'}
   data-magnetic={magnetic ? '0.3' : undefined}

@@ -1,6 +1,7 @@
 ---
 import './ProjectCard.scss';
 import type { ImageMetadata } from 'astro';
+import Button from '@/components/ui/Button/Button.astro';
 import DeviceFrame, { type Device } from '@/components/ui/DeviceFrame/DeviceFrame.astro';
 import { createRandom } from '@/webgl/utils/random';
 
@@ -84,9 +85,12 @@ const bars = Array.from({ length: 38 }, () => 1 + Math.floor(random() * 3));
       ))}
     </span>
     {url && (
-      <a class="ticket__link" href={url} target="_blank" rel="noopener noreferrer">
-        {labels.view} ↗
-      </a>
+      <Button class="ticket__link" href={url} variant="signal" external magnetic>
+        {labels.view}
+        <span class="ticket__arrow" aria-hidden="true">
+          ↗
+        </span>
+      </Button>
     )}
   </div>
 </article>
