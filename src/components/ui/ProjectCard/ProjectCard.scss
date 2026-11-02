@@ -143,16 +143,24 @@ $notch: 0.9rem;
     }
   }
 
+  // Botón amarillo (Button `signal`): la flecha sale hacia arriba al pasar el cursor.
   &__link {
-    @include hud;
-    justify-self: start;
-    padding: space(2xs) space(xs);
-    background: color(ink);
-    color: color(on-ink);
+    white-space: nowrap;
+
+    @include mq(lg) {
+      justify-self: stretch;
+    }
 
     @include hover {
-      background: color(signal);
-      color: color(on-signal);
+      .ticket__arrow {
+        transform: translate(0.2em, -0.2em);
+      }
     }
+  }
+
+  &__arrow {
+    display: inline-block;
+    margin-inline-start: space(2xs);
+    transition: transform duration(fast) ease(snap);
   }
 }
