@@ -2,30 +2,42 @@
 import { fileURLToPath } from 'node:url';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import { DEFAULT_LOCALE, isLocale, LOCALES } from './src/i18n/config.ts';
+import { translatePath } from './src/i18n/routes.ts';
+
+const SITE = 'https://jaiberflor.dev';
 
 // https://astro.build/config
 export default defineConfig({
   // Única fuente del dominio: canonical, hreflang, Open Graph, datos estructurados,
   // sitemap, robots.txt y llms.txt.
-  site: 'https://jaiberflor.dev',
+  site: SITE,
   // Sin resaltado de código (no hay bloques de código): Shiki usa estilos en línea
   // incompatibles con la CSP.
   markdown: { syntaxHighlight: false },
   integrations: [
     // Sitemap con hreflang (es/en). La raíz "/" solo redirige por idioma: no se indexa.
     sitemap({
-      i18n: { defaultLocale: 'es', locales: { es: 'es', en: 'en' } },
       filter: (page) => {
         const { pathname } = new URL(page);
         return pathname !== '/' && !pathname.includes('404');
       },
-      // Igual que el <head>: x-default apunta al idioma por defecto (si no coinciden,
-      // Google puede ignorar el par de hreflang).
-      // Las URL comparten la lista de enlaces: se crea una nueva por URL.
+      // Igual que el <head>: los pares de idioma salen del mapa de rutas (los slugs están
+      // traducidos, así que no basta con cambiar el prefijo) y x-default apunta al idioma
+      // por defecto (si no coinciden, Google puede ignorar el par de hreflang).
       serialize: (item) => {
-        const fallback = item.links?.find((link) => link.lang === 'es');
-        if (!item.links || !fallback) return item;
-        return { ...item, links: [...item.links, { url: fallback.url, lang: 'x-default' }] };
+        const [, from, ...rest] = new URL(item.url).pathname.split('/');
+        if (!from || !isLocale(from)) return item;
+        const path = rest.join('/');
+        const url = (/** @type {import('./src/i18n/config').Locale} */ to) =>
+          new URL(`/${to}/${translatePath(path, from, to)}`, SITE).href;
+        return {
+          ...item,
+          links: [
+            ...LOCALES.map((lang) => ({ lang, url: url(lang) })),
+            { lang: 'x-default', url: url(DEFAULT_LOCALE) },
+          ],
+        };
       },
     }),
   ],

@@ -1,0 +1,85 @@
+@use 'abstracts' as *;
+
+// "Qué construyo": tres tarjetas entre Proyectos (amarillo) y Contacto (tinta).
+.services {
+  display: block;
+  padding-block: space(3xl);
+  background: color(bg);
+  color: color(text);
+
+  &__inner {
+    display: grid;
+    gap: space(xl);
+  }
+
+  &__header {
+    display: grid;
+    gap: space(xs);
+  }
+
+  &__eyebrow {
+    @include hud;
+  }
+
+  &__title {
+    font-size: font-size(3xl);
+  }
+
+  &__lead {
+    max-width: 52ch;
+    font-size: font-size(lg);
+  }
+
+  &__list {
+    display: grid;
+    gap: space(sm);
+
+    @include mq(lg) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  &__item {
+    display: flex;
+  }
+
+  // Toda la tarjeta es el enlace: el área táctil es grande.
+  &__card {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: space(xs);
+    width: 100%;
+    padding: space(md);
+    background: color(ink);
+    color: color(on-ink);
+    border-top: space(3xs) solid color(signal);
+    transition:
+      background-color duration(fast) ease(snap),
+      color duration(fast) ease(snap);
+
+    @include hover {
+      background: color(signal);
+      color: color(on-signal);
+    }
+  }
+
+  &__index {
+    @include hud;
+    opacity: 0.6;
+  }
+
+  &__name {
+    font-size: font-size(xl);
+    line-height: 1;
+  }
+
+  &__summary {
+    max-width: 40ch;
+  }
+
+  &__more {
+    @include hud;
+    padding-top: space(sm);
+    border-top: 1px solid color(rule);
+  }
+}

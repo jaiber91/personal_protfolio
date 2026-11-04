@@ -1,6 +1,6 @@
 ---
 title: Este portafolio
-summary: 'Tablero flip-dot en WebGL, letras split-flap y pases de abordar que responden al scroll.'
+summary: 'Un tablero de aeropuerto animado en 3D escribe mi nombre, y los proyectos se muestran como pases de abordar.'
 role: Diseño y desarrollo
 stack: [Astro, Three.js, GLSL, GSAP, Sass]
 year: 2026

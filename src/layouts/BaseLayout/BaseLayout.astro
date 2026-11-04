@@ -5,7 +5,9 @@ import '@fontsource-variable/jetbrains-mono';
 import '@/styles/main.scss';
 import './BaseLayout.scss';
 import SocialMeta from '@/components/layout/SocialMeta/SocialMeta.astro';
-import StructuredData from '@/components/layout/StructuredData/StructuredData.astro';
+import StructuredData, {
+  type StructuredPage,
+} from '@/components/layout/StructuredData/StructuredData.astro';
 import {
   DEFAULT_LOCALE,
   getDictionary,
@@ -14,6 +16,7 @@ import {
   localizePath,
   resolveLocale,
   stripLocale,
+  translatePath,
 } from '@/i18n';
 import { THEME_STORAGE_KEY } from '@/scripts/core/theme';
 
@@ -22,19 +25,32 @@ interface Props {
   description?: string;
   /** Páginas que no deben indexarse (404): sin canonical, hreflang ni datos estructurados. */
   noindex?: boolean;
+  /** Open Graph: `profile` en el inicio; `website` en las demás páginas. */
+  ogType?: 'profile' | 'website';
+  /** Datos estructurados propios de la página (p. ej. un servicio). Sin esto: `ProfilePage`. */
+  page?: StructuredPage;
 }
 
 const locale = resolveLocale(Astro.currentLocale);
 const t = getDictionary(locale);
-const { title = t.meta.title, description = t.meta.description, noindex = false } = Astro.props;
+const {
+  title = t.meta.title,
+  description = t.meta.description,
+  noindex = false,
+  ogType = 'profile',
+  page,
+} = Astro.props;
 
 const path = stripLocale(Astro.url.pathname);
 const canonical = new URL(localizePath(locale, path), Astro.site);
 const alternates = LOCALES.map((alt) => ({
   hreflang: LOCALE_META[alt].htmlLang,
-  href: new URL(localizePath(alt, path), Astro.site).href,
+  href: new URL(localizePath(alt, translatePath(path, locale, alt)), Astro.site).href,
 }));
-const defaultAlternate = new URL(localizePath(DEFAULT_LOCALE, path), Astro.site).href;
+const defaultAlternate = new URL(
+  localizePath(DEFAULT_LOCALE, translatePath(path, locale, DEFAULT_LOCALE)),
+  Astro.site,
+).href;
 const ogImage = new URL(`/og/og-${locale}.png`, Astro.site).href;
 ---
 
@@ -55,9 +71,15 @@ const ogImage = new URL(`/og/og-${locale}.png`, Astro.site).href;
         ))}
         <link rel="alternate" hreflang="x-default" href={defaultAlternate} />
 
-        <SocialMeta locale={locale} title={title} description={description} url={canonical.href} />
+        <SocialMeta
+          locale={locale}
+          title={title}
+          description={description}
+          url={canonical.href}
+          type={ogType}
+        />
 
-        <StructuredData locale={locale} url={canonical.href} image={ogImage} />
+        <StructuredData locale={locale} url={canonical.href} image={ogImage} page={page} />
       </Fragment>
     )}
 

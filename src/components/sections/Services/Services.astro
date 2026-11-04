@@ -1,0 +1,54 @@
+---
+import './Services.scss';
+import { getCollection } from 'astro:content';
+import { isRouteKey, routePath, type Dictionary, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dictionary['services'];
+}
+
+const { locale, t } = Astro.props;
+
+// Una tarjeta por página de detalle (src/content/services/<idioma>/<clave>.md).
+const services = (await getCollection('services', ({ id }) => id.startsWith(`${locale}/`)))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => {
+    const key = entry.id.split('/')[1] ?? '';
+    if (!isRouteKey(key)) throw new Error(`Servicio sin ruta en src/i18n/routes.ts: ${entry.id}`);
+    return { ...entry.data, href: routePath(locale, key) };
+  });
+---
+
+{/* "Qué construyo": enlaza las páginas de detalle (apps móviles, web y landing pages). */}
+<section class="services" id="services" aria-labelledby="services-title">
+  <div class="services__inner container">
+    <header class="services__header">
+      <p class="services__eyebrow" data-reveal>
+        {t.eyebrow}
+      </p>
+      <h2 class="services__title" id="services-title" data-split>
+        {t.title}
+      </h2>
+      <p class="services__lead" data-reveal>
+        {t.lead}
+      </p>
+    </header>
+    <ol class="services__list" role="list">
+      {services.map((service, index) => (
+        <li class="services__item" data-reveal>
+          <a class="services__card" href={service.href}>
+            <span class="services__index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3 class="services__name">{service.name}</h3>
+            <p class="services__summary">{service.summary}</p>
+            <span class="services__more">
+              {t.more} <span aria-hidden="true">→</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

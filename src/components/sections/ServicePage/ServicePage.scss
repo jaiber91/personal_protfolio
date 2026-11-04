@@ -1,0 +1,184 @@
+@use 'abstracts' as *;
+
+// Página de detalle de "Qué construyo": cabecera en tinta (como el tablero) y cuerpo de
+// lectura sobre el fondo del tema.
+.service {
+  display: block;
+
+  &__hero {
+    padding-block: calc(var(--header-height) + #{space(xl)}) space(xl);
+    background: color(ink);
+    color: color(on-ink);
+  }
+
+  &__inner {
+    display: grid;
+    gap: space(md);
+    justify-items: start;
+  }
+
+  &__breadcrumb ol {
+    @include hud;
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(2xs);
+    color: color(signal);
+
+    li + li::before {
+      content: '/';
+      margin-inline-end: space(2xs);
+      opacity: 0.6;
+    }
+
+    a {
+      text-decoration: underline;
+      text-underline-offset: 0.25em;
+    }
+  }
+
+  &__title {
+    max-width: 14ch;
+    font-size: font-size(3xl);
+    color: color(signal);
+    overflow-wrap: anywhere;
+  }
+
+  &__lead {
+    max-width: 52ch;
+    font-size: font-size(lg);
+  }
+
+  &__body {
+    display: grid;
+    gap: space(xl);
+    padding-block: space(xl);
+  }
+
+  &__section {
+    display: grid;
+    gap: space(md);
+    padding-top: space(md);
+    border-top: 1px solid color(rule);
+
+    @include mq(lg) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+      align-items: start;
+    }
+  }
+
+  &__heading {
+    font-size: font-size(xl);
+    line-height: 1;
+  }
+
+  &__text {
+    max-width: 60ch;
+  }
+
+  // En pantallas grandes, el texto de apoyo (intro del costo) y la lista van en la columna 2.
+  &__section > :not(.service__heading) {
+    @include mq(lg) {
+      grid-column: 2;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: space(xs);
+    max-width: 60ch;
+
+    li {
+      position: relative;
+      padding-inline-start: space(md);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0.6em;
+        left: 0;
+        width: space(xs);
+        height: 2px;
+        background: color(text);
+      }
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: space(sm);
+
+    @include mq(md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  &__card {
+    display: grid;
+    align-content: start;
+    gap: space(2xs);
+    padding: space(sm);
+    background: color(surface);
+    border-top: space(3xs) solid color(signal);
+  }
+
+  &__card-title {
+    @include hud;
+    font-weight: 700;
+    color: color(text);
+  }
+
+  &__steps {
+    display: grid;
+    gap: space(sm);
+  }
+
+  &__step {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    column-gap: space(sm);
+    row-gap: space(3xs);
+    padding-bottom: space(sm);
+    border-bottom: 1px solid color(rule);
+
+    > :not(.service__index) {
+      grid-column: 2;
+    }
+  }
+
+  &__index {
+    @include display-type;
+    grid-row: span 2;
+    font-size: font-size(xl);
+    color: color(text-muted);
+  }
+
+  &__faq {
+    display: grid;
+  }
+
+  &__question {
+    border-bottom: 1px solid color(rule);
+
+    summary {
+      padding-block: space(sm);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    p {
+      max-width: 60ch;
+      padding-bottom: space(sm);
+      color: color(text-muted);
+    }
+  }
+
+  &__cta {
+    padding-block: space(xl);
+    background: color(signal);
+    color: color(on-signal);
+  }
+
+  &__cta-title {
+    font-size: font-size(2xl);
+  }
+}

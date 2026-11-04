@@ -1,12 +1,13 @@
 ---
 import './Platforms.scss';
-import type { Dictionary } from '@/i18n';
+import { isRouteKey, routePath, type Dictionary, type Locale } from '@/i18n';
 
 interface Props {
+  locale: Locale;
   t: Dictionary['platforms'];
 }
 
-const { t } = Astro.props;
+const { locale, t } = Astro.props;
 const total = String(t.steps.length).padStart(2, '0');
 ---
 
@@ -32,6 +33,11 @@ const total = String(t.steps.length).padStart(2, '0');
             </span>
             <h3 class="platforms__label">{step.label}</h3>
             <p class="platforms__description">{step.description}</p>
+            {'route' in step && step.route && isRouteKey(step.route) && (
+              <a class="platforms__link" href={routePath(locale, step.route)}>
+                {step.link} →
+              </a>
+            )}
           </li>
         ))}
       </ol>

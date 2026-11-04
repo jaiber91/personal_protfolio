@@ -2,9 +2,9 @@ import type { Dictionary } from './es';
 
 const en: Dictionary = {
   meta: {
-    title: 'Jaiber Flor | Full Stack Developer',
+    title: 'Jaiber Flor | Full Stack Developer · Mobile & Web Apps',
     description:
-      'Jaiber Leonardo Flor is a Full Stack developer in Colombia with 5+ years in banking, startups and education. Flutter, Angular and NestJS.',
+      'Jaiber Leonardo Flor, a Full Stack developer in Colombia with 5+ years of experience. Mobile apps, web apps and landing pages, working remotely.',
     ogImageAlt: 'A board of yellow discs spelling Jaiber Flor, with the role Full Stack Developer.',
   },
   a11y: {
@@ -18,10 +18,11 @@ const en: Dictionary = {
     platforms: 'Platforms',
     story: 'Journey',
     projects: 'Projects',
+    services: 'What I build',
     contact: 'Contact',
   },
   hud: {
-    location: 'Jamundí, Colombia',
+    location: 'Jamundí (Cali), Colombia',
     coordinates: '3°15′N 76°32′W',
     localTime: 'Local time',
     status: 'Available for projects',
@@ -40,9 +41,9 @@ const en: Dictionary = {
   hero: {
     eyebrow: 'Full Stack Developer',
     title: 'Jaiber Flor',
-    lead: 'I build mobile and web apps for banking and startups with Flutter, Angular and NestJS, from the architecture to the interface.',
+    lead: "I build mobile apps, web apps and landing pages with Flutter, Angular and NestJS. I've worked in banking, startups and education.",
     primaryCta: 'See my journey',
-    secondaryCta: "Let's talk",
+    secondaryCta: "Let's talk about your project",
     scrollHint: 'Scroll',
     // "HIGH" in English sounds like the Spanish "JAI" (the J is never pronounced like "Jack").
     pronunciation: {
@@ -54,16 +55,18 @@ const en: Dictionary = {
   },
   manifesto: {
     eyebrow: '00 — Manifesto',
-    text: 'I taught *over 1,000 people* to use technology before I started building it. Today I develop applications for *thousands of users* in environments where *quality matters*: banking, startups and cross-platform experiences. I write code with purpose and take care of *every stage*, from testing to release.',
+    text: 'I taught *over 1,000 people* to use technology before I started building it. Today I build mobile and web apps for *thousands of users* in environments where *quality matters*, like banking and startups. I take care of *every stage*: I test what I write and automate releases.',
   },
   platforms: {
     eyebrow: '01 — Platforms',
-    title: 'One codebase, every screen',
+    title: 'Mobile, tablet and web',
     steps: [
       {
         label: 'Mobile',
         description:
           'Flutter apps for iOS and Android, split into modules and tested so they can grow without breaking.',
+        route: 'mobile-apps',
+        link: 'How I build mobile apps',
       },
       {
         label: 'Tablet',
@@ -74,6 +77,8 @@ const en: Dictionary = {
         label: 'Web',
         description:
           'Angular portals and NestJS APIs built for thousands of users connected in real time.',
+        route: 'web-apps',
+        link: 'How I build web apps',
       },
     ],
   },
@@ -86,7 +91,7 @@ const en: Dictionary = {
       title: 'Departures',
       subtitle: 'Salidas',
       columns: { period: 'Period', company: 'Destination', role: 'Flight', status: 'Status' },
-      status: { current: 'Boarding', done: 'Landed' },
+      status: { current: 'In flight', done: 'Landed' },
       details: 'Details',
       close: 'Close',
       hint: 'Tap a flight to see its details',
@@ -101,7 +106,7 @@ const en: Dictionary = {
           {
             value: 300,
             suffix: '',
-            label: 'people on the same banking project',
+            label: 'people work with the module architecture I designed',
             detail:
               'The app is split into independent modules. I designed how they connect and navigate between each other, and that solution became the standard every team on the project uses in their packages.',
           },
@@ -132,7 +137,7 @@ const en: Dictionary = {
             suffix: '+',
             label: 'attendees connected at once',
             detail:
-              'At a startup building technology for residential communities, I helped build its virtual and hybrid assembly platform in Angular. It includes live video, real-time quorum and voting for sessions of 300 to 2,000 attendees.',
+              'At a startup building technology for HOAs and condo associations, I helped build its virtual and hybrid assembly platform in Angular. It includes live video, real-time quorum and voting for sessions of 300 to 2,000 attendees.',
           },
           {
             value: 10,
@@ -189,14 +194,14 @@ const en: Dictionary = {
         title: 'Systems Engineering',
         place: 'Universidad Internacional de La Rioja',
       },
-      {
-        period: '2018',
-        title: "Bachelor's Degree in History",
-        place: 'Universidad del Valle',
-      },
-      { period: '2021', title: 'Full Stack Developer', place: 'Prográmate by Simplon' },
+      { period: '2021', title: 'Full Stack Developer Bootcamp', place: 'Prográmate by Simplon' },
       { period: '2020', title: 'Frontend Developer Master', place: 'Platzi' },
       { period: '2019', title: 'Multimedia Production Technology', place: 'SENA' },
+      {
+        period: '2018',
+        title: "Bachelor's Degree in History Education",
+        place: 'Universidad del Valle',
+      },
     ],
   },
   projects: {
@@ -204,19 +209,38 @@ const en: Dictionary = {
     title: 'Selected work',
     pass: 'Boarding pass',
     gateLabel: 'Gate',
+    gates: { phone: 'Mobile', tablet: 'Tablet', web: 'Web' },
     yearLabel: 'Year',
     empty: 'Projects coming soon.',
     stackLabel: 'Stack',
     roleLabel: 'Role',
     viewLabel: 'View project',
   },
+  services: {
+    eyebrow: '04 — What I build',
+    title: 'What I build',
+    lead: 'Projects I build end to end for companies, founders and teams across Latin America and the US.',
+    more: 'See details',
+  },
   contact: {
-    eyebrow: '04 — Contact',
+    eyebrow: '05 — Contact',
     title: "Let's talk",
-    lead: "I have shipped apps to thousands of users in banking and startups, and I come from the education sector. If your next project is headed down any of those paths, let's build it together.",
+    lead: "Have a project, an idea or a role to fill? Write to me and I'll reply within 24 hours. I work remotely with teams across Latin America and the US.",
     copyEmail: 'Copy email',
     emailCopied: 'Email copied!',
     qrLabel: 'Scan → LinkedIn',
+  },
+  service: {
+    breadcrumbHome: 'Home',
+    breadcrumbLabel: 'Breadcrumb',
+    audienceTitle: 'Who it is for',
+    includesTitle: "What's included",
+    processTitle: 'How I work',
+    estimateTitle: 'How cost is estimated',
+    faqTitle: 'Frequently asked questions',
+    ctaTitle: 'Have a project in mind?',
+    ctaText: "Tell me the idea and I'll reply within 24 hours with the next steps.",
+    ctaButton: "Let's talk about your project",
   },
   notFound: {
     title: 'Flight cancelled | Jaiber Flor',

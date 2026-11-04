@@ -107,4 +107,20 @@
       display: block;
     }
   }
+
+  // Enlace a la página con más detalle: visible con su paso, igual que la descripción.
+  &__link {
+    @include hud;
+    grid-column: 2;
+    justify-self: start;
+    margin-bottom: space(xs);
+    color: color(signal);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    display: none;
+
+    [data-active] > & {
+      display: inline-block;
+    }
+  }
 }

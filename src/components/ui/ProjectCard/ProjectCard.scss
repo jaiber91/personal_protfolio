@@ -132,6 +132,14 @@ $notch: 0.9rem;
     font-size: font-size(2xl);
   }
 
+  &__gate-name {
+    @include hud;
+    display: block;
+    margin-top: space(3xs);
+    font-stretch: normal;
+    letter-spacing: 0.06em;
+  }
+
   &__barcode {
     display: flex;
     gap: 2px;

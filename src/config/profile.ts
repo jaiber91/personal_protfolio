@@ -17,6 +17,8 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jaiberflor',
   github: 'https://github.com/jaiber91',
   location: { locality: 'Jamundí', region: 'Valle del Cauca', country: 'CO' },
+  /** Mercados a los que se ofrece trabajo remoto (datos estructurados de los servicios). */
+  areaServed: ['Latin America', 'United States'],
   knowsAbout: [
     'Flutter',
     'Dart',

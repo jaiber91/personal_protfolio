@@ -10,9 +10,10 @@ interface Props {
   title: string;
   description: string;
   url: string;
+  type?: 'profile' | 'website';
 }
 
-const { locale, title, description, url } = Astro.props;
+const { locale, title, description, url, type = 'profile' } = Astro.props;
 const t = getDictionary(locale);
 // Imagen 1200×630 por idioma; se regenera con `npm run og`.
 const image = new URL(`/og/og-${locale}.png`, Astro.site).href;
@@ -21,7 +22,7 @@ const otherLocales = LOCALES.filter((alt) => alt !== locale);
 
 <meta name="author" content={profile.fullName} />
 
-<meta property="og:type" content="profile" />
+<meta property="og:type" content={type} />
 <meta property="og:site_name" content={profile.displayName} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
@@ -36,8 +37,12 @@ const otherLocales = LOCALES.filter((alt) => alt !== locale);
 {otherLocales.map((alt) => (
   <meta property="og:locale:alternate" content={LOCALE_META[alt].ogLocale} />
 ))}
-<meta property="profile:first_name" content={profile.givenName} />
-<meta property="profile:last_name" content={profile.familyName} />
+{type === 'profile' && (
+  <Fragment>
+    <meta property="profile:first_name" content={profile.givenName} />
+    <meta property="profile:last_name" content={profile.familyName} />
+  </Fragment>
+)}
 
 {/* X (Twitter): sin twitter:card solo se muestra el enlace. */}
 <meta name="twitter:card" content="summary_large_image" />

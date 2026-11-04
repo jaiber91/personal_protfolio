@@ -1,9 +1,9 @@
 // Diccionario base: define la forma (tipo) que deben cumplir los demás idiomas.
 const es = {
   meta: {
-    title: 'Jaiber Flor | Desarrollador Full Stack',
+    title: 'Jaiber Flor | Desarrollador Full Stack · Apps móviles y web',
     description:
-      'Jaiber Leonardo Flor es desarrollador Full Stack en Colombia, con más de 5 años en banca, startups y educación. Flutter, Angular y NestJS.',
+      'Jaiber Leonardo Flor, desarrollador Full Stack en Colombia con más de 5 años de experiencia. Apps móviles, aplicaciones web y landing pages, en remoto.',
     ogImageAlt:
       'Tablero de discos amarillos que escribe Jaiber Flor, con el rol Full Stack Developer.',
   },
@@ -18,10 +18,11 @@ const es = {
     platforms: 'Plataformas',
     story: 'Trayectoria',
     projects: 'Proyectos',
+    services: 'Qué construyo',
     contact: 'Contacto',
   },
   hud: {
-    location: 'Jamundí, Colombia',
+    location: 'Jamundí (Cali), Colombia',
     coordinates: '3°15′N 76°32′W',
     localTime: 'Hora local',
     status: 'Disponible para proyectos',
@@ -40,9 +41,9 @@ const es = {
   hero: {
     eyebrow: 'Full Stack Developer',
     title: 'Jaiber Flor',
-    lead: 'Desarrollo apps móviles y web para banca y startups con Flutter, Angular y NestJS, desde la arquitectura hasta la interfaz.',
+    lead: 'Desarrollo apps móviles, aplicaciones web y landing pages con Flutter, Angular y NestJS. He trabajado en banca, startups y educación.',
     primaryCta: 'Ver trayectoria',
-    secondaryCta: 'Hablemos',
+    secondaryCta: 'Hablemos de tu proyecto',
     scrollHint: 'Desliza',
     // Pista de pronunciación bajo el nombre (en inglés la J se lee "Y": ver en.ts).
     pronunciation: {
@@ -55,16 +56,19 @@ const es = {
   manifesto: {
     eyebrow: '00 — Manifiesto',
     // Las palabras entre *asteriscos* se resaltan con el color de la señal.
-    text: 'Enseñé a *más de 1.000 personas* a usar la tecnología antes de dedicarme a construirla. Hoy desarrollo aplicaciones para *miles de usuarios* en entornos donde *la calidad importa*: banca, startups y experiencias multiplataforma. Escribo código con propósito y cuido *cada etapa*, desde las pruebas hasta el despliegue.',
+    text: 'Enseñé a *más de 1.000 personas* a usar la tecnología antes de dedicarme a construirla. Hoy desarrollo apps móviles y web para *miles de usuarios* en entornos donde *la calidad importa*, como la banca y las startups. Cuido *cada etapa*: pruebo lo que escribo y automatizo la publicación.',
   },
   platforms: {
     eyebrow: '01 — Plataformas',
-    title: 'Un código, todas las pantallas',
+    title: 'Móvil, tablet y web',
     steps: [
       {
         label: 'Móvil',
         description:
           'Apps en Flutter para iOS y Android, divididas en módulos y con pruebas para crecer sin romperse.',
+        // Clave del mapa de rutas (src/i18n/routes.ts) de la página con más detalle.
+        route: 'mobile-apps',
+        link: 'Cómo desarrollo apps móviles',
       },
       {
         label: 'Tablet',
@@ -75,6 +79,8 @@ const es = {
         label: 'Web',
         description:
           'Portales en Angular y APIs en NestJS preparados para miles de usuarios conectados en tiempo real.',
+        route: 'web-apps',
+        link: 'Cómo desarrollo aplicaciones web',
       },
     ],
   },
@@ -87,7 +93,7 @@ const es = {
       title: 'Salidas',
       subtitle: 'Departures',
       columns: { period: 'Periodo', company: 'Destino', role: 'Vuelo', status: 'Estado' },
-      status: { current: 'En curso', done: 'Completado' },
+      status: { current: 'En vuelo', done: 'Aterrizó' },
       details: 'Detalles',
       close: 'Cerrar',
       hint: 'Toca un vuelo para ver sus detalles',
@@ -102,7 +108,7 @@ const es = {
           {
             value: 300,
             suffix: '',
-            label: 'personas en el mismo proyecto bancario',
+            label: 'personas trabajan con la arquitectura de módulos que diseñé',
             detail:
               'La app está dividida en módulos independientes. Diseñé cómo se conectan y navegan entre sí, y esa solución se volvió el estándar que todos los equipos del proyecto usan en sus paquetes.',
           },
@@ -190,30 +196,50 @@ const es = {
         title: 'Ingeniería de Sistemas',
         place: 'Universidad Internacional de La Rioja',
       },
-      { period: '2018', title: 'Licenciatura en Historia', place: 'Universidad del Valle' },
-      { period: '2021', title: 'Full Stack Developer', place: 'Prográmate by Simplon' },
+      { period: '2021', title: 'Bootcamp Full Stack Developer', place: 'Prográmate by Simplon' },
       { period: '2020', title: 'Frontend Developer Master', place: 'Platzi' },
       { period: '2019', title: 'Tecnología en Producción Multimedia', place: 'SENA' },
+      { period: '2018', title: 'Licenciatura en Historia', place: 'Universidad del Valle' },
     ],
   },
   projects: {
     eyebrow: '03 — Proyectos',
-    title: 'Trabajo seleccionado',
+    title: 'Proyectos destacados',
     pass: 'Pase de abordar',
     gateLabel: 'Puerta',
+    // Nombre legible de cada puerta (M1, T2, W3): el código solo no se entiende.
+    gates: { phone: 'Móvil', tablet: 'Tablet', web: 'Web' },
     yearLabel: 'Año',
     empty: 'Pronto habrá proyectos aquí.',
     stackLabel: 'Stack',
     roleLabel: 'Rol',
     viewLabel: 'Ver proyecto',
   },
+  services: {
+    eyebrow: '04 — Qué construyo',
+    title: 'Qué construyo',
+    lead: 'Proyectos que desarrollo de principio a fin, para empresas, emprendedores y equipos de Latinoamérica y EE. UU.',
+    more: 'Ver detalles',
+  },
   contact: {
-    eyebrow: '04 — Contacto',
+    eyebrow: '05 — Contacto',
     title: '¿Hablamos?',
-    lead: 'He llevado apps a miles de usuarios en banca y en startups, y vengo del sector educativo. Si tu próximo proyecto va por alguno de esos caminos, construyámoslo juntos.',
+    lead: '¿Tienes un proyecto, una idea o una vacante? Escríbeme y te respondo en menos de 24 horas. Trabajo en remoto con equipos de Latinoamérica y EE. UU.',
     copyEmail: 'Copiar correo',
     emailCopied: '¡Correo copiado!',
     qrLabel: 'Escanea → LinkedIn',
+  },
+  service: {
+    breadcrumbHome: 'Inicio',
+    breadcrumbLabel: 'Ruta de navegación',
+    audienceTitle: 'Para quién es',
+    includesTitle: 'Qué incluye',
+    processTitle: 'Cómo trabajo',
+    estimateTitle: 'Cómo se estima el costo',
+    faqTitle: 'Preguntas frecuentes',
+    ctaTitle: '¿Tienes un proyecto en mente?',
+    ctaText: 'Cuéntame la idea y te respondo en menos de 24 horas con los siguientes pasos.',
+    ctaButton: 'Hablemos de tu proyecto',
   },
   notFound: {
     title: 'Vuelo cancelado | Jaiber Flor',

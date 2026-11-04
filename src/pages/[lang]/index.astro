@@ -9,6 +9,7 @@ import Loader from '@/components/sections/Loader/Loader.astro';
 import Manifesto from '@/components/sections/Manifesto/Manifesto.astro';
 import Platforms from '@/components/sections/Platforms/Platforms.astro';
 import Projects from '@/components/sections/Projects/Projects.astro';
+import Services from '@/components/sections/Services/Services.astro';
 import Story from '@/components/sections/Story/Story.astro';
 import { getDictionary, LOCALES, type Locale } from '@/i18n';
 import BaseLayout from '@/layouts/BaseLayout/BaseLayout.astro';
@@ -27,9 +28,10 @@ const t = getDictionary(locale);
 
   <Hero t={t.hero} hud={t.hud} />
   <Manifesto t={t.manifesto} />
-  <Platforms t={t.platforms} />
+  <Platforms locale={locale} t={t.platforms} />
   <Story locale={locale} t={t.story} />
   <Projects locale={locale} t={t.projects} />
+  <Services locale={locale} t={t.services} />
   <Contact t={t.contact} hud={t.hud} />
 
   <Footer slot="footer" t={t} />

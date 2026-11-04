@@ -18,7 +18,15 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   placeholder?: boolean;
-  labels: { pass: string; gate: string; year: string; role: string; stack: string; view: string };
+  labels: {
+    pass: string;
+    gate: string;
+    gates: Record<Device, string>;
+    year: string;
+    role: string;
+    stack: string;
+    view: string;
+  };
 }
 
 const {
@@ -64,7 +72,10 @@ const bars = Array.from({ length: 38 }, () => 1 + Math.floor(random() * 3));
     <dl class="ticket__data">
       <div>
         <dt>{labels.gate}</dt>
-        <dd class="ticket__gate">{gates[device]}</dd>
+        <dd class="ticket__gate">
+          {gates[device]}
+          <span class="ticket__gate-name">{labels.gates[device]}</span>
+        </dd>
       </div>
       <div>
         <dt>{labels.year}</dt>

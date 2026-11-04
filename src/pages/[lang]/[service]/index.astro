@@ -1,0 +1,59 @@
+---
+// Páginas de "Qué construyo" (una por servicio e idioma). El slug de cada idioma sale del
+// mapa de rutas (src/i18n/routes.ts): /es/desarrollo-apps-moviles/ ↔ /en/mobile-app-development/.
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import Footer from '@/components/layout/Footer/Footer.astro';
+import Header from '@/components/layout/Header/Header.astro';
+import ServicePage from '@/components/sections/ServicePage/ServicePage.astro';
+import {
+  getDictionary,
+  isLocale,
+  isRouteKey,
+  localizePath,
+  ROUTES,
+  routePath,
+  type Locale,
+} from '@/i18n';
+import BaseLayout from '@/layouts/BaseLayout/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('services');
+  return entries.map((entry) => {
+    const [lang, key] = entry.id.split('/');
+    if (!lang || !key || !isLocale(lang) || !isRouteKey(key)) {
+      throw new Error(`Servicio sin idioma o sin ruta en src/i18n/routes.ts: ${entry.id}`);
+    }
+    return {
+      params: { lang, service: ROUTES[key][lang].replace(/\/$/, '') },
+      props: { entry, key },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { entry, key } = Astro.props;
+const locale = Astro.params.lang as Locale;
+const t = getDictionary(locale);
+const { data } = entry;
+const absolute = (path: string) => new URL(path, Astro.site).href;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  ogType="website"
+  page={{
+    name: data.heading,
+    description: data.description,
+    serviceType: data.serviceType,
+    breadcrumb: [
+      { name: t.service.breadcrumbHome, url: absolute(localizePath(locale)) },
+      { name: data.name, url: absolute(routePath(locale, key)) },
+    ],
+    faq: data.faq,
+  }}
+>
+  <Header slot="header" locale={locale} t={t} homeHref={localizePath(locale)} />
+  <ServicePage locale={locale} t={t.service} data={data} />
+  <Footer slot="footer" t={t} />
+</BaseLayout>

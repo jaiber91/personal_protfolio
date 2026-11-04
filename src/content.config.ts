@@ -24,4 +24,31 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { projects };
+// Páginas de "Qué construyo": src/content/services/{es,en}/<clave>.md. El nombre del archivo
+// es la clave del mapa de rutas (src/i18n/routes.ts), que define el slug de cada idioma.
+const item = z.object({ title: z.string(), text: z.string() });
+const services = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
+  schema: z.object({
+    /** Orden en la sección "Qué construyo" del inicio. */
+    order: z.number().int(),
+    /** <title> y meta descripción. */
+    title: z.string().max(65),
+    description: z.string().max(160),
+    /** Tipo de servicio en los datos estructurados (schema.org `serviceType`). */
+    serviceType: z.string(),
+    /** Nombre corto: miga de pan y enlaces. */
+    name: z.string(),
+    /** Resumen de una línea para la tarjeta del inicio. */
+    summary: z.string(),
+    heading: z.string(),
+    lead: z.string(),
+    audience: z.array(z.string()).min(1),
+    includes: z.array(item).min(1),
+    process: z.array(item).min(1),
+    estimate: z.object({ intro: z.string(), factors: z.array(z.string()).min(1) }),
+    faq: z.array(z.object({ question: z.string(), answer: z.string() })).min(1),
+  }),
+});
+
+export const collections = { projects, services };

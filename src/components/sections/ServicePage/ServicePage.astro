@@ -1,0 +1,124 @@
+---
+import './ServicePage.scss';
+import type { CollectionEntry } from 'astro:content';
+import Button from '@/components/ui/Button/Button.astro';
+import { localizePath, type Dictionary, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  t: Dictionary['service'];
+  data: CollectionEntry<'services'>['data'];
+}
+
+const { locale, t, data } = Astro.props;
+const home = localizePath(locale);
+const contact = `${home}#contact`;
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+---
+
+{/* Página de "Qué construyo": texto estático, sin animaciones de entrada (no hay loader). */}
+<article class="service" id="top">
+  <header class="service__hero">
+    <div class="service__inner container">
+      <nav class="service__breadcrumb" aria-label={t.breadcrumbLabel}>
+        <ol role="list">
+          <li>
+            <a href={home}>{t.breadcrumbHome}</a>
+          </li>
+          <li aria-current="page">{data.name}</li>
+        </ol>
+      </nav>
+      <h1 class="service__title">{data.heading}</h1>
+      <p class="service__lead">{data.lead}</p>
+      <div class="service__actions">
+        <Button href={contact} variant="signal">
+          {t.ctaButton}
+        </Button>
+      </div>
+    </div>
+  </header>
+
+  <div class="service__body container">
+    <section class="service__section" aria-labelledby="audience-title">
+      <h2 class="service__heading" id="audience-title">
+        {t.audienceTitle}
+      </h2>
+      <ul class="service__list" role="list">
+        {data.audience.map((entry) => (
+          <li>{entry}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="service__section" aria-labelledby="includes-title">
+      <h2 class="service__heading" id="includes-title">
+        {t.includesTitle}
+      </h2>
+      <ul class="service__grid" role="list">
+        {data.includes.map((entry) => (
+          <li class="service__card">
+            <h3 class="service__card-title">{entry.title}</h3>
+            <p>{entry.text}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="service__section" aria-labelledby="process-title">
+      <h2 class="service__heading" id="process-title">
+        {t.processTitle}
+      </h2>
+      <ol class="service__steps" role="list">
+        {data.process.map((step, index) => (
+          <li class="service__step">
+            <span class="service__index" aria-hidden="true">
+              {pad(index)}
+            </span>
+            <h3 class="service__card-title">{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="service__section" aria-labelledby="estimate-title">
+      <h2 class="service__heading" id="estimate-title">
+        {t.estimateTitle}
+      </h2>
+      <p class="service__text">{data.estimate.intro}</p>
+      <ul class="service__list" role="list">
+        {data.estimate.factors.map((factor) => (
+          <li>{factor}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="service__section" aria-labelledby="faq-title">
+      <h2 class="service__heading" id="faq-title">
+        {t.faqTitle}
+      </h2>
+      <div class="service__faq">
+        {data.faq.map((entry) => (
+          <details class="service__question">
+            <summary>{entry.question}</summary>
+            <p>{entry.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <aside class="service__cta" aria-labelledby="cta-title">
+    <div class="service__inner container">
+      <h2 class="service__cta-title" id="cta-title">
+        {t.ctaTitle}
+      </h2>
+      <p class="service__lead">{t.ctaText}</p>
+      <div class="service__actions">
+        <Button href={contact} variant="signal">
+          {t.ctaButton}
+        </Button>
+      </div>
+    </div>
+  </aside>
+</article>

@@ -1,64 +1,125 @@
 ---
 // Datos estructurados (schema.org, JSON-LD): le dicen a Google y a los buscadores de IA
-// quién es la persona, con qué nombres la buscan y dónde están sus perfiles.
+// quién es la persona, con qué nombres la buscan, dónde están sus perfiles y qué construye.
 // Un <script type="application/ld+json"> no se ejecuta, así que la CSP no lo bloquea.
 import { profile } from '@/config/profile';
 import type { Locale } from '@/i18n';
 import { getDictionary, LOCALE_META } from '@/i18n';
 
+/** Página de un servicio: `WebPage` + `Service` + `BreadcrumbList` + `FAQPage`. */
+export interface StructuredPage {
+  name: string;
+  description: string;
+  serviceType: string;
+  breadcrumb: { name: string; url: string }[];
+  faq: { question: string; answer: string }[];
+}
+
 interface Props {
   locale: Locale;
   url: string;
   image: string;
+  page?: StructuredPage | undefined;
 }
 
-const { locale, url, image } = Astro.props;
+const { locale, url, image, page } = Astro.props;
 const t = getDictionary(locale);
 const site = new URL('/', Astro.site).href;
 const personId = `${site}#person`;
+const websiteId = `${site}#website`;
+const inLanguage = LOCALE_META[locale].htmlLang;
 
-const data = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Person',
-      '@id': personId,
-      name: profile.fullName,
-      givenName: profile.givenName,
-      familyName: profile.familyName,
-      alternateName: profile.alternateNames,
-      jobTitle: profile.jobTitle,
-      description: t.meta.description,
-      url: site,
-      image,
-      sameAs: [profile.linkedin, profile.github],
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: profile.location.locality,
-        addressRegion: profile.location.region,
-        addressCountry: profile.location.country,
-      },
-      knowsAbout: profile.knowsAbout,
-      alumniOf: profile.alumniOf.map((name) => ({ '@type': 'EducationalOrganization', name })),
-    },
-    {
-      '@type': 'ProfilePage',
-      '@id': `${url}#page`,
-      url,
-      name: t.meta.title,
-      inLanguage: LOCALE_META[locale].htmlLang,
-      mainEntity: { '@id': personId },
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${site}#website`,
-      url: site,
-      name: profile.displayName,
-      inLanguage: ['es', 'en'],
-      publisher: { '@id': personId },
-    },
-  ],
+const person = {
+  '@type': 'Person',
+  '@id': personId,
+  name: profile.fullName,
+  givenName: profile.givenName,
+  familyName: profile.familyName,
+  alternateName: profile.alternateNames,
+  jobTitle: profile.jobTitle,
+  description: t.meta.description,
+  url: site,
+  image,
+  sameAs: [profile.linkedin, profile.github],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: profile.location.locality,
+    addressRegion: profile.location.region,
+    addressCountry: profile.location.country,
+  },
+  knowsLanguage: ['es', 'en'],
+  knowsAbout: profile.knowsAbout,
+  alumniOf: profile.alumniOf.map((name) => ({ '@type': 'EducationalOrganization', name })),
 };
+
+const website = {
+  '@type': 'WebSite',
+  '@id': websiteId,
+  url: site,
+  name: profile.displayName,
+  inLanguage: ['es', 'en'],
+  publisher: { '@id': personId },
+};
+
+// Sin precio: el costo se estima con cada proyecto (ver docs/plan-seo-freelance.md).
+const pageNodes = page
+  ? [
+      {
+        '@type': 'WebPage',
+        '@id': `${url}#page`,
+        url,
+        name: page.name,
+        description: page.description,
+        inLanguage,
+        isPartOf: { '@id': websiteId },
+        about: { '@id': `${url}#service` },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+      },
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: page.name,
+        serviceType: page.serviceType,
+        description: page.description,
+        url,
+        provider: { '@id': personId },
+        areaServed: profile.areaServed.map((name) => ({ '@type': 'Place', name })),
+        availableLanguage: ['es', 'en'],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: page.breadcrumb.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: item.url,
+        })),
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${url}#faq`,
+        url,
+        inLanguage,
+        mainEntity: page.faq.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      },
+    ]
+  : [
+      {
+        '@type': 'ProfilePage',
+        '@id': `${url}#page`,
+        url,
+        name: t.meta.title,
+        inLanguage,
+        mainEntity: { '@id': personId },
+      },
+    ];
+
+const data = { '@context': 'https://schema.org', '@graph': [person, ...pageNodes, website] };
 
 // `</` escapado: el JSON no puede cerrar la etiqueta <script> aunque un texto lo contenga.
 const json = JSON.stringify(data).replace(/</g, '\\u003c');
