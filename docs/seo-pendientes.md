@@ -1,6 +1,6 @@
 # SEO: pendientes
 
-Estado al 2026-10-14. Sitio en producción: https://jaiberflor.dev (Cloudflare, rama `main`).
+Estado al 2026-11-02. Plan de contenido y clientes: `docs/plan-seo-freelance.md`. Sitio en producción: https://jaiberflor.dev (Cloudflare, rama `main`).
 
 ## Ya hecho (verificado en producción)
 
@@ -31,7 +31,8 @@ Estado al 2026-10-14. Sitio en producción: https://jaiberflor.dev (Cloudflare, 
 
 - [ ] **LinkedIn:** agregar `https://jaiberflor.dev` en "Sitio web" e información de contacto;
       evaluar mostrar el nombre como **Jaiber Leonardo Flor**; correo `hola@jaiberflor.dev`.
-- [ ] **GitHub** (`jaiber91`): agregar `jaiberflor.dev` en el perfil.
+- [ ] **GitHub** (`jaiber91`): agregar `jaiberflor.dev` en el perfil (al 2026-11-02 el campo
+      sitio web apunta a LinkedIn y la ubicación dice "Cali"; el sitio dice "Jamundí").
 - [ ] **CV:** sitio y correo nuevos.
 
 ## 3. Validar (lo hace Jaiber, con apoyo)
